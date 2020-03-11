@@ -1,0 +1,161 @@
+﻿@using TrendyShop.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<Auction>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Compra Venta (Subastas)</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/modern-business.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Inicio</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Artículos
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="/Home/NewArticle">Anunciar</a>
+                            <a class="dropdown-item" href="/Home/Articles">Lista de Artículos</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Subasta
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="/Home/NewAuction">Nueva Subasta</a>
+                            <a class="dropdown-item" href="/Home/Auctions">Lista de Subastas</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/About">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Contact">Contáctanos</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Usuario
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="/Home/Login">Entrar</a>
+                            <a class="dropdown-item" href="/Home/Register">Registrar</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <h1 class="col-lg-4 mt-4 mb-3">
+                Subastas
+                <small>(Filtros)</small>
+            </h1>
+
+            <div class="col-lg-2"></div>
+            <input type="text" class="form-control col-lg-5 mt-4 mb-3" id="name">
+            <a class="col-lg-1 btn btn-primary mt-4 mb-4 text-white">Buscar</a>
+        </div>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home/Index">Inicio</a>
+            </li>
+            <li class="breadcrumb-item active">Subastas</li>
+        </ol>
+
+        <!-- Content Row -->
+        <div class="row">
+            <!-- Sidebar Column -->
+            <div class="col-lg-3 mb-4">
+                <div class="list-group">
+                    <a href="" class="list-group-item">Próximas</a>
+                    <a href="" class="list-group-item">En curso</a>
+                    <a href="" class="list-group-item">Previas</a>
+                </div>
+            </div>
+
+            <div class="col-lg-9 mb-4">
+                <h2>Subastas</h2>
+
+                <div class="row">
+                    @foreach (Auction a in Model)
+            {
+                    <div class="col-lg-12 mb-4">
+                        <div class="card h-100">
+                            <h4 class="card-header">@a.Title</h4>
+                            <div class="card-body">
+                                <p class="card-text">@a.Description</p>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <h5>Participantes: xxx</h5>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        @*<a href="/Home/Auction" class="btn btn-primary">Unirse</a>*@
+                                        @Html.ActionLink("Unirse", "Details", "Auction", new { id = a.Id }, null);
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            }
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

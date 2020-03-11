@@ -17,8 +17,10 @@ namespace TrendyShop.Models
         [Key,ForeignKey("ArticleId"), Column(Order = 1)]
         public Article Article { get; set; }
 
+        [Display(Name = "Cantidad Disponible")]
         public int Amount { get; set; }
 
+        [Display(Name = "Comentario sobre el anuncio")]
         public string Description { get; set; } //Is this necessary??
 
         public DateTime LastModified { get; set; }

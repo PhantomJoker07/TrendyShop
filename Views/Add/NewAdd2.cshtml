@@ -1,6 +1,4 @@
-﻿@using TrendyShop.ViewModels
-@model AddViewModel
-
+﻿@*@{ Layout = null; }*@
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,59 +77,47 @@
     <div class="container">
 
         <!-- Page Heading/Breadcrumbs -->
-
-        <div class="row">
-            <h3 class="col-lg-4 mt-4">@Model.Article.Name</h3>
-            @*<a href="/Home/Vendor" class="col-lg-4 mt-4 text-center"><h3>Vendedor</h3></a>*@
-            <p>@Html.ActionLink(Model.UserName, "Details", "User", new { id = Model.UserId }, null)</p>
-        </div>
-
-
-
+        <h1 class="mt-4 mb-3">Nuevo Artículo</h1>
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="/Home/Index">Inicio</a>
             </li>
             <li class="breadcrumb-item active"><a href="/Home/Articles">Artículos</a></li>
-            <li class="breadcrumb-item active">@Model.Article.Name</li>
+            <li class="breadcrumb-item active">Nuevo Artículo</li>
         </ol>
 
         <div class="row">
-            <div class="col-lg-12 navbar-brand">Imagen del producto</div>
-            <div class="col-lg-12">
-                <img src="/images/img1.jpg" height="255" width="255">
-            </div>
+            <div class="col-lg-12 navbar-brand">Imagen</div>
         </div>
 
         <!-- Article Info -->
-        <div class="row">
-            <div class="col-lg-12 mb-4">
-                <h4 class="card-header my-4">Descripción:</h4>
-            </div>
-            <div class="col-lg-12 card-body">
-                <p class="card-text">
-                    @Model.AddDescription
-                </p>
-            </div>
-            <div class="col-lg-11 card-footer my-4">
-                <h3>Precio: @Model.Article.Price</h3>
-            </div>
-            <div class="col-lg-11 card-footer my-4">
-                <h3>Cantidad Disponible: @Model.Amount</h3>
-            </div>
-            <div class="col-lg-1 card-footer my-4">
-                @*                <a href="" class="btn btn-primary">Comprar</a>*@
-                @Html.ActionLink("Comprar", "Buy", "Buy", new { uid = @Model.UserId, aid = @Model.Article.ArticleId }, null)
+        @*NewArticle*@
+        <form asp-action="NewAdd" method="post" class="m-4">
+            <div class="row breadcrumb">
+                <h5 class="col-lg-12">Nombre:</h5>
+                <input name="Name" type="text" class="form-control col-lg-12 mb-4">
 
-            </div>
-            <div class="col-lg-1 card-footer my-4">
-                @Html.ActionLink("Edit", "EditAdd", "Add", new { aid = @Model.Article.ArticleId, uid = Model.UserId }, null)
+                <h5 class="col-lg-12">Categoría:</h5>
+                <input name="Category" type="text" class="form-control col-lg-12 mb-4">
 
+                <h5 class="col-lg-12">Condición:</h5>
+                <input name="IsNew" type="text" class="form-control col-lg-12 mb-4">
+
+                <h5 class="col-lg-12">Descripción:</h5>
+                <textarea name="Description" rows="10" cols="100" class="form-control mb-4" maxlength="999" style="resize:none"></textarea>
+
+                <h5 class="col-lg-12">Vendedor:</h5>
+                <input name="Seller" type="text" class="form-control col-lg-12 mb-4">
+
+                <h5 class="col-lg-12">Precio:</h5>
+                <input name="Price" type="text" class="form-control col-lg-12 mb-4">
+
+                <div class="col-lg-11"></div>
+                <button class="btn btn-primary" type="submit">Publicar</button>
             </div>
-            @*incompleto*@
-           
-        </div>
+        </form>
+
         <!-- /.row -->
 
     </div>
@@ -139,7 +125,7 @@
     <!-- Footer -->
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+            <p class="m-0 text-center text-white">Copyright &copy; Compra Venta 2019</p>
         </div>
         <!-- /.container -->
     </footer>

@@ -2,7 +2,7 @@
   "runtimeOptions": {
     "additionalProbingPaths": [
       "C:\\Users\\Gabriela\\.dotnet\\store\\|arch|\\|tfm|",
-      "B:\\Computers Science\\3rd year\\2do semestre\\IS\\Proyecto\\TrendyShop\\packages"
+      "C:\\Users\\Gabriela\\source\\repos\\TrendyShop\\packages"
     ]
   }
 }

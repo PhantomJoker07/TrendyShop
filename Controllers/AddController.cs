@@ -7,13 +7,14 @@ using TrendyShop.Data;
 using TrendyShop.ViewModels;
 using TrendyShop.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Web;
 
 namespace TrendyShop.Controllers
 {
     public class AddController : Controller
     {
         private EFDbContext context;
-        
+
         public AddController(EFDbContext ctx)
         {
             context = ctx;
@@ -44,9 +45,38 @@ namespace TrendyShop.Controllers
             return View(result);
         }
 
-        public IActionResult NewAdd()
+        public ViewResult NewAdd()
         {
-            return View();
+            var categories = context.Categories.ToList();
+            var model = new NewAddViewModel {
+                Add = new Add(),
+                Categories = categories
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateNewAdd(NewAddViewModel viewModel)
+        {
+            context.Adds.Add(viewModel.Add);//this already updates User and Article
+            context.SaveChanges();
+
+            return RedirectToAction("Index", "Add");
+        }
+
+        [HttpPost]
+        public IActionResult EditAdd(int aid, int uid)
+        {
+            var add = context.Adds.SingleOrDefault(a => a.ArticleId == aid && a.UserId == uid);
+
+            if (add == null)
+            {
+                //return HttpNotFound();
+            }
+                
+
+
+            return View("NewAdd", add);
         }
     }
 }

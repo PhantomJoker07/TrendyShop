@@ -12,6 +12,7 @@ namespace TrendyShop.Models
         [Key]
         public int UserId { get; set; }
         
+        [Display(Name ="Nombre de Usuario")]
         public string Name { get; set; }
         
         //public string LastName { get; set; }
@@ -20,8 +21,10 @@ namespace TrendyShop.Models
         
         public string Card { get; set; }
 
+        [Display(Name = "Teléfono")]
         public string PhoneNumber { get; set; }
 
+        [Display(Name ="Correo")]
         public string Email { get; set; }
 
         public float Rating { get; set; }

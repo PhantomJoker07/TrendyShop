@@ -466,3 +466,18 @@ B:\Computers Science\3rd year\2do semestre\IS\Proyecto\TrendyShop\TrendyShop\obj
 B:\Computers Science\3rd year\2do semestre\IS\Proyecto\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.csproj.CopyComplete
 B:\Computers Science\3rd year\2do semestre\IS\Proyecto\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.dll
 B:\Computers Science\3rd year\2do semestre\IS\Proyecto\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.pdb
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\Details.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\Index.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\Details.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\Index.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\NewAuction.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\About.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\Contact.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\Register.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\Details.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\Index.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\Login.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\Buy.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\EditAdd.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\NewAdd2.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\NewAdd.cshtml.g.cs

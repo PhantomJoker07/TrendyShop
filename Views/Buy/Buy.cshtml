@@ -1,0 +1,24 @@
+﻿@model TrendyShop.ViewModels.BuyViewModel
+@{
+    ViewData["Title"] = "Compra";
+}
+@*desplegar aca arriba el articulo en cuestion que se desea comprar*@
+<h1>Para efectuar su compra rellene los puntos siguientes:</h1>
+@*<h2>Por favor inserte el número de artículos de los que ofrece este anuncio que usted desea adquirir:<h2>*@
+
+@using (Html.BeginForm("EffectBuy", "Buy",new { aid = @Model.Add.ArticleId, uid = @Model.Add.UserId, card = @Model.Card, amountToBuy = @Model.AmountToBuy}))
+{
+    <div class=" form-group">
+        @Html.LabelFor(m => m.AmountToBuy)
+        @Html.TextBoxFor(m => m.AmountToBuy, new { @class = "form-control"})
+        @Html.ValidationMessageFor(m => m.AmountToBuy)
+    </div>
+
+    <div class=" form-group">
+        @Html.LabelFor(m => m.Card)
+        @Html.TextBoxFor(m => m.Card, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Card)
+    </div>
+
+    <button type ="submit" class =" btn btn-primary">Comprar</button>
+}

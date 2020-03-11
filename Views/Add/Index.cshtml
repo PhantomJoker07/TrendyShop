@@ -39,7 +39,7 @@
                             Artículos
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/NewArticle">Anunciar</a>
+                            <a class="dropdown-item" href="/Add/NewAdd">Anunciar</a>
                             <a class="dropdown-item" href="/Home/Articles">Lista de Artículos</a>
                         </div>
                     </li>
@@ -132,7 +132,7 @@
                                         </div>
                                         <div class="col-lg-1">
                                             @*<a href="/Home/Article" class="btn btn-primary">Más</a>*@
-                                            @Html.ActionLink("Mas","Details","Add", new {id = a.ArticleId },null)
+                                            @Html.ActionLink("Mas", "Details", "Add", new { id = a.ArticleId}, null)
                                         </div>
                                     </div>
                                 </div>
@@ -140,6 +140,10 @@
                         </div>
                     }
                 </div>
+
+            </div>
+            <div class="col-lg-1 card-footer my-4">
+                @Html.ActionLink("Nuevo Anuncio", "NewAdd", "Add", null)
 
             </div>
         </div>

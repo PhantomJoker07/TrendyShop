@@ -18,7 +18,7 @@ namespace TrendyShop.Models
         public Article Article { get; set; }
 
         [Display(Name = "Cantidad Disponible")]
-        public int Amount { get; set; }
+        public int Amount { get; set; }//required?
 
         [Display(Name = "Comentario sobre el anuncio")]
         public string Description { get; set; } //Is this necessary??

@@ -1,6 +1,7 @@
-﻿@using TrendyShop.Models
+﻿@using TrendyShop.ViewModels
 
-@model IEnumerable<Add>
+@*@model IEnumerable<Add>*@
+@model AddIndexViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +25,7 @@
 
 <body>
 
+
     <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
@@ -36,11 +38,11 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Artículos
+                            Anuncios
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                             <a class="dropdown-item" href="/Add/NewAdd">Anunciar</a>
-                            <a class="dropdown-item" href="/Home/Articles">Lista de Artículos</a>
+                            <a class="dropdown-item" href="/Add">Lista de Anuncios</a>
                         </div>
                     </li>
 
@@ -49,8 +51,8 @@
                             Subasta
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/NewAuction">Nueva Subasta</a>
-                            <a class="dropdown-item" href="/Home/Auctions">Lista de Subastas</a>
+                            <a class="dropdown-item" href="/Auction/NewAuction">Nueva Subasta</a>
+                            <a class="dropdown-item" href="/Auction">Lista de Subastas</a>
                         </div>
                     </li>
 
@@ -66,7 +68,7 @@
                             Usuario
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/Login">Entrar</a>
+                            <a class="dropdown-item" href="/User/Login">Entrar</a>
                             <a class="dropdown-item" href="/Home/Register">Registrar</a>
                         </div>
                     </li>
@@ -75,7 +77,6 @@
             </div>
         </div>
     </nav>
-
     <!-- Page Content -->
     <div class="container">
         <!-- Page Heading/Breadcrumbs -->
@@ -105,10 +106,18 @@
             <div class="col-lg-3 mb-4">
                 <h3>Filtrar por:</h3>
                 <div class="list-group">
-                    <a href="" class="list-group-item">Tipo</a>
+                    @*<a href="" class="list-group-item">Tipo</a>*@
                     <a href="" class="list-group-item">Precio</a>
                     <a href="" class="list-group-item">Categoría</a>
+                    @foreach (Category cat in Model.Categories)
+                    {
+                        @Html.ActionLink(cat.Name, "Index", "Add", new { categoryId = cat.CategoryId }, new { @class = "list-group-item" });
+
+                    }
                     <a href="" class="list-group-item">Condición</a>
+                    @Html.ActionLink("Nuevo", "Index", "Add", new { isNew = "true" }, new { @class = "list-group-item" })
+                    @Html.ActionLink("De Uso", "Index", "Add", new { isNew = "false" }, new { @class = "list-group-item" })
+                    
                 </div>
             </div>
 
@@ -116,7 +125,7 @@
                 <h2>Lista de Artículos</h2>
 
                 <div class="row">
-                    @foreach (Add a in Model)
+                    @foreach (Add a in Model.Adds)
                     {
                         <div class="col-lg-12 mb-4">
                             <div class="card h-100">
@@ -132,7 +141,7 @@
                                         </div>
                                         <div class="col-lg-1">
                                             @*<a href="/Home/Article" class="btn btn-primary">Más</a>*@
-                                            @Html.ActionLink("Mas", "Details", "Add", new { id = a.ArticleId}, null)
+                                            @Html.ActionLink("Mas", "Details", "Add", new { id = a.ArticleId }, null)
                                         </div>
                                     </div>
                                 </div>

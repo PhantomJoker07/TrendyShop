@@ -13,6 +13,7 @@ namespace TrendyShop.ViewModels
 
         public Add Add { get; set; }
 
+        [AvailableAmount]
         [Range(1,int.MaxValue, ErrorMessage ="No es posible realizar una compra tan grande")]
         [Display(Name = "Número de artículos a comprar")]
         [Required(ErrorMessage ="Por favor especifique el número de artículos que desea adquirir")]

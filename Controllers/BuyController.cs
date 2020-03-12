@@ -40,7 +40,7 @@ namespace TrendyShop.Controllers
         [HttpPost]//this is required so no get request will modify the database
         public IActionResult EffectBuy(int aid, int uid, int card, int amountToBuy)
         {
-            var add = context.Adds.Single(a => a.ArticleId == aid && a.UserId == uid);
+            var add = context.Adds.Include(a => a.Article).Single(a => a.ArticleId == aid && a.UserId == uid);
 
             if (!ModelState.IsValid)
             {
@@ -58,6 +58,11 @@ namespace TrendyShop.Controllers
                 //mandar error
             }
             add.Amount -= amountToBuy;
+            if(add.Amount == 0)
+            {
+                context.Articles.Remove(add.Article);
+                context.Remove(add);
+            }
 
             context.SaveChanges();
 

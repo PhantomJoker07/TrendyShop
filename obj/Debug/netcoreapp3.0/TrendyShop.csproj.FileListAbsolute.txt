@@ -478,6 +478,6 @@ C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Raz
 C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\Index.cshtml.g.cs
 C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\Login.cshtml.g.cs
 C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\Buy.cshtml.g.cs
-C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\EditAdd.cshtml.g.cs
 C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\NewAdd2.cshtml.g.cs
 C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\NewAdd.cshtml.g.cs
+C:\Users\Gabriela\source\repos\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\Edit.cshtml.g.cs

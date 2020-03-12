@@ -12,10 +12,11 @@ namespace TrendyShop.Models
         [Key]
         public int ArticleId { get; set; }	//primary key
 
-        [Display(Name = "Artículo a ofertar")]
+        [Required, StringLength(255), Display(Name = "Artículo a ofertar")]
         public string Name { get; set; }
 
         [Display(Name = "Categoría")]
+        [Required(ErrorMessage ="Por favor seleccione una categoría para su artículo")]
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
@@ -25,12 +26,13 @@ namespace TrendyShop.Models
         [Display(Name = "Marca")]
         public string Brand { get; set; }
 
-        [Display(Name = "Precio")]
+        [Required, Display(Name = "Precio")]
         public double Price { get; set; }
 
         //photos not implemeted yet!!!
 
         [Display(Name = "Descripción del artículo")]
+        [StringLength(1024)]
         public string Description { get; set; }
 
         [Display(Name = "Nuevo")]

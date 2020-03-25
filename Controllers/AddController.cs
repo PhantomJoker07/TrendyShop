@@ -92,7 +92,6 @@ namespace TrendyShop.Controllers
                 }; 
                 return View("NewAdd", newViewModel);
             }
-
             context.Adds.Add(viewModel.Add);//this already updates User and Article
             context.SaveChanges();
 

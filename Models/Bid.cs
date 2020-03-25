@@ -9,7 +9,7 @@ namespace TrendyShop.Models
     {
         string ci; //references to User.ci
        
-        DateTime time;
+        TimeSpan time;
         
         float amount;
     }

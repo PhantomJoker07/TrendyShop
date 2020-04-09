@@ -15,12 +15,12 @@ namespace TrendyShop.Models
         
         public bool IsNew { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("UserId"), Column(Order = 0)]
         public User User { get; set; }
 
-        public int ArticleId { get; set; }
+        public string ArticleId { get; set; }
 
         [Key, ForeignKey("ArticleId"), Column(Order = 1)]
         public Article Article { get; set; }

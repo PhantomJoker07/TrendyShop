@@ -48,7 +48,7 @@ namespace TrendyShop.Controllers
             return View(vm);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(string id)
         {
             var auction = context.Auctions.Find(id);
 
@@ -57,8 +57,8 @@ namespace TrendyShop.Controllers
 
             var result = new AuctionViewModel
             {
-                UserName = auction.User.Name,
-                UserId = auction.User.UserId,
+                UserName = auction.User.UserName,
+                UserId = auction.User.Id,
                 Duration = auction.Duration,
                 AuctionDescription = auction.Article.Description,  
                 Price = auction.Article.Price
@@ -98,7 +98,7 @@ namespace TrendyShop.Controllers
         }
 
 
-        public ActionResult Cancel(int aid, int uid)
+        public ActionResult Cancel(string aid, string uid)
         {
             var auction = context.Auctions.Include(a => a.Article).Include(a => a.User)
                 .Single(a => a.UserId == uid && a.ArticleId == aid);

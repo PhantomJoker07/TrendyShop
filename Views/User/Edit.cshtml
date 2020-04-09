@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+@model TrendyShop.ViewModels.EditAccountViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Trendy Shop (Editar Perfil)</title>
+
+</head>
+
+<body>
+
+    <!-- Page Content -->
+    <div class="container my-4">
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home/Index">Inicio</a>
+            </li>
+            <li class="breadcrumb-item active">Entrar</li>
+        </ol>
+
+        <div class="container">
+            <form asp-controller="User" asp-action="Edit" method="post" name="sentMessage" id="contactForm">
+                <h5 class="text-center">Nombre de usuario:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-5"></div>
+                    <input type="text" asp-for="UserName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Número de teléfono:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-5"></div>
+                    <input type="text" asp-for="PhoneNumber" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su número de teléfono.">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Correo electrónico:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-5"></div>
+                    <input type="text" asp-for="Email" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su dirección de correo.">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Detalles:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-5"></div>
+                    <input type="text" asp-for="Details" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca algunos detalles sobre ud.">
+                    <span asp-validation-for="Details" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Contraseña actual:</h5>
+                <div class="row mb-4">
+                    <div class="col-lg-5"></div>
+                    <input type="password" asp-for="NewPassword" class="col-lg-2 form-control" id="email" required data-validation-required-message="Debe especificar una contraseña.">
+                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Nueva Contraseña:</h5>
+                <div class="row mb-4">
+                    <div class="col-lg-5"></div>
+                    <input type="password" asp-for="NewPassword" class="col-lg-2 form-control" id="email" required data-validation-required-message="Debe especificar una contraseña.">
+                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Confirmar contraseña:</h5>
+                <div class="row mb-4">
+                    <div class="col-lg-5"></div>
+                    <input type="password" asp-for="Confirmation" class="col-lg-2 form-control" id="email" required data-validation-required-message="Debe confirmar su contraseña.">
+                    <span asp-validation-for="Confirmation" class="text-danger"></span>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-4"></div>
+                    <button type="submit" class="bg-dark text-center btn btn-primary col-lg-4">Confirmar</button>
+                    <div asp-validation-summary="All" class="col-lg-4 text-danger"></div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript -->
+    @*<script src="/vendor/jquery/jquery.min.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
+
+</body>
+
+</html>

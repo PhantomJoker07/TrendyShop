@@ -10,7 +10,7 @@ namespace TrendyShop.Models
     public class Article
     {
         [Key]
-        public int ArticleId { get; set; }	//primary key
+        public string ArticleId { get; set; }	//primary key
 
         [Required, StringLength(255), Display(Name = "Artículo a ofertar")]
         public string Name { get; set; }

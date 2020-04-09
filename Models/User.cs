@@ -4,19 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace TrendyShop.Models
 {
-    public class User
+    public class User : IdentityUser
     {   
-        [Key]
-        [Required(ErrorMessage = "Debe especificar su ID")]
-        public int UserId { get; set; }
+        //[Key]
+        //[Required(ErrorMessage = "Debe especificar su ID")]
+        //public string UserId { get; set; }
         
-        [Display(Name ="Nombre de Usuario")]
-        [Required(ErrorMessage = "Debe ingresar su nombre")]
-        [StringLength(255)]
-        public string Name { get; set; }
+        //[Display(Name ="Nombre de Usuario")]
+        //[Required(ErrorMessage = "Debe ingresar su nombre")]
+        //[StringLength(255)]
+        //public string Name { get; set; }
         
         //public string LastName { get; set; }
 
@@ -26,11 +27,11 @@ namespace TrendyShop.Models
 
         [Phone]
         [Display(Name = "Teléfono")]
-        public string PhoneNumber { get; set; }
+        override public string PhoneNumber { get; set; }
 
         [EmailAddress]
         [Display(Name ="Correo")]
-        public string Email { get; set; }
+        override public string Email { get; set; }
 
         public float Rating { get; set; }
 

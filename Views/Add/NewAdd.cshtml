@@ -43,7 +43,7 @@
 
             <h5 class="col-lg-12 custom-checkbox">
                 Nuevo:
-                @Html.CheckBoxFor(a => a.Add.Article.IsNew)
+                (a => a.Add.Article.IsNew)
                 @Html.ValidationMessageFor(a => a.Add.Article.IsNew)
             </h5>
 
@@ -54,8 +54,8 @@
 
             <!-- User information will be later extracted from login not here-->
             <h5 class="col-lg-12">User name:</h5>
-            @Html.TextBoxFor(a => a.Add.User.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.User.Name)
+            @Html.TextBoxFor(a => a.Add.User.UserName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.Add.User.UserName)
 
             <h5 class="col-lg-12">User Phone Number:</h5>
             @Html.TextBoxFor(a => a.Add.User.PhoneNumber, new { @class = "form-control" })

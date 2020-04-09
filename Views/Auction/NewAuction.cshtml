@@ -63,8 +63,8 @@
 
                 <!-- User information will be later extracted from login not here-->
                 <h5 class="col-lg-12">User name:</h5>
-                @Html.TextBoxFor(a => a.Auction.User.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(a => a.Auction.User.Name)
+                @Html.TextBoxFor(a => a.Auction.User.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(a => a.Auction.User.UserName)
 
                 <h5 class="col-lg-12">User Phone Number:</h5>
                 @Html.TextBoxFor(a => a.Auction.User.PhoneNumber, new { @class = "form-control" })

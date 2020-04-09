@@ -1,0 +1,66 @@
+﻿@model User
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="wrapper-main">
+    <!-- full Title -->
+    <div class="full-title">
+        <div class="container">
+            <!-- Page Heading/Breadcrumbs -->
+            <h1 class="mt-4 mb-3"> @Model.UserName </h1>
+            <div class="breadcrumb-main">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="blog-main">
+        <div class="container">
+            <div class="row">
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
+                    <!-- Preview Image -->
+                    <img class="img-fluid rounded" src="~/images/blog-item-01.jpg" alt="" />
+                    <hr>
+
+                    <h1 class="text-center">Información de la cuenta</h1>
+                    <div class="blog-right-side">
+                        <div class="card my-4">
+                            <h5 class="card-header text-center">
+                                Usuario: @Model.UserName
+                            </h5>
+                            <h5 class="card-text my-4">
+                                Nombre Completo: @Model.UserName.
+                            </h5>
+                            <h5 class="card-text my-4">
+                                Email: @Model.Email
+                            </h5>
+                            <h5 class="card-header text-center my-4">
+                                Información
+                            </h5>
+                            <h5 class="card-text">
+                                @Model.Description
+                            </h5>
+                        </div>
+                    </div>
+                    @if (SignInManager.IsSignedIn(User) && User.Identity.Name.Equals(Model.UserName))
+                    {
+                        <div class="blog-right-side">
+                            <div class="my-4">
+                                <a class="card-title btn btn-secondary" asp-action="Edit" asp-controller="User" asp-route-userName="@Model.UserName">Editar</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </div>
+</div>

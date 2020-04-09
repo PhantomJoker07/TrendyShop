@@ -61,8 +61,8 @@ namespace TrendyShop.Controllers
             var result = new AddViewModel
             {
                 Article = add.Article,
-                UserName = add.User.Name,
-                UserId = add.User.UserId,
+                UserName = add.User.UserName,
+                UserId = add.User.Id,
                 Amount = add.Amount,
                 AddDescription = add.Description
             };
@@ -99,7 +99,7 @@ namespace TrendyShop.Controllers
         }
 
         //[HttpPost]
-        public ActionResult Edit(int aid, int uid)
+        public ActionResult Edit(string aid, string uid)
         {
             var add = context.Adds.SingleOrDefault(a => a.ArticleId == aid && a.UserId == uid);
             context.Entry(add).Reference(a => a.Article).Load();
@@ -156,7 +156,7 @@ namespace TrendyShop.Controllers
             return RedirectToAction("Index", "Add");
         }
 
-        public ActionResult Delete(int aid, int uid)
+        public ActionResult Delete(string aid,string uid)
         {
             var add = context.Adds.Include(a => a.Article).Include(a => a.User)
                 .Single(a => a.UserId == uid && a.ArticleId == aid);

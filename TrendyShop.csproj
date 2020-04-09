@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20200307033935_testWithoutUserReferences.Designer.cs" />
     <Compile Remove="Migrations\20200307035523_testWithoutUserReferences3.cs" />
     <Compile Remove="Migrations\20200307035523_testWithoutUserReferences3.Designer.cs" />
+    <Compile Remove="Migrations\20200409181747_IdentityWithStrings.cs" />
+    <Compile Remove="Migrations\20200409181747_IdentityWithStrings.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,7 +14,8 @@ namespace TrendyShop.Data
     {
         public static void Initialize(EFDbContext context)
         {
-            context.Database.Migrate();
+            //context.Database.Migrate();
+            context.Database.EnsureCreated();
         }
     }
 }

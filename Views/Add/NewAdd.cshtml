@@ -1,13 +1,16 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager
 @model TrendyShop.ViewModels.NewAddViewModel
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
 
-<title>NewAdd</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>NewAdd</title>
 </head>
 
 <body>
@@ -43,27 +46,15 @@
 
             <h5 class="col-lg-12 custom-checkbox">
                 Nuevo:
-                (a => a.Add.Article.IsNew)
+                @Html.CheckBoxFor(a => a.Add.Article.IsNew)
                 @Html.ValidationMessageFor(a => a.Add.Article.IsNew)
             </h5>
 
             <h5 class="col-lg-12">Descripción de anuncio:</h5>
             @Html.TextAreaFor(a => a.Add.Description, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.Description)
+            @Html.ValidationMessageFor(a => a.Add.Description)  
 
-
-            <!-- User information will be later extracted from login not here-->
-            <h5 class="col-lg-12">User name:</h5>
-            @Html.TextBoxFor(a => a.Add.User.UserName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.User.UserName)
-
-            <h5 class="col-lg-12">User Phone Number:</h5>
-            @Html.TextBoxFor(a => a.Add.User.PhoneNumber, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.User.PhoneNumber)
-
-            <h5 class="col-lg-12">User Email:</h5>
-            @Html.TextBoxFor(a => a.Add.User.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.User.Email)
+         
 
             <div class="col-lg-11"></div>
             <button type="submit" class="btn btn-primary col-lg-1">Publicar</button>

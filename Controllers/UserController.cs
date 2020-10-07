@@ -39,7 +39,9 @@ namespace TrendyShop.Controllers
                 var user = new User
                 {
                     UserName = model.UserName,
-                   // Name = model.Name,
+                    Alias = model.UserName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
                     Description = model.Details,
@@ -97,11 +99,12 @@ namespace TrendyShop.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string userName)
         {
+            userName = User.Identity.Name;
             var account = await userManager.FindByNameAsync(userName);
             var model = new EditAccountViewModel
             {
-                UserName = account.UserName,
-             //   Name = account.Name,
+                FirstName = account.FirstName,
+                LastName = account.LastName,
                 Email = account.Email,
                 Details = account.Description,
                 PhoneNumber = account.PhoneNumber,
@@ -114,10 +117,11 @@ namespace TrendyShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var account = await userManager.FindByNameAsync(model.UserName);
-
+                var account = await userManager.FindByNameAsync(User.Identity.Name);
+                account.UserName = User.Identity.Name;
                 account.Email = model.Email;
-            //    account.Name = model.Name;
+                account.FirstName = model.FirstName;
+                account.LastName = model.LastName;
                 account.PhoneNumber = model.PhoneNumber;
                 account.Description = model.Details;
 
@@ -158,6 +162,5 @@ namespace TrendyShop.Controllers
             }
             return View(model);
         }
-
     }
 }

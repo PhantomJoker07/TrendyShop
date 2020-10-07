@@ -8,7 +8,7 @@ namespace TrendyShop.ViewModels
 {
     public class HomeViewModel
     {
-        public string AddId { get; set; }
+        public int AddId { get; set; }
 
         public string ArticleName { get; set; }
 

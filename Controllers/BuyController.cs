@@ -23,7 +23,7 @@ namespace TrendyShop.Controllers
             return View();
         }
 
-        public IActionResult Buy(string uid, string aid)
+        public IActionResult Buy(string uid, int aid)
         {
             var add = context.Adds.Include(a => a.Article)
                 .Include(a => a.User)
@@ -38,7 +38,7 @@ namespace TrendyShop.Controllers
         }
 
         [HttpPost]//this is required so no get request will modify the database
-        public IActionResult EffectBuy(string aid, string uid, int card, int amountToBuy)
+        public IActionResult EffectBuy(int aid, string uid, int card, int amountToBuy)
         {
             var add = context.Adds.Include(a => a.Article).Single(a => a.ArticleId == aid && a.UserId == uid);
 

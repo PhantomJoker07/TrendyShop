@@ -9,12 +9,12 @@ namespace TrendyShop.Models
 {
     public class ShoppingList_Article
     {
-        public string ShoppingListId { get; set; }
+        public int ShoppingListId { get; set; }
 
         [Key, ForeignKey("ShoppingListId"), Column(Order = 0)]
         public ShoppingList ShoppingList { get; set; }
 
-        public string ArticleId { get; set; }
+        public int ArticleId { get; set; }
 
         [Key, ForeignKey("ArticleId"), Column(Order = 1)]
         public Article Article { get; set; }

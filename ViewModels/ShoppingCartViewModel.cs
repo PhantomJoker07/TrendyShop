@@ -7,11 +7,11 @@ using TrendyShop.ViewModels;
 
 namespace TrendyShop.ViewModels
 {
-    public class ShoppingCartViewModel
+    public class ShoppingCartViewModel:HomeViewModel
     {
 
-        public string Id { get; set; }
-        public string ShoppingListId { get; set; }
+        public int Id { get; set; }
+        public int ShoppingListId { get; set; }
 
         public IEnumerable<ShoppingListViewModel> ShoppingList { get; set; }
 

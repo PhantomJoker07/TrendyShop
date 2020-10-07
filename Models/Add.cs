@@ -1,18 +1,19 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace TrendyShop.Models
 {
     public class Add
     {
-        public string UserId { get; set; }
+       public string UserId { get; set; }
 
-        [ForeignKey("UserId"),Column(Order = 0)]
+        [ForeignKey("UserId"),Column(Order = 0)]  //previously UserId
         public User User { get; set; }
 
-        public string ArticleId { get; set; }
+        public int ArticleId { get; set; }
 
         [Key,ForeignKey("ArticleId"), Column(Order = 1)]
         public Article Article { get; set; }

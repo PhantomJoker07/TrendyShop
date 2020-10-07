@@ -16,6 +16,26 @@ namespace TrendyShop.Data
         {
             //context.Database.Migrate();
             context.Database.EnsureCreated();
+            Fill_Categories(context);
+        }
+
+        public static void Fill_Categories (EFDbContext context)
+        {
+            Category[] categories =
+            {
+                new Category { Name = "Unknown"},
+                new Category { Name = "Laptop" },
+                new Category { Name = "Celular" },
+                new Category { Name = "PC de escritorio" },
+                new Category { Name = "Componente" },
+            };
+
+
+            if (!context.Categories.Any())
+            {
+                foreach (var cat in categories) context.Categories.Add(cat);
+                context.SaveChanges();
+            }
         }
     }
 }

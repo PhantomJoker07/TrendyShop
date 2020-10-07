@@ -18,12 +18,19 @@ namespace TrendyShop.Models
         //[Required(ErrorMessage = "Debe ingresar su nombre")]
         //[StringLength(255)]
         //public string Name { get; set; }
-        
-        //public string LastName { get; set; }
+        public string Alias { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+        //primary key is userName knowns as name
 
         public string Description { get; set; }
         
-        public string Card { get; set; }//Required? Lists of cards?
+        public string Card { get; set; } //Required? Lists of cards?
+
+       // public string FirstName { get; set; }  
+       // public string LastName { get; set; }
 
         [Phone]
         [Display(Name = "Teléfono")]

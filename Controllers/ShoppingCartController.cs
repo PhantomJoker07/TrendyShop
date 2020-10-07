@@ -37,7 +37,7 @@ namespace TrendyShop.Controllers
 
 
             List<ShoppingListViewModel> CartItems = new List<ShoppingListViewModel>();
-            string sl = "";
+            int sl = 0;
 
 
             foreach (var item in cartArt)
@@ -78,7 +78,7 @@ namespace TrendyShop.Controllers
 
 
 
-        public IActionResult AddToShoppCart(string uid, string aid)
+        public IActionResult AddToShoppCart(string uid, int aid)
         {
             var add = context.Adds.Include(a => a.Article)
                 .Include(a => a.User)
@@ -94,7 +94,7 @@ namespace TrendyShop.Controllers
 
 
 
-        public IActionResult AddToCart(string aid, string uid, int amountToAdd)
+        public IActionResult AddToCart(int aid, string uid, int amountToAdd)
         {
             var add = context.Adds.Include(a => a.Article).Include(a => a.User).Single(a => a.ArticleId == aid && a.UserId == uid);
 
@@ -231,7 +231,7 @@ namespace TrendyShop.Controllers
 
 
 
-        public IActionResult DeleteArticle(string slid, string aid)
+        public IActionResult DeleteArticle(int slid, int aid)
         {
             //Eliminarlo de la tabla Shplarticle
             var art = context.ShoppingList_Articles.Single(a => (a.ShoppingListId == slid && a.ArticleId == aid));
@@ -295,7 +295,7 @@ namespace TrendyShop.Controllers
             return RedirectToAction("Index", "ShoppingCart");
         }
 
-        public IActionResult Details(string sid)
+        public IActionResult Details(int sid)
         {
             var sl = context.ShoppingLists.Find(sid);
 

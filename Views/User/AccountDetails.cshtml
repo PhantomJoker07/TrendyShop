@@ -9,8 +9,9 @@
     <div class="full-title">
         <div class="container">
             <!-- Page Heading/Breadcrumbs -->
-            <h1 class="mt-4 mb-3"> @Model.UserName </h1>
+            <h1 class="mt-4 mb-3"> @Model.Alias </h1>
             <div class="breadcrumb-main">
+     
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                     </li>
@@ -32,16 +33,16 @@
                     <div class="blog-right-side">
                         <div class="card my-4">
                             <h5 class="card-header text-center">
-                                Usuario: @Model.UserName
+                                Detalles:
                             </h5>
                             <h5 class="card-text my-4">
-                                Nombre Completo: @Model.UserName.
+                                Nombre Completo: @Model.FirstName @Model.LastName.
                             </h5>
                             <h5 class="card-text my-4">
                                 Email: @Model.Email
                             </h5>
                             <h5 class="card-header text-center my-4">
-                                Información
+                                Información adicional
                             </h5>
                             <h5 class="card-text">
                                 @Model.Description

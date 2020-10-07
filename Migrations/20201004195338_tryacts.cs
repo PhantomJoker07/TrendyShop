@@ -2,7 +2,7 @@
 
 namespace TrendyShop.Migrations
 {
-    public partial class BuyImplemented : Migration
+    public partial class tryacts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

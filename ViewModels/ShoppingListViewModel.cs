@@ -8,9 +8,9 @@ namespace TrendyShop.ViewModels
 {
     public class ShoppingListViewModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
-        public string ArticleId { get; set; }
+        public int ArticleId { get; set; }
         public Article Article { get; set; }
         public int Amount { get; set; }
         public int Price { get; set; }

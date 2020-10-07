@@ -42,6 +42,20 @@
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
 
+                <h5 class="text-center">Nombre:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-5"></div>
+                    <input type="text" asp-for="FirstName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Apellidos:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-5"></div>
+                    <input type="text" asp-for="LastName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
                 <h5 class="text-center">Número de teléfono:</h5>
                 <div class="row text-center">
                     <div class="col-lg-5"></div>

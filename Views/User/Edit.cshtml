@@ -31,11 +31,18 @@
 
         <div class="container">
             <form asp-controller="User" asp-action="Edit" method="post" name="sentMessage" id="contactForm">
-                <h5 class="text-center">Nombre de usuario:</h5>
+                <h5 class="text-center">Nombre:</h5>
                 <div class="row text-center">
                     <div class="col-lg-5"></div>
-                    <input type="text" asp-for="UserName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
-                    <span asp-validation-for="UserName" class="text-danger"></span>
+                    <input type="text" asp-for="FirstName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-center">Apellido:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-5"></div>
+                    <input type="text" asp-for="LastName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
 
                 <h5 class="text-center">Número de teléfono:</h5>
@@ -62,21 +69,21 @@
                 <h5 class="text-center">Contraseña actual:</h5>
                 <div class="row mb-4">
                     <div class="col-lg-5"></div>
-                    <input type="password" asp-for="NewPassword" class="col-lg-2 form-control" id="email" required data-validation-required-message="Debe especificar una contraseña.">
-                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                    <input type="password" asp-for="OldPassword" class="col-lg-2 form-control" id="submit" required data-validation-required-message="Debe especificar una contraseña.">
+                    <span asp-validation-for="OldPassword" class="text-danger"></span>
                 </div>
 
                 <h5 class="text-center">Nueva Contraseña:</h5>
                 <div class="row mb-4">
                     <div class="col-lg-5"></div>
-                    <input type="password" asp-for="NewPassword" class="col-lg-2 form-control" id="email" required data-validation-required-message="Debe especificar una contraseña.">
+                    <input type="password" asp-for="NewPassword" class="col-lg-2 form-control" id="submit" required data-validation-required-message="Debe especificar una contraseña.">
                     <span asp-validation-for="NewPassword" class="text-danger"></span>
                 </div>
 
                 <h5 class="text-center">Confirmar contraseña:</h5>
                 <div class="row mb-4">
                     <div class="col-lg-5"></div>
-                    <input type="password" asp-for="Confirmation" class="col-lg-2 form-control" id="email" required data-validation-required-message="Debe confirmar su contraseña.">
+                    <input type="password" asp-for="Confirmation" class="col-lg-2 form-control" id="submit" required data-validation-required-message="Debe confirmar su contraseña.">
                     <span asp-validation-for="Confirmation" class="text-danger"></span>
                 </div>
 

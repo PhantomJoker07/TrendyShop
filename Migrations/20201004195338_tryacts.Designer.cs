@@ -10,8 +10,8 @@ using TrendyShop.Data;
 namespace TrendyShop.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20200409213159_AddedIdentity")]
-    partial class AddedIdentity
+    [Migration("20201004195338_tryacts")]
+    partial class tryacts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,8 +154,8 @@ namespace TrendyShop.Migrations
 
             modelBuilder.Entity("TrendyShop.Models.Add", b =>
                 {
-                    b.Property<string>("ArticleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -178,8 +178,10 @@ namespace TrendyShop.Migrations
 
             modelBuilder.Entity("TrendyShop.Models.Article", b =>
                 {
-                    b.Property<string>("ArticleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ArticleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
@@ -216,8 +218,8 @@ namespace TrendyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ArticleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
@@ -258,8 +260,8 @@ namespace TrendyShop.Migrations
 
             modelBuilder.Entity("TrendyShop.Models.ShoppingCar", b =>
                 {
-                    b.Property<string>("ShoppingListId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ShoppingListId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -273,8 +275,10 @@ namespace TrendyShop.Migrations
 
             modelBuilder.Entity("TrendyShop.Models.ShoppingList", b =>
                 {
-                    b.Property<string>("ShoppingListId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ShoppingListId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("IsMainList")
                         .HasColumnType("bit");
@@ -292,11 +296,11 @@ namespace TrendyShop.Migrations
 
             modelBuilder.Entity("TrendyShop.Models.ShoppingList_Article", b =>
                 {
-                    b.Property<string>("ShoppingListId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ShoppingListId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ArticleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -462,7 +466,9 @@ namespace TrendyShop.Migrations
                 {
                     b.HasOne("TrendyShop.Models.Article", "Article")
                         .WithMany()
-                        .HasForeignKey("ArticleId");
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TrendyShop.Models.User", "User")
                         .WithMany()

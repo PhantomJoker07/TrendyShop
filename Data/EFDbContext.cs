@@ -12,8 +12,6 @@ namespace TrendyShop.Data
     {
         public DbSet<Article> Articles { get; set; }
 
-      //  public DbSet<User> Users { get; set; }
-
         public DbSet<ShoppingCar> ShoppingCars { get; set; }
 
         public DbSet<ShoppingList_Article> ShoppingList_Articles{ get; set; }
@@ -34,6 +32,10 @@ namespace TrendyShop.Data
             modelBuilder.Entity<Add>().HasKey(c => c.ArticleId);
             modelBuilder.Entity<ShoppingList_Article>().HasKey(sla => new { sla.ShoppingListId, sla.ArticleId });
             modelBuilder.Entity<ShoppingCar>().HasKey(sc => sc.ShoppingListId);
-        }
+            modelBuilder.Entity<Auction>().HasKey(a => a.ArticleId);
+
+            //modelBuilder.Entity<User>().HasKey(u => u.UserName);
+        }    
     }
 }
+    

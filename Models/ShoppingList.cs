@@ -10,7 +10,7 @@ namespace TrendyShop.Models
     public class ShoppingList
     {
         [Key]
-        public string ShoppingListId { get; set; }
+        public int ShoppingListId { get; set; }
 
         public string Name { get; set; }
 

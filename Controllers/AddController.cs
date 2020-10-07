@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using TrendyShop.Data;
 using TrendyShop.ViewModels;
 using TrendyShop.Models;
+using TrendyShop.Controllers;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TrendyShop.Controllers
 {
@@ -61,10 +64,10 @@ namespace TrendyShop.Controllers
             var result = new AddViewModel
             {
                 Article = add.Article,
-                UserName = add.User.UserName,
-                UserId = add.User.Id,
+                UserName = add.User.Alias,
                 Amount = add.Amount,
-                AddDescription = add.Description
+                AddDescription = add.Description,
+                User = add.User
             };
 
             return View(result);
@@ -87,19 +90,24 @@ namespace TrendyShop.Controllers
             {
                 NewAddViewModel newViewModel = new NewAddViewModel
                 {
-                    Add = viewModel.Add,
+                    Add = viewModel.Add, 
                     Categories = context.Categories.ToList()
-                }; 
+                };
+                newViewModel.Add.User = GetUser(User.Identity.Name); //returns null if user not found
+                newViewModel.Add.UserId = User.Identity.Name;
                 return View("NewAdd", newViewModel);
             }
+            viewModel.Add.User = GetUser(User.Identity.Name); //returns null if user not found
+            viewModel.Add.UserId = User.Identity.Name;
+
             context.Adds.Add(viewModel.Add);//this already updates User and Article
             context.SaveChanges();
 
             return RedirectToAction("Index", "Add");
         }
 
-        //[HttpPost]
-        public ActionResult Edit(string aid, string uid)
+        //[HttpPost]    
+        public ActionResult Edit(int aid, string uid)
         {
             var add = context.Adds.SingleOrDefault(a => a.ArticleId == aid && a.UserId == uid);
             context.Entry(add).Reference(a => a.Article).Load();
@@ -156,7 +164,7 @@ namespace TrendyShop.Controllers
             return RedirectToAction("Index", "Add");
         }
 
-        public ActionResult Delete(string aid,string uid)
+        public ActionResult Delete(int aid,string uid)
         {
             var add = context.Adds.Include(a => a.Article).Include(a => a.User)
                 .Single(a => a.UserId == uid && a.ArticleId == aid);
@@ -167,5 +175,19 @@ namespace TrendyShop.Controllers
 
             return RedirectToAction("Index", "Add");
         }
+
+        public User GetUser(string UserId)
+        {
+            var users = context.Users;
+            foreach (var u in users)
+            {
+                if (string.Compare(u.UserName, UserId) == 0)
+                {
+                    return u;
+                }
+            }
+            throw new Exception("User " + UserId + " not found");
+        }
+
     }
 }

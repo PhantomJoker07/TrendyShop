@@ -61,21 +61,8 @@
                 @Html.ValidationMessageFor(a => a.Auction.Duration)
 
 
-                <!-- User information will be later extracted from login not here-->
-                <h5 class="col-lg-12">User name:</h5>
-                @Html.TextBoxFor(a => a.Auction.User.UserName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(a => a.Auction.User.UserName)
-
-                <h5 class="col-lg-12">User Phone Number:</h5>
-                @Html.TextBoxFor(a => a.Auction.User.PhoneNumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(a => a.Auction.User.PhoneNumber)
-
-                <h5 class="col-lg-12">User Email:</h5>
-                @Html.TextBoxFor(a => a.Auction.User.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(a => a.Auction.User.Email)
-
                 <div class="col-lg-11"></div>
-                <button type="submit" class="btn btn-primary col-lg-1">Publicar</button>
+                <button type="submit" class="btn btn-primary col-lg-1">Publicar </button>
             </div>
         </form>
         <!-- /.row -->

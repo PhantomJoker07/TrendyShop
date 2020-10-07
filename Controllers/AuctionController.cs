@@ -8,6 +8,7 @@ using TrendyShop.ViewModels;
 using TrendyShop.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
+using System.Diagnostics;
 
 namespace TrendyShop.Controllers
 {
@@ -19,7 +20,6 @@ namespace TrendyShop.Controllers
         {
             context = ctx;
         }
-
         public IActionResult Index(string isNew, int categoryId = -1, int lprice = -1, int uprice = int.MaxValue)
         {
             var aucs = context.Auctions.Include(a => a.User).Include(a => a.Article).ToList();
@@ -48,7 +48,7 @@ namespace TrendyShop.Controllers
             return View(vm);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(int id)
         {
             var auction = context.Auctions.Find(id);
 
@@ -58,12 +58,25 @@ namespace TrendyShop.Controllers
             var result = new AuctionViewModel
             {
                 UserName = auction.User.UserName,
-                UserId = auction.User.Id,
+                User = GetUser(auction.User.UserName),
                 Duration = auction.Duration,
+                Start = auction.Start,
+                Article = auction.Article,
+                Name = auction.Title,
                 AuctionDescription = auction.Article.Description,  
-                Price = auction.Article.Price
+                Price = auction.CurrentPrice
             };
 
+            return View(result);
+        }
+
+        public IActionResult Join(int id)
+        {
+            //TO BE DEVELOPED
+            var result = new AuctionViewModel
+            {
+
+            };
             return View(result);
         }
 
@@ -81,6 +94,7 @@ namespace TrendyShop.Controllers
 
         public IActionResult CreateNewAuction(NewAuctionViewModel viewModel)
         {
+            
             if (!ModelState.IsValid)
             {
                 NewAuctionViewModel newViewModel = new NewAuctionViewModel
@@ -88,8 +102,19 @@ namespace TrendyShop.Controllers
                     Auction = viewModel.Auction,
                     Categories = context.Categories.ToList()
                 };
+
+                newViewModel.Auction.User = GetUser(User.Identity.Name); //returns null if user not found
+                newViewModel.Auction.UserId = User.Identity.Name;
+                newViewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
+                viewModel.Auction.Start = DateTime.Now;
+
                 return View("NewAuction", newViewModel);
             }
+
+            viewModel.Auction.User = GetUser(User.Identity.Name); //returns null if user not found
+            viewModel.Auction.UserId = User.Identity.Name;
+            viewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
+            viewModel.Auction.Start = DateTime.Now;
 
             context.Auctions.Add(viewModel.Auction);//this already updates User and Article
             context.SaveChanges();
@@ -98,7 +123,7 @@ namespace TrendyShop.Controllers
         }
 
 
-        public ActionResult Cancel(string aid, string uid)
+        public ActionResult Cancel(int aid, string uid)
         {
             var auction = context.Auctions.Include(a => a.Article).Include(a => a.User)
                 .Single(a => a.UserId == uid && a.ArticleId == aid);
@@ -108,6 +133,19 @@ namespace TrendyShop.Controllers
             context.SaveChanges();
 
             return RedirectToAction("Index", "Auction");
+        }
+
+        public User GetUser(string UserId)
+        {
+            var users = context.Users;
+            foreach (var u in users)
+            {
+                if (string.Compare(u.UserName, UserId) == 0)
+                {
+                    return u;
+                }
+            }
+            throw new Exception("User " + UserId + " not found");
         }
     }
 }

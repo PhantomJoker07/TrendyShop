@@ -1,34 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj": {}
+    "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\TrendyShop\\TrendyShop.csproj": {}
   },
   "projects": {
-    "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj": {
+    "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\TrendyShop\\TrendyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj",
+        "projectUniqueName": "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\TrendyShop\\TrendyShop.csproj",
         "projectName": "TrendyShop",
-        "projectPath": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj",
-        "packagesPath": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\packages",
-        "outputPath": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\obj\\",
+        "projectPath": "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\TrendyShop\\TrendyShop.csproj",
+        "packagesPath": "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\packages",
+        "outputPath": "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\TrendyShop\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\NuGet.Config",
-          "C:\\Users\\Gabriel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\NuGet.Config",
+          "C:\\Users\\amali\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
         ],
         "sources": {
-          "C:\\+Lightning Storage+\\NUGETSAVES": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "E:\\Cibernetics Core\\3er Año\\+IS+\\packages": {},
-          "E:\\Programs\\NuGet\\packages": {}
+          "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\Estadisticas_De_Futbol\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.0": {
@@ -87,16 +83,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.0.3, 3.0.3]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -105,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

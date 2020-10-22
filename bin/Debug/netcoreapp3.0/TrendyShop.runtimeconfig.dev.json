@@ -1,9 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Gabriel\\.dotnet\\store\\|arch|\\|tfm|",
-      "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\packages",
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      "C:\\Users\\amali\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\CompraVenta\\packages"
     ]
   }
 }

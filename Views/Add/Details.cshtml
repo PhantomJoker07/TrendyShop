@@ -72,12 +72,51 @@
                 @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.UserName }, null)
 
             </div>
+
+
+            <div class="col-lg-1 card-footer my-4">
+
+                <button @*class="ml-1"*@ type="button" data-toggle="modal" data-target="#nimodal">Carrito</button>
+            </div>
+
+
             @*incompleto*@
 
         </div>
         <!-- /.row -->
 
     </div>
+
+    <div class="modal fade" id="nimodal" tabindex="-1" role="dialog" aria-labelledby="AddToCartModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddToCartModalLongTitle">Cantidad:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("AddToCart", "ShoppingCart", new { aid = @Model.Article.ArticleId, uid = @Model.UserName }))
+                    {
+                        <label for="amountToBuy"></label>
+                        <input type="text" id="amountToBuy" name="amountToBuy" />
+
+                        <input type="submit" value="Agregar" />
+                    }
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="red-button" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- /.container -->
 
 </body>

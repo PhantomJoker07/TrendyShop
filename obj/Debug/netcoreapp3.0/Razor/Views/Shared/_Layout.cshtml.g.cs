@@ -365,13 +365,13 @@ using Microsoft.AspNetCore.Identity;
 #line default
 #line hidden
 #nullable disable
-                WriteLiteral(@"                            <a class=""nav-link dropdown-toggle"" href=""#"" id=""navbarDropdownPortfolio"" data-toggle=""dropdown"" aria-haspopup=""true"" aria-expanded=""false"">
-                                Usuario
-                            </a>
-                            <div class=""dropdown-menu dropdown-menu-right"" aria-labelledby=""navbarDropdownPortfolio"">
-                                <a class=""dropdown-item"" href=""/User/Login"">Entrar</a>
-                                <a class=""dropdown-item"" href=""/User/Register"">Registrar</a>
-                            </div>
+                WriteLiteral(@"                        <a class=""nav-link dropdown-toggle"" href=""#"" id=""navbarDropdownPortfolio"" data-toggle=""dropdown"" aria-haspopup=""true"" aria-expanded=""false"">
+                            Usuario
+                        </a>
+                        <div class=""dropdown-menu dropdown-menu-right"" aria-labelledby=""navbarDropdownPortfolio"">
+                            <a class=""dropdown-item"" href=""/User/Login"">Entrar</a>
+                            <a class=""dropdown-item"" href=""/User/Register"">Registrar</a>
+                        </div>
 ");
 #nullable restore
 #line 106 "C:\Users\amali\OneDrive\Documents\Visual Studio 2019\projects\CompraVenta\TrendyShop\Views\Shared\_Layout.cshtml"

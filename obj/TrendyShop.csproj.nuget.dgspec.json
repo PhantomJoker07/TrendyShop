@@ -23,7 +23,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+<<<<<<< HEAD
           "C:\\Users\\amali\\OneDrive\\Documents\\Visual Studio 2019\\projects\\Estadisticas_De_Futbol\\packages": {},
+=======
+>>>>>>> 7d655f375487f5a072076783822d38fed6ac67ee
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

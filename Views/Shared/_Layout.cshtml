@@ -96,16 +96,35 @@
                         }
                         else
                         {
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Usuario
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                                <a class="dropdown-item" href="/User/Login">Entrar</a>
-                                <a class="dropdown-item" href="/User/Register">Registrar</a>
+                        <li class="nav-item dropdown">
+                            <a class="btn btn-dark" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name<i class="fas fa-sort-down"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                                <a class="dropdown-item" asp-action="AccountDetails" asp-controller="User" asp-route-userName="@User.Identity.Name">Perfil</a>
+                                <form method="post">
+                                    <button type="submit" class="dropdown-item" asp-action="Logout" asp-controller="User">Salir</button>
+                                </form>
                             </div>
+<<<<<<< HEAD
                         }
                     </li>
                 </ul>
+=======
+                        </li>
+                    }
+                    else
+                    {
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Usuario
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="/User/Login">Entrar</a>
+                            <a class="dropdown-item" href="/User/Register">Registrar</a>
+                        </div>
+                    }
+
+                    </ul>
+                </div>
+>>>>>>> 7d655f375487f5a072076783822d38fed6ac67ee
             </div>
         </div>
     </nav>

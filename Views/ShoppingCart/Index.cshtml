@@ -1,0 +1,132 @@
+﻿
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ShoppingCart";
+}
+
+@model TrendyShop.ViewModels.ShoppingCartViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+
+
+
+    <style>
+
+
+        table {
+            width: 75%;
+            background-color: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-4 mx-auto">
+                <div class="card ">
+                    <h2 class="card-header">
+                        Lista de compra
+                    </h2>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Marca</th>
+                                <th>Cantidad</th>
+                                <th>Precio Total</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                @foreach (var art in Model.ShoppingList)
+                                {
+                                <tr>
+                                    <td>@art.Article.Name</td>
+                                    <td>@art.Article.Brand</td>
+                                    <td>@art.Amount</td>
+                                    @*<td>
+                                            <form asp-action="UpdateQuantity" asp-controller="ShoppingCart">
+                                                <input type="hidden" id="slart" name="slart" value="@art." />
+                                                <input type="number" name="quantity" value="@art.Amount" />
+
+                                                <input type="submit" />
+                                            </form>
+                                        </td>*@
+                                    <td>@art.TotalPrice</td>
+                                    <td>@Html.ActionLink("Eliminar", "DeleteArticle", "ShoppingCart", new { slid = @Model.ShoppingListId, aid = @art.ArticleId }, new { @class = "fas fa-trash-alt" })</td>
+
+                                </tr>
+
+                            }
+
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            @using (Html.BeginForm("SaveShoppingList", "ShoppingCart"))
+                            {
+                                @Html.HiddenFor(model => model.ShoppingListId)
+
+
+                                //@Html.LabelFor(model => model.ShoppListName)
+                                @Html.TextBoxFor(model => model.ShoppListName, new { @class = "form-control" })
+                                <br />
+                                <button type="submit" class="btn btn-dark">Salvar Lista</button>
+                                <br />
+                                @Html.ActionLink("Listas de Compra", "SavedLists", "ShoppingCart")
+
+
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-4 mx-auto">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h5>Pago:</h5>
+                            <br />
+                            Total: @Model.Total
+                        </div>
+                        <div class="card-body">
+                            @using (Html.BeginForm("BuyCart", "ShoppingCart"))
+                            {
+
+                                <div class="form-group">
+                                    <label for="CreditCardName">Propietario de la Tarjeta</label>
+                                    <input type="text" step="any" name="CreditCardName" />
+                                    <br />
+                                    <br />
+                                    <label for="CreditCardNumber">Número de Tarjeta de crédito</label>
+                                    <input type="text" step="any" name="CreditCardNumber" />
+
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-dark">Comprar</button>
+                                </div>
+
+                            }
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </body>
+
+</html>

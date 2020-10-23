@@ -8,6 +8,7 @@ using TrendyShop.Data;
 using TrendyShop.ViewModels;
 using TrendyShop.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace TrendyShop.Controllers
 {
@@ -25,21 +26,18 @@ namespace TrendyShop.Controllers
 
         public IActionResult Index()
         {
-
-
-            //Como yo voy a ten
+            var userid = GetUser(User.Identity.Name).Id;
 
             var cartArt = (from a in context.ShoppingCars
                            join b in context.ShoppingLists on a.ShoppingListId equals b.ShoppingListId
                            join c in context.ShoppingList_Articles on b.ShoppingListId equals c.ShoppingListId
-                           where b.IsMainList == true    //&& a.UserId==miUserId
+                           where b.IsMainList == true && a.UserId == userid
                            select new { c.Article, c.Amount, b.ShoppingListId });   //Aqui
 
 
             List<ShoppingListViewModel> CartItems = new List<ShoppingListViewModel>();
             int sl = 0;
-
-
+            float TotalPrice = 0;
             foreach (var item in cartArt)
             {
 
@@ -51,8 +49,7 @@ namespace TrendyShop.Controllers
                     Amount = item.Amount,
                     Price = (int)item.Article.Price * item.Amount
                 });
-
-
+                TotalPrice += (int)item.Article.Price * item.Amount;
             }
 
             if (CartItems.Count == 0)
@@ -62,7 +59,6 @@ namespace TrendyShop.Controllers
                 {
                     context.ShoppingLists.Remove(list);
                     context.SaveChanges();
-
                 }
 
             }
@@ -78,11 +74,14 @@ namespace TrendyShop.Controllers
 
 
 
-        public IActionResult AddToShoppCart(string uid, int aid)
+        public IActionResult AddToShoppCart(int aid, string uid)
         {
+
+
+            var user = GetUser(uid);
             var add = context.Adds.Include(a => a.Article)
                 .Include(a => a.User)
-                .Single(a => a.UserId == uid && a.ArticleId == aid);//just single nor singleOrDefault because this add already exist
+                .Single(a => a.UserId == user.Id && a.ArticleId == aid);//just single nor singleOrDefault because this add already exist
 
             var addViewModel = new AddToSCViewModel
             {
@@ -93,31 +92,36 @@ namespace TrendyShop.Controllers
         }
 
 
-
-        public IActionResult AddToCart(int aid, string uid, int amountToAdd)
+        [HttpPost]
+        public IActionResult AddToCart(int aid, string uid, int amountToBuy)
         {
+
+            if (amountToBuy <= 0)
+                return RedirectToAction("Index", "Add");
+
+
+            uid = GetUser(uid).Id;
             var add = context.Adds.Include(a => a.Article).Include(a => a.User).Single(a => a.ArticleId == aid && a.UserId == uid);
 
-            if (!ModelState.IsValid)
-            {
-                AddToSCViewModel avw = new AddToSCViewModel
-                {
-                    Add = add,
-                    AmountToAdd = amountToAdd,
 
-                };
-                return View("AddToShoppCart", avw);
-            }
 
-            if (add.Amount < amountToAdd)
+            if (add.Amount < amountToBuy)
             {
                 //mandar error
             }
 
 
-            var sl = context.ShoppingLists.SingleOrDefault(s => s.IsMainList == true);
+            //var loggedUserId = GetUser(User.Identity.Name).Id;
 
-            if (sl == null)
+            var mySl = (from sc in context.ShoppingCars
+                        join l in context.ShoppingLists
+                        on sc.ShoppingListId equals l.ShoppingListId
+                        where sc.UserId == GetUser(User.Identity.Name).Id && l.IsMainList == true
+                        select new { l.ShoppingListId }).ToList();
+
+            //var sl = context.ShoppingLists.SingleOrDefault(s => s.IsMainList == true);
+            var sl2 = new ShoppingList();
+            if (mySl.Count() == 0)
             {
                 ShoppingList sl1 = new ShoppingList
                 {
@@ -130,25 +134,38 @@ namespace TrendyShop.Controllers
 
 
                 context.SaveChanges();
+                sl2 = context.ShoppingLists.SingleOrDefault(l => context.ShoppingCars.Any(c => c.ShoppingListId == l.ShoppingListId) == false);
+
+            }
+            else
+            {
+                foreach (var item in mySl)
+                {
+                    sl2 = context.ShoppingLists.Find(item.ShoppingListId);
+                }
             }
 
 
-            var sl2 = context.ShoppingLists.SingleOrDefault(s => s.IsMainList == true);
+            //var sl2 = context.ShoppingLists.SingleOrDefault(s => s.IsMainList == true);
 
 
-            if (context.ShoppingCars.SingleOrDefault(c => (int.Parse(c.UserId) == 1 && c.ShoppingListId == sl2.ShoppingListId)) == null)
+
+
+            if (context.ShoppingCars.SingleOrDefault(c => (c.UserId == GetUser(User.Identity.Name).Id && c.ShoppingListId == sl2.ShoppingListId)) == null)
             {
                 ShoppingCar sc = new ShoppingCar
                 {
+                    UserId = User.Identity.Name,
+                    User = GetUser(User.Identity.Name),
                     ShoppingListId = sl2.ShoppingListId,
-                    ShoppingList = sl2,
-                    UserId = "1",
+                    ShoppingList = sl2
+
                 };
 
                 context.ShoppingCars.Add(sc);
+                context.SaveChanges();
+
             }
-
-
 
 
             ShoppingList_Article sla = new ShoppingList_Article
@@ -157,7 +174,7 @@ namespace TrendyShop.Controllers
                 ShoppingList = sl2,
                 ArticleId = add.ArticleId,
                 Article = add.Article,
-                Amount = amountToAdd
+                Amount = amountToBuy
             };
 
 
@@ -177,16 +194,19 @@ namespace TrendyShop.Controllers
         }
 
 
-        public IActionResult BuyCart()
+        public IActionResult BuyCart(ShoppingCartViewModel shoppingCartViewModel)
         {
-            var carItems = (from a in context.ShoppingCars
-                            join b in context.ShoppingLists on a.ShoppingListId equals b.ShoppingListId
-                            join c in context.ShoppingList_Articles on b.ShoppingListId equals c.ShoppingListId
-                            where b.IsMainList == true
-                            select new { c.Article, c.Amount }).ToList();
 
 
-            foreach (var item in carItems)
+            var userid = GetUser(User.Identity.Name).Id;
+
+            var cartItems = (from a in context.ShoppingCars
+                             join b in context.ShoppingLists on a.ShoppingListId equals b.ShoppingListId
+                             join c in context.ShoppingList_Articles on b.ShoppingListId equals c.ShoppingListId
+                             where b.IsMainList == true && a.UserId == userid
+                             select new { c.Article, c.Amount }).ToList();   //Aqui
+
+            foreach (var item in cartItems)
             {
                 var ad = context.Adds.SingleOrDefault(b => b.ArticleId == item.Article.ArticleId);
                 context.Entry(ad).Reference(a => a.User).Load();
@@ -210,7 +230,21 @@ namespace TrendyShop.Controllers
 
             }
 
-            var sl = context.ShoppingLists.SingleOrDefault(c => c.IsMainList == true);
+            var mySl = (from sc in context.ShoppingCars
+                        join l in context.ShoppingLists
+                        on sc.ShoppingListId equals l.ShoppingListId
+                        where sc.UserId == userid && l.IsMainList == true
+                        select new { l.ShoppingListId }).ToList();
+
+            var sl = new ShoppingList();
+
+
+
+            foreach (var item in mySl)
+            {
+                sl = context.ShoppingLists.Find(item.ShoppingListId);
+            }
+
 
             if (sl != null)
             {
@@ -261,10 +295,12 @@ namespace TrendyShop.Controllers
 
         public IActionResult SavedLists()
         {
-            var saved = (from l in context.ShoppingLists
-                         where l.IsSaved == true
+            var userid = GetUser(User.Identity.Name).Id;
+            var saved = (from sc in context.ShoppingCars
+                         join l in context.ShoppingLists
+                         on sc.ShoppingListId equals l.ShoppingListId
+                         where sc.UserId == userid && l.IsSaved == true
                          select l).ToList();
-
 
             return View(saved);
         }
@@ -272,7 +308,22 @@ namespace TrendyShop.Controllers
 
         public IActionResult LoadShoppingList(int sid)
         {
-            var currentsl = context.ShoppingLists.SingleOrDefault(c => c.IsMainList == true);
+
+            var mySl = (from sc in context.ShoppingCars
+                        join l in context.ShoppingLists
+                        on sc.ShoppingListId equals l.ShoppingListId
+                        where sc.UserId == GetUser(User.Identity.Name).Id && l.IsMainList == true
+                        select new { l.ShoppingListId }).ToList();
+
+            var currentsl = new ShoppingList();
+
+
+            foreach (var item in mySl)
+            {
+                currentsl = context.ShoppingLists.Find(item.ShoppingListId);
+            }
+
+
             if (currentsl != null)
             {
                 currentsl.IsMainList = false;
@@ -326,7 +377,18 @@ namespace TrendyShop.Controllers
 
 
 
-
+        public User GetUser(string UserId)
+        {
+            var users = context.Users;
+            foreach (var u in users)
+            {
+                if (string.Compare(u.UserName, UserId) == 0)
+                {
+                    return u;
+                }
+            }
+            throw new Exception("User " + UserId + " not found");
+        }
 
     }
 }

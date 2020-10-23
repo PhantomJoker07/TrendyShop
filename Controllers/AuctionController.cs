@@ -64,38 +64,20 @@ namespace TrendyShop.Controllers
                 Article = auction.Article,
                 Name = auction.Title,
                 AuctionDescription = auction.Article.Description,  
-                Price = auction.CurrentPrice,
-                Bids = auction.Bids,
+                Price = auction.CurrentPrice
             };
 
             return View(result);
         }
 
-        public IActionResult Bid(AuctionViewModel viewModel)
+        public IActionResult Join(int id)
         {
             //TO BE DEVELOPED
-          //  if (string.Compare(User.Identity.Name,viewModel.User.UserName) != 0 && !viewModel.IsFinished)
+            var result = new AuctionViewModel
             {
-                double amount = viewModel.BidAmount;
 
-                if (amount > viewModel.Price)
-                {
-                    viewModel.Price = amount;
-
-                    Bid nbid = new Bid
-                    {
-                        Amount = amount,
-                        User = GetUser (User.Identity.Name),
-                        Time = viewModel.Duration,
-                    };
-
-                    nbid.UserId = nbid.User.Id;
-                    viewModel.Bids.Add(nbid);
-                }
-
-            }
-
-            return View(viewModel);
+            };
+            return View(result);
         }
 
         public IActionResult NewAuction()
@@ -120,13 +102,11 @@ namespace TrendyShop.Controllers
                     Auction = viewModel.Auction,
                     Categories = context.Categories.ToList()
                 };
+
                 newViewModel.Auction.User = GetUser(User.Identity.Name); //returns null if user not found
                 newViewModel.Auction.UserId = User.Identity.Name;
                 newViewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
-                newViewModel.Auction.Start = DateTime.Now;
-                newViewModel.Auction.IsFinished = false;
-              //  Bid b2 = new Bid { User = GetUser(User.Identity.Name) };
-              //  newViewModel.Auction.Bids.Add(b2);
+                viewModel.Auction.Start = DateTime.Now;
 
                 return View("NewAuction", newViewModel);
             }
@@ -135,9 +115,6 @@ namespace TrendyShop.Controllers
             viewModel.Auction.UserId = User.Identity.Name;
             viewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
             viewModel.Auction.Start = DateTime.Now;
-            viewModel.Auction.IsFinished = false;
-            // Bid b = new Bid { User = GetUser(User.Identity.Name) };
-            //  viewModel.Auction.Bids.Add(b);
 
             context.Auctions.Add(viewModel.Auction);//this already updates User and Article
             context.SaveChanges();

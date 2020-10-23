@@ -41,63 +41,70 @@
                     }
                     else
                     {
-                       <li class="nav-item">
-                           <a class="nav-link" href="/Add">Anuncios</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Add">Anuncios</a>
+                        </li>
                     }
 
                     @if (SignInManager.IsSignedIn(User))
-                     {
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ShoppingCart">Carrito de Compra</a>
+                        </li>
+                    }
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Subasta
-                         </a>
+                            </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                                 <a class="dropdown-item" href="/Auction/NewAuction">Nueva Subasta</a>
                                 <a class="dropdown-item" href="/Auction">Subastas</a>
-                         </div>
-                       </li>
-                     }
-
-                   else
-                   {
-                     <li class="nav-item">
-                        <a class="nav-link" href="/Auction">Subastas</a>
-                     </li>
-                   }
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/About">Acerca de</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/Contact">Contáctanos</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                            <li class="nav-item dropdown">
-                                <a class="btn btn-dark" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name<i class="fas fa-sort-down"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                                    <a class="dropdown-item" asp-action="AccountDetails" asp-controller="User" asp-route-userName="@User.Identity.Name">Perfil</a>
-                                    <form method="post">
-                                        <button type="submit" class="dropdown-item" asp-action="Logout" asp-controller="User">Salir</button>
-                                    </form>
-                                </div>
-                            </li>
-                        }
-                        else
-                        {
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Usuario
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                                <a class="dropdown-item" href="/User/Login">Entrar</a>
-                                <a class="dropdown-item" href="/User/Register">Registrar</a>
                             </div>
-                        }
+                        </li>
+                    }
 
-                        </ul>
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Auction">Subastas</a>
+                        </li>
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/About">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Contact">Contáctanos</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                        <li class="nav-item dropdown">
+                            <a class="btn btn-dark" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name<i class="fas fa-sort-down"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                                <a class="dropdown-item" asp-action="AccountDetails" asp-controller="User" asp-route-userName="@User.Identity.Name">Perfil</a>
+                                <form method="post">
+                                    <button type="submit" class="dropdown-item" asp-action="Logout" asp-controller="User">Salir</button>
+                                </form>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Usuario
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="/User/Login">Entrar</a>
+                            <a class="dropdown-item" href="/User/Register">Registrar</a>
+                        </div>
+                    }
+
+                    </ul>
                 </div>
             </div>
         </nav>

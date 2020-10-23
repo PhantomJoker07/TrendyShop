@@ -29,17 +29,5 @@ namespace TrendyShop.ViewModels
 
         public double Price { get; set; }
 
-        public double BidAmount { get; set; }
-
-        public List<Bid> Bids { get; set; }
-
-
-        // public Auction Auction { get; set; }
-
-        //public AuctionViewModel()
-        //{
-
-        //}
-
     }
 }

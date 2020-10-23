@@ -34,11 +34,6 @@ namespace TrendyShop.Models
 
         public bool IsFinished { get; set; }
 
-        public List<Bid> Bids { get; set; }
-
-        public Auction()
-        {
-            Bids = new List<Bid>();
-        }
+        List<Bid> Bids { get; set; }
     }
 }

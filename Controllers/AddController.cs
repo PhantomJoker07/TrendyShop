@@ -10,16 +10,19 @@ using TrendyShop.Controllers;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace TrendyShop.Controllers
 {
     public class AddController : Controller
     {
         private EFDbContext context;
-
-        public AddController(EFDbContext ctx)
+        private IWebHostEnvironment webHostEnvironment;
+        public AddController(EFDbContext ctx, IWebHostEnvironment hostEnvironment)
         {
+            webHostEnvironment = hostEnvironment;
             context = ctx;
         }
         public IActionResult Index(string isNew, int categoryId = -1, int lprice = -1, int uprice = int.MaxValue)
@@ -100,21 +103,44 @@ namespace TrendyShop.Controllers
             viewModel.Add.User = GetUser(User.Identity.Name); //returns null if user not found
             viewModel.Add.UserId = User.Identity.Name;
 
+            viewModel.Add.Article.Image = UploadedFile(viewModel.Image);
             context.Adds.Add(viewModel.Add);//this already updates User and Article
             context.SaveChanges();
 
             return RedirectToAction("Index", "Add");
         }
 
+        private string UploadedFile(IFormFile image)
+        {
+            string uniqueFileName = null;
+
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+
         //[HttpPost]    
         public ActionResult Edit(int aid, string uid)
         {
-            var add = context.Adds.SingleOrDefault(a => a.ArticleId == aid && a.UserId == uid);
-            context.Entry(add).Reference(a => a.Article).Load();
+            var add = context.Adds.Include(a => a.Article).SingleOrDefault(a => a.ArticleId == aid && a.UserId == uid);
+
+            //I dont understand the purpose of this line and it was throwing an error so i commented it to be able to work on the view
+            //context.Entry(add).Reference(a => a.Article).Load();
 
             if (add == null)
             {
-                //return HttpNotFound();
+                return RedirectToAction("Index");
             }
 
             var viewModel = new EditAddViewModel

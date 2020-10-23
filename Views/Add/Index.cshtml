@@ -6,17 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Compra Venta (Artículos)</title>
-
-</head>
-
 <body>
 
     <!-- Page Content -->
@@ -27,11 +16,10 @@
 
             <h1 class="col-lg-4 mt-4 mb-3">
                 Artículos
-                <small>(Filtros)</small>
             </h1>
             <div class="col-lg-2"></div>
-            <input type="text" class="form-control col-lg-5 mt-4 mb-3" id="name">
-            <a class="col-lg-1 btn btn-primary mt-4 mb-4 text-white">Buscar</a>
+            <input type="search" class="form-control col-lg-4 mt-4 mb-3" id="name">
+            <a class="col-lg-1 btn btn-dark mt-4 mb-3 ml-1 text-white">Buscar</a>
 
         </div>
 
@@ -46,62 +34,82 @@
         <div class="row">
             <!-- Sidebar Column -->
             <div class="col-lg-3 mb-4">
-                <h3>Filtrar por:</h3>
-                <div class="list-group">
-                    @*<a href="" class="list-group-item">Tipo</a>*@
-                    <a href="" class="list-group-item">Precio</a>
-                    <a href="" class="list-group-item">Categoría</a>
-                    @foreach (Category cat in Model.Categories)
-                    {
-                        @Html.ActionLink(cat.Name, "Index", "Add", new { categoryId = cat.CategoryId }, new { @class = "list-group-item" });
-
-                    }
-                    <a href="" class="list-group-item">Condición</a>
-                    @Html.ActionLink("Nuevo", "Index", "Add", new { isNew = "true" }, new { @class = "list-group-item" })
-                    @Html.ActionLink("De Uso", "Index", "Add", new { isNew = "false" }, new { @class = "list-group-item" })
-                    
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="navbar-nav flex-column">
+                            <li class="card-title border-bottom h2">
+                                Filtrar por...
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link"><i class="fas fa-dollar-sign"></i> Precio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fas fa-chart-bar"></i> Categoría <span class="badge badge-success"></span></a>
+                                <div id="submenu-1" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        @foreach (Category cat in Model.Categories)
+                                        {
+                                            <li class="nav-item mb-1 ml-4">
+                                                @Html.ActionLink(cat.Name, "Index", "Add", new { categoryId = cat.CategoryId })
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1"><i class="fas fa-gift"></i> Condición</a>
+                                <div id="submenu-1-1" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item mb-1 ml-4">
+                                            @Html.ActionLink("Nuevo", "Index", "Add", new { isNew = "true" })
+                                        </li>
+                                        <li class="nav-item mb-1 ml-4">
+                                            @Html.ActionLink("De Uso", "Index", "Add", new { isNew = "false" })
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="col-lg-9 mb-4">
                 <h2>Lista de Artículos</h2>
 
-                <div class="row">
-                    @foreach (Add a in Model.Adds)
-                    {
-                        <div class="col-lg-12 mb-4">
-                            <div class="card h-100">
-                                <h4 class="card-header">@a.Article.Name</h4>
-                                <div class="card-body">
-                                    <p class="card-text">@a.Article.Description</p>
-                                </div>
+                @foreach (Add a in Model.Adds)
+                {
+                    <div class="col-lg-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body" @*style="background-color:rgb(246, 246, 255)"*@>
+                                <img src="~/images/@a.Article.Image" height="200" width="300" />
+                                <h4 class="card-title border-bottom">@a.Article.Name</h4>
 
-                                <div class="card-footer">
-                                    <div class="row">
-                                        <div class="col-lg-11">
-                                            <h3>Precio: @a.Article.Price</h3>
-                                        </div>
-                                        <div class="col-lg-1">
-                                            @*<a href="/Home/Article" class="btn btn-primary">Más</a>*@
-                                            @Html.ActionLink("Mas", "Details", "Add", new { id = a.ArticleId }, null)
-                                        </div>
+                                <div class="d-flex">
+                                    <h5> <i class="fas fa-money-bill-alt"></i> Precio: @a.Article.Price$</h5>
+                                    <h5 class="ml-2"><i class="fas fa-certificate"></i> Marca: @a.Article.Brand</h5>
+                                </div>
+                                <p class="card-text">@a.Article.Description</p>
+
+                                <div class="d-flex">
+                                    <div class="ml-auto">
+                                        @Html.ActionLink("Ver Anuncio...", "Details", "Add", new { id = a.ArticleId }, null)
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
 
             </div>
             @*<div class="col-lg-1 card-footer my-4">
-                @Html.ActionLink("Nuevo Anuncio", "NewAdd", "Add", null)
+                    @Html.ActionLink("Nuevo Anuncio", "NewAdd", "Add", null)
 
-            </div>*@
+                </div>*@
         </div>
 
     </div>
     <!-- /.container -->
- 
     <!-- Bootstrap core JavaScript -->
 
 </body>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,9 +11,10 @@ namespace TrendyShop.ViewModels
     {
         public int Id { get; set; }
 
-        public IEnumerable<Category> Categories{ get; set; }
+        public IEnumerable<Category> Categories { get; set; }
 
         public Add Add { get; set; }
 
+        public IFormFile Image { get; set; }
     }
 }

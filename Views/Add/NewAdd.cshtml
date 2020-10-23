@@ -4,66 +4,69 @@
 @inject SignInManager<User> SignInManager
 @model TrendyShop.ViewModels.NewAddViewModel
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>NewAdd</title>
-</head>
-
 <body>
-    <h1>NewAdd</h1>
-    <div class="row">
-        <div class="col-lg-12 navbar-brand">Imagen</div>
-    </div>
-
-    <form asp-controller="Add" asp-action="CreateNewAdd" method="post" class="m-4">
-        <div class="row breadcrumb">
-            <h5 class="col-lg-12">Nombre:</h5>
-            @Html.TextBoxFor(a => a.Add.Article.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.Article.Name)
-
-            <h5 class="col-lg-12">Marca:</h5>
-            @Html.TextBoxFor(a => a.Add.Article.Brand, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.Article.Brand)
-
-            <h5 class="col-lg-12">Precio:</h5>
-            @Html.TextBoxFor(a => a.Add.Article.Price, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.Article.Price)
-
-            <h5 class="col-lg-12">Categoría:</h5>
-            @Html.DropDownListFor(a => a.Add.Article.CategoryId, new SelectList(Model.Categories, "CategoryId", "Name"), "", new { @class = "form-control" })
-
-            <h5 class="col-lg-12"> Cantidad:</h5>
-            @Html.TextBoxFor(a => a.Add.Amount, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.Amount)
-
-            <h5 class="col-lg-12">Descripción del Artículo:</h5>
-            @Html.TextAreaFor(a => a.Add.Article.Description, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.Article.Description)
-
-            <h5 class="col-lg-12 custom-checkbox">
-                Nuevo:
-                @Html.CheckBoxFor(a => a.Add.Article.IsNew)
-                @Html.ValidationMessageFor(a => a.Add.Article.IsNew)
-            </h5>
-
-            <h5 class="col-lg-12">Descripción de anuncio:</h5>
-            @Html.TextAreaFor(a => a.Add.Description, new { @class = "form-control" })
-            @Html.ValidationMessageFor(a => a.Add.Description)  
-
-         
-
-            <div class="col-lg-11"></div>
-            <button type="submit" class="btn btn-primary col-lg-1">Publicar</button>
+    <form asp-controller="Add" asp-action="CreateNewAdd" method="post" class="m-4" enctype="multipart/form-data">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title border-bottom text-center" >Publique su artículo</h1>
+                    <div class="form-group d-flex flex-column">
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Article.Name)
+                            @Html.TextBoxFor(a => a.Add.Article.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Add.Article.Name)
+                        </div>
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Article.Brand)
+                            @Html.TextBoxFor(a => a.Add.Article.Brand, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Add.Article.Brand)
+                        </div>
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Article.Price)
+                            @Html.TextBoxFor(a => a.Add.Article.Price, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Add.Article.Price)
+                        </div>
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Article.CategoryId)
+                            @Html.DropDownListFor(a => a.Add.Article.CategoryId, new SelectList(Model.Categories, "CategoryId", "Name"), "", new { @class = "form-control" })
+                        </div>
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Amount)
+                            @Html.TextBoxFor(a => a.Add.Amount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Add.Amount)
+                        </div>
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Article.Description)
+                            @Html.TextAreaFor(a => a.Add.Article.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Add.Article.Description)
+                        </div>
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Article.IsNew)
+                            @Html.CheckBoxFor(a => a.Add.Article.IsNew)
+                            @Html.ValidationMessageFor(a => a.Add.Article.IsNew)
+                        </div>
+                        <label asp-for="Image"></label>
+                        <div class="custom-file mb-2">
+                            <input asp-for="Image" class="custom-file-input" id="customFile" />
+                            <label class="custom-file-label" for="customFile">Choose File</label>
+                            <span asp-validation-for="Image"></span>
+                        </div>
+                        <div class="mb-2">
+                            @Html.LabelFor(a => a.Add.Description)
+                            @Html.TextAreaFor(a => a.Add.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Add.Description)
+                        </div>
+                        <div class="ml-auto">
+                            <button type="submit" class="btn btn-dark">Publicar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
     @*public int CategoryId { get; set; } verificar que sea obligado isertarlo*@
     @*public int UserId { get; set; }*@
     @*public DateTime LastModified { get; set; }*@
-    @*Note que cuando se implemente el login por usuario no hara falta incluir la dato del usuario en este formulario*@
 </body>
 
 </html>

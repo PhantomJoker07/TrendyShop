@@ -11,7 +11,7 @@
     <div class="col-lg-8 mt-4 mx-auto">
         <div class="card">
             <div class="card-body">
-                <img src="~/images/@Model.Article.Image" height="200" width="300" />
+                <img src="~/images/@Model.Article.Image" class="img-fluid rounded" height="200" width="300" />
                 <div class="card-title border-bottom">
                     <h3 class="mt-2">@Model.Article.Name</h3>
                 </div>
@@ -28,10 +28,12 @@
                 </div>
                 @Model.AddDescription
             </div>
-            <div class=" card-footer">
-                @Html.ActionLink("Comprar", "Buy", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, null)
-                @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, null)
-                @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, null)
+            <div class="card-footer d-flex">
+                @Html.ActionLink("Comprar", "Buy", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "ml-2 mt-2" })
+                @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, new { @class = "ml-2 mt-2" })
+                @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, new { @class = "ml-2 mt-2" })
+
+                <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#nimodal">Añadir al Carrito</button>
             </div>
         </div>
     </div>
@@ -40,34 +42,26 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="AddToCartModalLongTitle">Cantidad:</h5>
+                    <h5 class="modal-title" id="AddToCartModalLongTitle">Añadir al Carrito</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-
                     @using (Html.BeginForm("AddToCart", "ShoppingCart", new { aid = @Model.Article.ArticleId, uid = @Model.UserName }))
                     {
-                        <label for="amountToBuy"></label>
-                        <input type="text" id="amountToBuy" name="amountToBuy" />
+                        <label for="amountToBuy">Cantidad</label>
 
-                        <input type="submit" value="Agregar" />
+                        <div class="d-flex">
+                            <input type="text" id="amountToBuy" name="amountToBuy" />
+                            <input type="submit" class="ml-1  btn-dark" value="Agregar" />
+                        </div>
                     }
 
-                </div>
-
-                <div class="modal-footer">
-                    <button class="red-button" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    <!-- /.container -->
-
 </body>
-
 </html>
+

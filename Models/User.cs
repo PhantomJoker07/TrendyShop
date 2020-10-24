@@ -44,5 +44,7 @@ namespace TrendyShop.Models
 
         public int TotalSales { get; set; }
 
+        public string ProfilePicture { get; set; }
+
     }
 }

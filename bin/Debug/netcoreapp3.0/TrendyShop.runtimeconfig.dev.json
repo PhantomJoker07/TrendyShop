@@ -1,8 +1,9 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Sandra\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\My Projects\\Proyecto IS\\packages"
+      "C:\\Users\\Gabriel\\.dotnet\\store\\|arch|\\|tfm|",
+      "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\packages",
+      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ]
   }
 }

@@ -1,29 +1,34 @@
 {
   "format": 1,
   "restore": {
-    "C:\\My Projects\\Proyecto IS\\TrendyShop\\TrendyShop.csproj": {}
+    "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj": {}
   },
   "projects": {
-    "C:\\My Projects\\Proyecto IS\\TrendyShop\\TrendyShop.csproj": {
+    "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\My Projects\\Proyecto IS\\TrendyShop\\TrendyShop.csproj",
+        "projectUniqueName": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj",
         "projectName": "TrendyShop",
-        "projectPath": "C:\\My Projects\\Proyecto IS\\TrendyShop\\TrendyShop.csproj",
-        "packagesPath": "C:\\My Projects\\Proyecto IS\\packages",
-        "outputPath": "C:\\My Projects\\Proyecto IS\\TrendyShop\\obj\\",
+        "projectPath": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\TrendyShop.csproj",
+        "packagesPath": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\packages",
+        "outputPath": "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\TrendyShop\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\My Projects\\Proyecto IS\\NuGet.Config",
-          "C:\\Users\\Sandra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "E:\\Cibernetics Core\\3er Año\\+IS+\\TrendyShop\\NuGet.Config",
+          "C:\\Users\\Gabriel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
         ],
         "sources": {
+          "C:\\+Lightning Storage+\\NUGETSAVES": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "E:\\Cibernetics Core\\3er Año\\+IS+\\packages": {},
+          "E:\\Programs\\NuGet\\packages": {}
         },
         "frameworks": {
           "netcoreapp3.0": {
@@ -82,6 +87,16 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.0.3, 3.0.3]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -90,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -9,43 +9,80 @@ using TrendyShop.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace TrendyShop.Controllers
 {
     public class AuctionController : Controller
     {
         private EFDbContext context;
+        private IWebHostEnvironment webHostEnvironment;
 
-        public AuctionController(EFDbContext ctx)
+        public AuctionController(EFDbContext ctx, IWebHostEnvironment hostEnvironment)
         {
             context = ctx;
+            webHostEnvironment = hostEnvironment;
         }
-        public IActionResult Index(string isNew, int categoryId = -1, int lprice = -1, int uprice = int.MaxValue)
+        public IActionResult Index()
         {
-            var aucs = context.Auctions.Include(a => a.User).Include(a => a.Article).ToList();
-
-            if (categoryId != -1)
-                aucs = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList();
-
-            if (isNew != null)
-            {
-                if (isNew == "true")
-                    aucs = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.IsNew).ToList();
-                else if (isNew == "false")
-                    aucs = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => !a.Article.IsNew).ToList();
-            }
-          
-            if (lprice != -1 || uprice != int.MaxValue)
-                aucs = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= lprice && a.Article.Price <= uprice)).ToList();
-
-            var categories = context.Categories.ToList();
             var vm = new AuctionIndexViewModel
             {
-                Auctions = aucs,
-                Categories = categories
+                Auctions = context.Auctions.Include(a => a.Article).ToList(),
+                Categories = context.Categories.ToList()
             };
 
             return View(vm);
+        }
+
+        public IActionResult CategoryFilter(int categoryId)
+        {
+            var vm = new AuctionIndexViewModel
+            {
+                Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList(),
+                Categories = context.Categories.ToList()
+            };
+
+            return View("Index", vm);
+        }
+
+        public IActionResult ConditionFilter(bool isNew)
+        {
+            var vm = new AuctionIndexViewModel
+            {
+                Categories = context.Categories.ToList()
+            };
+
+            if (isNew)
+            {
+                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.IsNew).ToList();
+                return View("Index", vm);
+            }
+
+            vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => !a.Article.IsNew).ToList();
+            return View("Index", vm);
+        }
+        public IActionResult PriceFilter(float minp, float maxp)
+        {
+            var vm = new AuctionIndexViewModel
+            {
+                Categories = context.Categories.ToList(),
+                Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp)).ToList()
+            };
+
+            return View("Index", vm);
+        }
+
+        public IActionResult Search(string search)
+        {
+            var vm = new AuctionIndexViewModel
+            {
+                Categories = context.Categories.ToList(),
+                Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search)).ToList()
+            };
+
+            return View("Index", vm);
         }
 
         public IActionResult Details(int id)
@@ -100,7 +137,8 @@ namespace TrendyShop.Controllers
                 NewAuctionViewModel newViewModel = new NewAuctionViewModel
                 {
                     Auction = viewModel.Auction,
-                    Categories = context.Categories.ToList()
+                    Categories = context.Categories.ToList(),
+                    Image = viewModel.Image
                 };
 
                 newViewModel.Auction.User = GetUser(User.Identity.Name); //returns null if user not found
@@ -115,13 +153,32 @@ namespace TrendyShop.Controllers
             viewModel.Auction.UserId = User.Identity.Name;
             viewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
             viewModel.Auction.Start = DateTime.Now;
+            viewModel.Auction.Article.Image = UploadFile(viewModel.Image);
 
             context.Auctions.Add(viewModel.Auction);//this already updates User and Article
             context.SaveChanges();
 
             return RedirectToAction("Index", "Auction");
         }
+        private string UploadFile(IFormFile image)
+        {
+            string uniqueFileName = null;
 
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
 
         public ActionResult Cancel(int aid, string uid)
         {

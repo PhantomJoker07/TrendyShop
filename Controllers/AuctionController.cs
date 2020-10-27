@@ -86,7 +86,6 @@ namespace TrendyShop.Controllers
             var auction = context.Auctions.Find(viewModel.ArticleId);
             var creator = context.Users.Find(auction.UserId);
 
-           // throw new Exception("User " + us.UserName + " is maja");
 
             if (ModelState.IsValid)
             {

@@ -26,6 +26,8 @@ namespace TrendyShop.Data
 
         public EFDbContext(DbContextOptions<EFDbContext> options) : base(options) { }
 
+        public DbSet<Bid> Bids { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -33,6 +35,7 @@ namespace TrendyShop.Data
             modelBuilder.Entity<ShoppingList_Article>().HasKey(sla => new { sla.ShoppingListId, sla.ArticleId });
             modelBuilder.Entity<ShoppingCar>().HasKey(sc => sc.ShoppingListId);
             modelBuilder.Entity<Auction>().HasKey(a => a.ArticleId);
+            modelBuilder.Entity<Bid>().HasKey(a => a.BidId);
 
             //modelBuilder.Entity<User>().HasKey(u => u.UserName);
         }    

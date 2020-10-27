@@ -13,6 +13,8 @@ namespace TrendyShop.ViewModels
 
         public Article Article { get; set; }
 
+        public int ArticleId { get; set; }
+
         public string Name { get; set; }
 
         public string UserName { get; set; }
@@ -29,5 +31,8 @@ namespace TrendyShop.ViewModels
 
         public double Price { get; set; }
 
+        public double BidAmount { get; set; }
+
+        public Bid LastBid { get; set; }
     }
 }

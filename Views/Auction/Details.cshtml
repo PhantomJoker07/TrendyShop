@@ -30,11 +30,16 @@
             TimeSpan elapsed = DateTime.Now - Model.Start;
             TimeSpan remaining = Model.Duration - elapsed;
             if (elapsed > Model.Duration) remaining = new TimeSpan(0);
+            string winner = "none";
+            if (Model.Price != Model.Article.Price)// && 1==0)
+            {
+                winner = Model.LastBid.user.UserName;
+            }
         }
 
         <div class="my-2 mb-4">
             <h3 class="text-left"><small>Tiempo restante: @remaining</small></h3>
-            <h3 class="text-left"><small>Licitador en Cabeza: GG</small></h3>
+            <h3 class="text-left"><small>Licitador en Cabeza: @winner</small></h3>
             <h3 class="text-left"><small>Precio Actual:@Model.Price</small></h3>
         </div>
 
@@ -55,25 +60,37 @@
                     @Model.AuctionDescription
                 </p>
             </div>
-
-            @if (SignInManager.IsSignedIn(User)) //Only a logged user can participate
-            {
-                <div class="col-lg-2 card-footer">
-                    <h3>Cantidad</h3>
-                </div>
-                <div class="col-lg-2 card-footer">
-                    <input class="form-control" required="" data-validation-required-message="Por favor introduzca una cantidad" type="text">
-                </div>
-                <div class="col-lg-4 card-footer">
-                    <a href="" class="btn btn-primary">Pujar</a>
-                </div>
-            }
-
-
             <div class="col-lg-4 card-footer">
             </div>
 
         </div>
+
+        @if (SignInManager.IsSignedIn(User) && !Model.IsFinished) //Only a logged user can bid
+        {
+            <form asp-controller="Auction" asp-action="Bid" method="post">
+                <h5 class="text-lg-left">Cantidad:</h5>
+                <div class="row text-center">
+                    <div class="col-lg-1"></div>
+                    <input type="text" asp-for="BidAmount" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca una cantidad.">
+                    <span asp-validation-for="BidAmount" class="text-danger"></span>
+                    <input type="text" asp-for="ArticleId" data="@Model.Id" id="submit" hidden />
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-1"></div>
+                    <button type="submit" class="bg-dark text-center btn btn-primary col-lg-2">Pujar</button>
+                    <div asp-validation-summary="All" class="col-lg-4 text-danger"></div>
+                </div>
+            </form>
+        }
+
+        @if (SignInManager.IsSignedIn(User) && Model.IsFinished) //For the winner only
+        {
+            <div class="row mb-4">
+                <div class="col-lg-1"></div>
+                <button type="submit" class="bg-dark text-center btn btn-primary col-lg-2">Finalizar Subasta</button>
+            </div>
+        }
+
         <!-- /.row -->
 
     </div>

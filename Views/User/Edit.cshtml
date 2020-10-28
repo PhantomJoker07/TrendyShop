@@ -5,18 +5,6 @@
 }
 
 <html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Trendy Shop (Editar Perfil)</title>
-
-</head>
-
 <body>
 
     <!-- Page Content -->
@@ -29,70 +17,75 @@
             <li class="breadcrumb-item active">Entrar</li>
         </ol>
 
-        <div class="container">
-            <form asp-controller="User" asp-action="Edit" method="post" name="sentMessage" id="contactForm">
-                <h5 class="text-center">Nombre:</h5>
-                <div class="row text-center">
-                    <div class="col-lg-5"></div>
-                    <input type="text" asp-for="FirstName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
+        <div class="col-lg-7 mx-auto mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <img class="img-fluid rounded" src="~/images/@Model.CurrentProfilePicture" height="200" width="300" />
+                    <form asp-controller="User" asp-action="Edit" method="post" name="sentMessage" id="contactForm" enctype="multipart/form-data">
+                        <label asp-for="Image"></label>
+                        <div class="custom-file mb-2">
+                            <input asp-for="Image" class="custom-file-input" id="customFile" />
+                            <label class="custom-file-label" for="customFile">Choose File</label>
+                            <span asp-validation-for="Image"></span>
+                        </div>
 
-                <h5 class="text-center">Apellido:</h5>
-                <div class="row text-center">
-                    <div class="col-lg-5"></div>
-                    <input type="text" asp-for="LastName" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName)
+                            <input type="text" asp-for="FirstName" class="form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
 
-                <h5 class="text-center">Número de teléfono:</h5>
-                <div class="row text-center">
-                    <div class="col-lg-5"></div>
-                    <input type="text" asp-for="PhoneNumber" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su número de teléfono.">
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName)
+                            <input type="text" asp-for="LastName" class=" form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
 
-                <h5 class="text-center">Correo electrónico:</h5>
-                <div class="row text-center">
-                    <div class="col-lg-5"></div>
-                    <input type="text" asp-for="Email" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca su dirección de correo.">
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PhoneNumber)
+                            <input type="text" asp-for="PhoneNumber" class="form-control" id="submit" required data-validation-required-message="Por favor introduzca su número de teléfono.">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
 
-                <h5 class="text-center">Detalles:</h5>
-                <div class="row text-center">
-                    <div class="col-lg-5"></div>
-                    <input type="text" asp-for="Details" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca algunos detalles sobre ud.">
-                    <span asp-validation-for="Details" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email)
+                            <input type="text" asp-for="Email" class=" form-control" id="submit" required data-validation-required-message="Por favor introduzca su dirección de correo.">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
 
-                <h5 class="text-center">Contraseña actual:</h5>
-                <div class="row mb-4">
-                    <div class="col-lg-5"></div>
-                    <input type="password" asp-for="OldPassword" class="col-lg-2 form-control" id="submit" required data-validation-required-message="Debe especificar una contraseña.">
-                    <span asp-validation-for="OldPassword" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Details)
+                            <input type="text" asp-for="Details" class="form-control" id="submit" required data-validation-required-message="Por favor introduzca algunos detalles sobre ud.">
+                            <span asp-validation-for="Details" class="text-danger"></span>
+                        </div>
 
-                <h5 class="text-center">Nueva Contraseña:</h5>
-                <div class="row mb-4">
-                    <div class="col-lg-5"></div>
-                    <input type="password" asp-for="NewPassword" class="col-lg-2 form-control" id="submit" required data-validation-required-message="Debe especificar una contraseña.">
-                    <span asp-validation-for="NewPassword" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.OldPassword)
+                            <input type="password" asp-for="OldPassword" class="form-control" id="submit" required data-validation-required-message="Debe especificar una contraseña.">
+                            <span asp-validation-for="OldPassword" class="text-danger"></span>
+                        </div>
 
-                <h5 class="text-center">Confirmar contraseña:</h5>
-                <div class="row mb-4">
-                    <div class="col-lg-5"></div>
-                    <input type="password" asp-for="Confirmation" class="col-lg-2 form-control" id="submit" required data-validation-required-message="Debe confirmar su contraseña.">
-                    <span asp-validation-for="Confirmation" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.NewPassword)
+                            <input type="password" asp-for="NewPassword" class="form-control" id="submit" required data-validation-required-message="Debe especificar una contraseña.">
+                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        </div>
 
-                <div class="row mb-4">
-                    <div class="col-lg-4"></div>
-                    <button type="submit" class="bg-dark text-center btn btn-primary col-lg-4">Confirmar</button>
-                    <div asp-validation-summary="All" class="col-lg-4 text-danger"></div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Confirmation)
+                            <input type="password" asp-for="Confirmation" class="form-control" id="submit" required data-validation-required-message="Debe confirmar su contraseña.">
+                            <span asp-validation-for="Confirmation" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="ml-auto">
+                                <button type="submit" class=" btn btn-secondary">Confirmar</button>
+                            </div>
+                        </div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
 
     </div>

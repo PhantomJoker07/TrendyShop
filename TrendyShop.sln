@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrendyShop", "TrendyShop.csproj", "{F875B199-DDD2-40F3-B221-CBA0FC75CC12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrendyShop", "TrendyShop.csproj", "{28105006-6ED9-4A12-9B57-DBE43EE44096}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F875B199-DDD2-40F3-B221-CBA0FC75CC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F875B199-DDD2-40F3-B221-CBA0FC75CC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F875B199-DDD2-40F3-B221-CBA0FC75CC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F875B199-DDD2-40F3-B221-CBA0FC75CC12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28105006-6ED9-4A12-9B57-DBE43EE44096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28105006-6ED9-4A12-9B57-DBE43EE44096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28105006-6ED9-4A12-9B57-DBE43EE44096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28105006-6ED9-4A12-9B57-DBE43EE44096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {87AEDC16-EEBC-4EAE-9908-3820F5A6DB5A}
+		SolutionGuid = {76B27322-7A11-410B-B68B-89F91CD3F1CE}
 	EndGlobalSection
 EndGlobal

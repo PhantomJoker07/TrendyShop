@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace TrendyShop.Models
 {
@@ -29,13 +30,13 @@ namespace TrendyShop.Models
         [Required, Display(Name = "Precio")]
         public double Price { get; set; }
 
-        //photos not implemeted yet!!!
-
         [Display(Name = "Descripción del artículo")]
         [StringLength(1024)]
         public string Description { get; set; }
 
         [Display(Name = "Nuevo")]
         public bool IsNew { get; set; }
+
+        public string Image { get; set; }
     }
 }

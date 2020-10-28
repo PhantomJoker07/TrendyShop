@@ -7,7 +7,9 @@ using TrendyShop.ViewModels;
 using TrendyShop.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace TrendyShop.Controllers
 {
@@ -16,13 +18,15 @@ namespace TrendyShop.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private EFDbContext context;
+        private IWebHostEnvironment webHostEnvironment;
 
         public UserController(UserManager<User> userManager,
-                               SignInManager<User> signInManager, EFDbContext context)
+                               SignInManager<User> signInManager, EFDbContext context, IWebHostEnvironment hostEnvironment)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
+            webHostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -45,6 +49,7 @@ namespace TrendyShop.Controllers
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
                     Description = model.Details,
+                    ProfilePicture = UploadFile(model.Image)
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
 
@@ -60,6 +65,26 @@ namespace TrendyShop.Controllers
                 }
             }
             return View(model);
+        }
+
+        private string UploadFile(IFormFile image)
+        {
+            string uniqueFileName = null;
+
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
         }
 
         [HttpGet]
@@ -108,6 +133,7 @@ namespace TrendyShop.Controllers
                 Email = account.Email,
                 Details = account.Description,
                 PhoneNumber = account.PhoneNumber,
+                CurrentProfilePicture = account.ProfilePicture
             };
             return View(model);
         }
@@ -124,7 +150,7 @@ namespace TrendyShop.Controllers
                 account.LastName = model.LastName;
                 account.PhoneNumber = model.PhoneNumber;
                 account.Description = model.Details;
-
+                account.ProfilePicture = UploadFile(model.Image);
                 var result = await userManager.UpdateAsync(account);
 
                 if (result.Succeeded)
@@ -136,7 +162,7 @@ namespace TrendyShop.Controllers
                         var change_result = await userManager.ChangePasswordAsync(account, model.OldPassword, model.NewPassword);
                         if (change_result.Succeeded)
                         {
-                            return View(model);
+                            return RedirectToAction("AccountDetails", new { userName = account.UserName });
                         }
                         else
                         {

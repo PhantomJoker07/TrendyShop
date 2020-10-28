@@ -18,78 +18,99 @@
 </head>
 
 <body>
+    <div id="carouselExampleIndicators" class="carousel slide mt-4" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner mt-4" role="listbox">
 
-    <header>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                <!-- Slide One - Set the background image for this slide in the line below -->
-                <div class="carousel-item active" style="background-image: url('/images/img00.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Feel at home</h3>
-                        <p>Welcome to Trendy Shop! The best place for online sells and auctions.</p>
+            <div class="carousel-item active" style="background-image: url('/images/img00.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3>Bienvenido</h3>
+                    <p>Somos el mejor sitio de ventas online y subastas</p>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('/images/guy.jpg'); background-size:cover">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3>Siéntase en Casa</h3>
+                    <p>Trabajamos para usted. No dude en contactarnos!</p>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('/images/img02.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3>Nos preocupamos por usted</h3>
+                    <p>Su seguridad y protección es nuestra prioridad. Su información está a salvo con nosotros.</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <!-- slider-area start -->
+    @*<div class="slider-area">
+            <div class="slider-active owl-carousel">
+                <div class="slider-items">
+                    <img src="~/images/img00.jpg" alt="" class="slider">
+                    <div class="slider-content flex-style">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-8 col-lg-10 col-12">
+                                    <h2>We Are <span>Everyone’s</span> Coinbuzz Agency</h2>
+                                    <p>There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form randomised words which don't look even slightly believable.</p>
+                                    <ul>
+                                        <li><a href="#">Read more</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('/images/img03.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Always ready to help</h3>
-                        <p>Our costumer service works for you. Feel free to contact us!</p>
-                    </div>
-                </div>
-                <!-- Slide Three - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('/images/img02.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Stay safe</h3>
-                        <p>Your security and protection is our priority. Your information will be safe with us.</p>
+                <div class="slider-items">
+                    <img src="~/images/img02.jpg" alt="" class="slider">
+                    <div class="slider-content flex-style">
+                        <div class="container">
+                            <div class="row">
+                                <div class="offset-lg-4 col-lg-8 text-right col-12">
+                                    <h2>We Are <span>Everyone’s</span> Coinbuzz Agency</h2>
+                                    <p>There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form randomised words which don't look even slightly believable.</p>
+                                    <ul>
+                                        <li><a href="#">Read more</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </header>
-
+        </div>*@
+    <!-- slider-area end -->
     <!-- Page Content -->
     <div class="container">
-
-
-        <h1 class="my-4 text-center ">Bienvenido</h1>
-
-
-
-        <h1 class="my-4">Inspeccione nuestros artículos recientes:</h1>
+        <h1 class="my-4 text-center"> Artículos recientes</h1>
 
         @foreach (HomeViewModel add in Model)
         {
-            <div class="row">
-                <div class="col-lg-12 mb-4">
-                    <div class="card h-100">
-                        <h4 class="card-header">@add.ArticleName</h4>
-                        <div class="card-body">
-                            <p class="card-text">@add.AddDescription</p>
-                        </div>
-                        <div class="card-footer">
-                            @*<a href="/Home/Add" class="btn btn-primary">Más</a>*@
-                            @Html.ActionLink("más", "Details", "Add", new { id = add.AddId })
+            <div class="col-lg-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title border-bottom">@add.ArticleName</h4>
 
+                        <div class="d-flex flex-column">
+                            <p class="card-text">@add.AddDescription</p>
+                            @Html.ActionLink("Ver más...", "Details", "Add", new { id = add.AddId }, new { @class = "ml-auto" })
                         </div>
                     </div>
                 </div>
             </div>
         }
     </div>
-
 </body>
-
 </html>

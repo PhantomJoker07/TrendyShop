@@ -71,18 +71,19 @@
 
 
 
-<div class="col-lg-8 mb-4 mx-auto">
+<div class="col-lg-8 mb-4 mx-auto mt-4">
     <div class="card ">
         <h2 class="card-header">
             @Model.ShoppingListName
         </h2>
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered mb-4">
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th>Artículo</th>
+                    <th>Marca</th>
                     <th>Cantidad</th>  @*pa editar*@
-                    <th></th>
+                    <th>Precio</th>
+                    @*<th></th>*@
 
                 </tr>
                 @foreach (var art in Model.List)
@@ -91,15 +92,15 @@
                         <td>@art.Article.Name</td>
                         <td>@art.Article.Brand</td>
                         <td>@art.Amount</td>
+                        <td>@art.Article.Price$</td>
                         @* <td>@Html.ActionLink("Eliminar", "DeleteArticle", "ShoppingCart", new { slid = @Model.ShoppingListId, aid = @art.ArticleId })</td>*@
-
                     </tr>
-
                 }
             </table>
+            <div class="d-flex">
+                @Html.ActionLink("Cargar Lista", "LoadShoppingList", "ShoppingCart", new { sid = Model.ShoppingListId }, new { @class = "ml-auto" })
+            </div>
         </div>
-        <div class="card-footer">
-            @Html.ActionLink("Cargar Lista", "LoadShoppingList", "ShoppingCart", new { sid = Model.ShoppingListId })
-        </div>
+
     </div>
 </div>

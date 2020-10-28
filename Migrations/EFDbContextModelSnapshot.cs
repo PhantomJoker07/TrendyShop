@@ -165,6 +165,7 @@ namespace TrendyShop.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ArticleId");
@@ -191,6 +192,9 @@ namespace TrendyShop.Migrations
                         .HasColumnType("nvarchar(1024)")
                         .HasMaxLength(1024);
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsNew")
                         .HasColumnType("bit");
 
@@ -211,19 +215,26 @@ namespace TrendyShop.Migrations
 
             modelBuilder.Entity("TrendyShop.Models.Auction", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
+
+                    b.Property<double>("CurrentPrice")
+                        .HasColumnType("float");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsNew")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -231,9 +242,7 @@ namespace TrendyShop.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
+                    b.HasKey("ArticleId");
 
                     b.HasIndex("UserId");
 
@@ -254,6 +263,46 @@ namespace TrendyShop.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("TrendyShop.Models.Order", b =>
+                {
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Paid")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SellerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("ShippingCharge")
+                        .HasColumnType("real");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("TrendyShop.Models.ShoppingCar", b =>
@@ -318,7 +367,7 @@ namespace TrendyShop.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Card")
+                    b.Property<string>("Alias")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -334,6 +383,12 @@ namespace TrendyShop.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -357,6 +412,9 @@ namespace TrendyShop.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
@@ -385,6 +443,22 @@ namespace TrendyShop.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("TrendyShop.Models.User_Card", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CardNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameOnCard")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "CardNumber");
+
+                    b.ToTable("User_Cards");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -448,7 +522,9 @@ namespace TrendyShop.Migrations
 
                     b.HasOne("TrendyShop.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TrendyShop.Models.Article", b =>
@@ -471,6 +547,23 @@ namespace TrendyShop.Migrations
                     b.HasOne("TrendyShop.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TrendyShop.Models.Order", b =>
+                {
+                    b.HasOne("TrendyShop.Models.Add", "Add")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TrendyShop.Models.User", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("TrendyShop.Models.User", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId");
                 });
 
             modelBuilder.Entity("TrendyShop.Models.ShoppingCar", b =>
@@ -497,6 +590,15 @@ namespace TrendyShop.Migrations
                     b.HasOne("TrendyShop.Models.ShoppingList", "ShoppingList")
                         .WithMany()
                         .HasForeignKey("ShoppingListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrendyShop.Models.User_Card", b =>
+                {
+                    b.HasOne("TrendyShop.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

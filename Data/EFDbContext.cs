@@ -23,19 +23,23 @@ namespace TrendyShop.Data
         public DbSet<Auction> Auctions { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<User_Card> User_Cards { get; set; }
+
 
         public EFDbContext(DbContextOptions<EFDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Add>().HasKey(c => c.ArticleId);
+            modelBuilder.Entity<Add>().HasKey(a => a.ArticleId);
             modelBuilder.Entity<ShoppingList_Article>().HasKey(sla => new { sla.ShoppingListId, sla.ArticleId });
             modelBuilder.Entity<ShoppingCar>().HasKey(sc => sc.ShoppingListId);
             modelBuilder.Entity<Auction>().HasKey(a => a.ArticleId);
-
+            modelBuilder.Entity<User_Card>().HasKey(uc => new { uc.UserId, uc.CardNumber});
+            modelBuilder.Entity<Order>().HasKey(o => new { o.Date, o.CustomerId/*, o.SellerId*/, o.ArticleId });
             //modelBuilder.Entity<User>().HasKey(u => u.UserName);
-        }    
+        }
     }
 }
     

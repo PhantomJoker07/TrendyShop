@@ -27,11 +27,6 @@ namespace TrendyShop.Models
 
         public string Description { get; set; }
         
-        public string Card { get; set; } //Required? Lists of cards?
-
-       // public string FirstName { get; set; }  
-       // public string LastName { get; set; }
-
         [Phone]
         [Display(Name = "Teléfono")]
         override public string PhoneNumber { get; set; }
@@ -45,6 +40,5 @@ namespace TrendyShop.Models
         public int TotalSales { get; set; }
 
         public string ProfilePicture { get; set; }
-
     }
 }

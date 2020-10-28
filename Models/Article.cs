@@ -22,8 +22,7 @@ namespace TrendyShop.Models
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-
-
+        
         [Display(Name = "Marca")]
         public string Brand { get; set; }
 

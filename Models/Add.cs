@@ -8,14 +8,16 @@ namespace TrendyShop.Models
 {
     public class Add
     {
-       public string UserId { get; set; }
+        [Key, Column(Order = 0)]
+        public string UserId { get; set; }
 
-        [ForeignKey("UserId"),Column(Order = 0)]  //previously UserId
+        [ForeignKey("UserId")]  //previously UserId
         public User User { get; set; }
-
+        
+        [Key, Column(Order = 1)]
         public int ArticleId { get; set; }
 
-        [Key,ForeignKey("ArticleId"), Column(Order = 1)]
+        [ForeignKey("ArticleId")]
         public Article Article { get; set; }
 
         [Display(Name = "Cantidad Disponible")]

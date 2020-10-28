@@ -16,6 +16,9 @@ namespace TrendyShop.ViewModels
         public float Charge { get; set; }
         public IList<User_Card> Cards { get; set; }
         public bool InvalidOperation { get; set; }
+        
+        [Display(Name = "Número de tarjeta")]
+        public string SelectedCardNumber { get; set; }
 
         [Display(Name = "Número de tarjeta")]
         public string CardNumber { get; set; }

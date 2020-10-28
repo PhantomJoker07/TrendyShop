@@ -16,7 +16,7 @@ namespace TrendyShop.Models
         public User User { get; set; }
 
         [Key, Column(Order = 1)]
-        public int CardNumber { get; set; }
+        public string CardNumber { get; set; }
 
         public string NameOnCard { get; set; }
     }

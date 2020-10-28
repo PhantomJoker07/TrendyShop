@@ -15,13 +15,13 @@
 
                 <div class=" form-group">
                     @Html.LabelFor(m => m.NameOnCard)
-                    @Html.TextBoxFor(m => m.NameOnCard, new { @class = "form-control", @id = "cardName" })
+                    @Html.TextBoxFor(m => m.NameOnCard, new { @class = "form-control"@*, @id = "cardName"*@ })
                     @Html.ValidationMessageFor(m => m.NameOnCard)
                 </div>
 
                 <div class=" form-group">
                     @Html.LabelFor(m => m.CardNumber)
-                    @Html.TextBoxFor(m => m.CardNumber, new { @class = "form-control", @id = "cardNumber" })
+                    @Html.TextBoxFor(m => m.CardNumber, new { @class = "form-control"@*, @id = "cardNumber"*@ })
                     @Html.ValidationMessageFor(m => m.CardNumber)
                 </div>
 
@@ -29,8 +29,8 @@
 
                 //podemos actually tener un card que sea una clase con NameOnCard y CardNumber
                 <div class=" form-group">
-                    @Html.LabelFor(m => m.CardNumber)
-                    @Html.DropDownListFor(m => m.CardNumber, new SelectList(Model.Cards, "CardNumber", "CardNumber"), "", new { @class = "form-control" })
+                    @Html.LabelFor(m => m.SelectedCardNumber)
+                    @Html.DropDownListFor(m => m.SelectedCardNumber, new SelectList(Model.Cards, "CardNumber", "CardNumber"), "", new { @class = "form-control" })
                 </div>
 
                 @Html.HiddenFor(m => m.UserId)
@@ -42,7 +42,10 @@
 
 
             <div class="d-flex">
-                <button class="btn btn-secondary ml-auto" onclick="insertData()">Realizar pago</button>
+                <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pago</button>
+
+                @*descomentar y eliminar el de arriba si se arregla lo de $*@
+                @*<button class="btn btn-secondary ml-auto" onclick="insertData()">Realizar pago</button>*@
 
                 <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks>
                     <button class="btn btn-dark ml-1" type="submit">Cancelar</button>
@@ -51,25 +54,6 @@
         </div>
     </div>
 </div>
-
-<div>
-    @if (Model.InvalidOperation)
-    {
-        @section scripts {
-            <script type="text/javascript">
-                $('#warningModal').modal()
-            </script>
-        }
-    }
-</div>
-
-@*<div class="d-flex">
-        <button onclick="insertData()">Realizar pago</button>
-
-        <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks>
-            <button class="ml-1" type="submit">Cancelar</button>
-        </form>
-    </div>*@
 
 <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -90,6 +74,18 @@
     </div>
 </div>
 
+
+<div>
+    @if (Model.InvalidOperation)
+    {
+        @section scripts {
+            <script type="text/javascript">
+                $('#warningModal').modal()
+            </script>
+        }
+    }
+</div>
+
 <div class="modal fade" id="confirmodal" tabindex="-1" role="dialog" aria-labelledby="ConfirmationModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -100,7 +96,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h1>Se descontará @Model.Charge de su cuenta. ¿Desea continuar?</h1>
+                <h6>Se descontará @Model.Charge de su cuenta. ¿Desea continuar?</h6>
 
                 @*<div class="d-flex">
                         <input onclick="finishOperation()" class="ml-1  btn-dark" value="Continuar" />
@@ -116,29 +112,41 @@
 
 <script>
     function insertData() {
-        var valResult = validateForm();
+        var isValid = validateForm();
 
-        if (valResult) {
+        if (isValid) {
             $('#confirmodal').modal()
         }
     }
 
     function validateForm() {
-        nameOnCard = document.getElementById("cardName").value;
-        cardNumber = document.getElementById("cardNumber").value;
-        var dropDownList = document.getElementById("CardNumber");
+        nameOnCard = document.getElementById("NameOnCard").value;
+        cardNumber = document.getElementById("CardNumber").value;
+        var dropDownList = document.getElementById("SelectedCardNumber");
         cardNumberDDL = dropDownList.options[dropDownList.selectedIndex].text;
 
         //cards most have from 13 - 18 digits
         if (cardNumberDDL == "" && (nameOnCard == "" || (cardNumber.length < 13 || cardNumber.length > 18))) {
-            alert("Por favor especifique un número de tarjeta válido para efectuar su compra");
+            alert("Por favor especifique un número y nombre de tarjeta válidos para efectuar su compra");
             return false;
         }
         return true;
     }
 
     function finishOperation() {
-        submitForm();
+        isValid = validateForm();
+
+        if (isValid) {
+            random = Math.floor((Math.random() * 10) + 1);
+
+            //este if else, el isvalid y el random pueden eliminarse si se logra que funcione el llamado a modal
+            if (random === 1) {
+                alert("Lo sentimos, al parecer la tarjeta seleccionada no cuenta con fondos suficientes. Por favor seleccione otra");
+            }
+            else {
+                submitForm();
+            }
+        }
     }
 
     function submitForm() {

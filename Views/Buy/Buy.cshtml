@@ -3,18 +3,10 @@
     ViewData["Title"] = "Compra";
 }
 
-
-@*<style>
-        .mydisplay {
-            display: none;
-        }
-    </style>*@
-
 <div class="col-lg-5 mx-auto mt-4">
     <div class="card">
         <div class="card-body">
             <h1 class="card-title border-bottom">Compra de @Model.Add.Article.Name</h1>
-            @*@using (Html.BeginForm("EffectBuy", "Buy", new { aid = @Model.Add.ArticleId, uid = @Model.Add.UserId, card = @Model.Card, amountToBuy = @Model.AmountToBuy }))*@
             @using (Html.BeginForm("EffectBuy", "Buy", FormMethod.Post, new { id = "bform" }))
             {
                 <div class=" form-group">
@@ -23,36 +15,16 @@
                     @Html.ValidationMessageFor(m => m.AmountToBuy)
                 </div>
 
-                @*<div class=" form-group">
-                @Html.LabelFor(m => m.ShippingToCardAddress)
-                @Html.CheckBoxFor(m => m.ShippingToCardAddress)
-                @Html.ValidationMessageFor(m => m.ShippingToCardAddress)
-            </div>*@
-
-                //visible por default, si se seleciona el checkbox se esconde
                 <div class=" form-group">
                     @Html.LabelFor(m => m.Address)
-                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "address" })
                     @Html.ValidationMessageFor(m => m.Address)
                 </div>
 
-                //hacer como un radio button
-                @*<div class=" form-group">
-                @Html.LabelFor(m => m.ShippingMode)
-                @Html.TextBoxFor(m => m.ShippingMode, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.ShippingMode)
-            </div>*@
-
-                @*<div class=" form-group">
-                @Html.LabelFor(m => m.Card)
-                @Html.TextBoxFor(m => m.Card, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Card)
-            </div>*@
-
                 <div class="d-flex">
-                    <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pedido mom</button>
-
-                    <button class="btn btn-secondary ml-auto" type="button" onclick="insertData()">Realizar pedido</button>
+                    <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pedido</button>
+                    @*descomentar y el eliminar el de arriba si se arregla lo del $*@
+                    @*<button class="btn btn-secondary ml-auto" type="button" onclick="insertData()">Realizar pedido</button>*@
                     <button class="btn btn-dark ml-1" type="button" onclick="location.pathname='/Add'">Cancelar</button>
                 </div>
 
@@ -79,9 +51,6 @@
                 <h1 id="total"></h1>
                 <h1 id="shippingCharge"> </h1>
 
-                @*<div class="d-flex">
-                        <input onclick="finishOperation()" class="ml-1  btn-dark" value="Continuar" />
-                    </div>*@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary ml-auto" onclick="finishOperation()">Continuar</button>
@@ -99,7 +68,6 @@
     function insertData() {
         var valResult = validateForm();
 
-        console.log(valResult);
         if (valResult) {
             updateValues();
             $('#confirmodal').modal();
@@ -108,20 +76,21 @@
         }
     }
 
-    function validateForm(){
+    function validateForm() {
         var amount = parseInt(document.getElementById('amount').value);
         var amountAvailable = @Model.Add.Amount;
-        var address = parseInt(document.getElementById('Address').value);
-
+        var address = document.getElementById('address').value;
+              
         if (amount == "" || isNaN(amount) || amount > amountAvailable) {
             alert("Por favor especifique una cantidad positiva y menor que la restante para su compra");
             return false;
         }
 
-        if (address == "") {
+        if (address == "" || address == null){
             alert("Por favor especifique una dirección a la cual enviar el pedido");
             return false;
         }
+
         return true;
     }
 
@@ -130,17 +99,17 @@
         var articlePrice = @Model.Add.Article.Price;
         var total = amount * articlePrice;
         shippingCharge = Math.floor((Math.random() * 10) + 1);//random
-        console.log(shippingCharge);
 
-        console.log("total");
         document.getElementById('total').innerHTML = "Total: " + total;
-        console.log("shippingCharge");
         document.getElementById('shippingCharge').innerHTML = "Costo por envío: " + shippingCharge;
     }
 
     function finishOperation() {
-        saveShippingCharge();
-        submitForm();
+        isvalid = validateForm();
+        if (isvalid) {
+            saveShippingCharge();
+            submitForm();
+        }
     }
 
     function submitForm() {
@@ -148,6 +117,8 @@
     }
 
     function saveShippingCharge() {
+        shippingCharge = Math.floor((Math.random() * 10) + 1);//eliminar esta linea si se arregla lo del $
+
         form = document.getElementById('bform');
 
         var input = document.createElement("INPUT");

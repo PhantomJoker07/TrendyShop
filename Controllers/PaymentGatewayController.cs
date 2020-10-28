@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TrendyShop.Data;
+using TrendyShop.Models;
 using TrendyShop.ViewModels;
 
 namespace TrendyShop.Controllers
@@ -23,15 +24,13 @@ namespace TrendyShop.Controllers
         }
 
         //En este caso, como la pasarela está integrada a la plataforma, ya tenemos datos del login del usuario
-        public IActionResult GetPaymentMethod(string userId/*, string sellerId*/, int articleId, long orderDateTicks, float charge)
+        public IActionResult GetPaymentMethod(string userId, int articleId, long orderDateTicks, float charge)
         {
-            //var user = context.Users.Single(u => u.Id == userId);
             var cards = context.User_Cards.Where(c => c.UserId == userId).ToList();
 
             PaymentMethodViewModel pmvm = new PaymentMethodViewModel
             {
                 UserId = userId,
-                //SellerId = sellerId,
                 ArticleId = articleId,
                 DateTicks = orderDateTicks,
                 Charge = charge,
@@ -56,7 +55,6 @@ namespace TrendyShop.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //var user = context.Users.Single(u => u.Id == pmvm.User.UserName);
                 var cards = context.User_Cards.Where(c => c.UserId == pmvm.UserId).ToList();
                 PaymentMethodViewModel newpmvm = new PaymentMethodViewModel
                 {
@@ -72,28 +70,48 @@ namespace TrendyShop.Controllers
                 return View(newpmvm);
             }
 
-            var validOperation = ValidatePayment(pmvm.NameOnCard, pmvm.CardNumber);
-
-            if(!validOperation)
+            var nameOnCard = pmvm.NameOnCard;
+            var cardNumber = pmvm.CardNumber;
+            if (pmvm.NameOnCard == null || pmvm.CardNumber == null)
             {
-                var cards = context.User_Cards.Where(c => c.UserId == pmvm.UserId).ToList();
-                PaymentMethodViewModel newpmvm = new PaymentMethodViewModel
+                nameOnCard = context.User_Cards.Single(uc => uc.UserId == pmvm.UserId && uc.CardNumber == pmvm.SelectedCardNumber).NameOnCard;
+                cardNumber = pmvm.SelectedCardNumber;
+            }
+            else
+            {
+                var user_card = new User_Card
                 {
                     UserId = pmvm.UserId,
-                    SellerId = pmvm.SellerId,
-                    ArticleId = pmvm.ArticleId,
-                    DateTicks = pmvm.DateTicks,
-                    Charge = pmvm.Charge,
-                    Cards = cards,
-                    CardNumber = pmvm.CardNumber,
-                    NameOnCard = pmvm.NameOnCard,
-                    InvalidOperation = true
+                    CardNumber = cardNumber,
+                    NameOnCard = nameOnCard
                 };
-                return View(newpmvm);
+                context.User_Cards.Add(user_card);
+                context.SaveChanges();
             }
 
-            //Deberia registrarse esta transaccion
-            return RedirectToAction("CloseOrder", "Buy", new { userId = pmvm.UserId/*, sellerId = pmvm.SellerId*/, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks });
+            //descomentar cuando funcione lo del $
+            //var validOperation = ValidatePayment(nameOnCard, cardNumber);
+
+            //if(!validOperation)
+            //{
+            //    var cards = context.User_Cards.Where(c => c.UserId == pmvm.UserId).ToList();
+            //    PaymentMethodViewModel newpmvm = new PaymentMethodViewModel
+            //    {
+            //        UserId = pmvm.UserId,
+            //        SellerId = pmvm.SellerId,
+            //        ArticleId = pmvm.ArticleId,
+            //        DateTicks = pmvm.DateTicks,
+            //        Charge = pmvm.Charge,
+            //        Cards = cards,
+            //        CardNumber = pmvm.CardNumber,
+            //        NameOnCard = pmvm.NameOnCard,
+            //        InvalidOperation = true
+            //    };
+            //    return View(newpmvm);
+            //}
+                       
+
+            return RedirectToAction("CloseOrder", "Buy", new { userId = pmvm.UserId, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks });
         }
     }
 }

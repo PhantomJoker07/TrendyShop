@@ -26,7 +26,7 @@ namespace TrendyShop.Models
         //public User Seller { get; set; }
 
 
-        [Key, Column(Order = 3)]
+        [Key, Column(Order = 2)]
         public int ArticleId { get; set; }
 
         //[ForeignKey("ArticleId")]

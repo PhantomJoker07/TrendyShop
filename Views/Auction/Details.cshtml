@@ -10,13 +10,17 @@
     <!-- Page Content -->
     *@{
         TimeSpan elapsed = DateTime.Now - Model.Start;
-            TimeSpan remaining = Model.Duration - elapsed;
-            if (elapsed > Model.Duration) remaining = new TimeSpan(0);
-            string winner = "none";
-            if (Model.Price != Model.Article.Price)// && 1==0)
-            {
-                winner = Model.LastBid.user.UserName;
-            }
+        TimeSpan remaining = Model.Duration - elapsed;
+        if (elapsed > Model.Duration) remaining = new TimeSpan(0);
+        string winner = "none";
+        if (Model.Price != Model.Article.Price)// && 1==0)
+        {
+            winner = Model.LastBid.user.UserName;
+        }
+        int r_days = (int)(remaining.TotalDays);
+        int r_hours = (int)(remaining.TotalHours)%24;
+        int r_minutes = (int)(remaining.TotalMinutes)%60;
+        int r_seconds = (int)(remaining.TotalSeconds)%60;
     }
     <div class="col-lg-7 mx-auto mt-4">
         <div class="card">
@@ -41,7 +45,7 @@
                         <p title="Fecha"><i class="far fa-calendar-alt"></i> @Model.Start.ToString("dd/MM/yy")</p>
                     }
                     <p title="Hora de inicio" class="ml-2"><i class="far fa-clock"></i> @Model.Start.ToString("hh:mm tt")</p>
-                    <p  title="Tiempo estante" class="ml-2"><i class="fas fa-hourglass-end"></i> @remaining</p>
+                    <p title="Tiempo estante" class="ml-2"><i class="fas fa-hourglass-end"></i> @r_days : @r_hours : @r_minutes : @r_seconds </p>
                     <h5 title="Participantes" class="ml-2"><i class="fas fa-users"></i> 150</h5> @*--------Pendiente Implementacion!!!!!------*@
 
                 </div>
@@ -50,7 +54,7 @@
                     <h5>Vendido a: [nombre] </h5> @*--------Pendiente Implementacion!!!!!------*@
 
                 }
-                else if (false) /*---------Si está en curso---------*/
+                else if (!Model.IsFinished) /*---------Si está en curso---------*/
                 {
                     <h5 class="mb-0">Licitador en cabeza: @winner </h5> @*--------Pendiente Implementacion!!!!!------*@
                 }
@@ -66,12 +70,29 @@
                     }
                 </div>
                 <div class="list-group-item">
-                    @if (SignInManager.IsSignedIn(User)) //Only a logged user can participate ---------No deberia chequear que la subasta esté en curso? -----
+                    @if (SignInManager.IsSignedIn(User) && !Model.IsFinished) //Only a logged user can participate ---------No deberia chequear que la subasta esté en curso? -----
                     {
-                        <h3>Cantidad</h3>
-                        <div class="d-flex form-group">
-                            <input class="mt-0" required="" data-validation-required-message="Por favor introduzca una cantidad" type="text">
-                            <a href="" class="btn btn-dark ml-2">Pujar</a>
+                        <form asp-controller="Auction" asp-action="Bid" method="post">
+                            <h5 class="text-lg-left">Cantidad:</h5>
+                            <div class="row text-center">
+                                <div class="col-lg-1"></div>
+                                <input type="text" asp-for="BidAmount" class="mb-4 col-lg-2 form-control" id="submit" required data-validation-required-message="Por favor introduzca una cantidad.">
+                                <span asp-validation-for="BidAmount" class="text-danger"></span>
+                                <input type="text" asp-for="ArticleId" data="@Model.Id" id="submit" hidden />
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-lg-1"></div>
+                                <button type="submit" class="bg-dark text-center btn btn-primary col-lg-2">Pujar</button>
+                                <div asp-validation-summary="All" class="col-lg-4 text-danger"></div>
+                            </div>
+                        </form>
+                    }
+
+                    @if (SignInManager.IsSignedIn(User) && Model.IsFinished) //For the winner only
+                    {
+                        <div class="row mb-4">
+                            <div class="col-lg-1"></div>
+                            <button type="submit" class="bg-dark text-center btn btn-primary col-lg-2">Finalizar Subasta</button>
                         </div>
                     }
                 </div>

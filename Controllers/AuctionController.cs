@@ -93,6 +93,8 @@ namespace TrendyShop.Controllers
             context.Entry(auction).Reference(a => a.Article).Load();
             context.Entry(auction).Reference(a => a.LastBid).Load();
 
+            var winner = context.Users.Find(auction.LastBid.UserId);
+
             var result = new AuctionViewModel
             {
                 UserName = auction.User.UserName,
@@ -122,13 +124,14 @@ namespace TrendyShop.Controllers
         {
             var auction = context.Auctions.Find(viewModel.ArticleId);
             var creator = context.Users.Find(auction.UserId);
+            context.Entry(auction).Reference(a => a.LastBid).Load();
 
 
             if (ModelState.IsValid)
             {
                 double amount = viewModel.BidAmount;
 
-                if (amount > auction.CurrentPrice)
+                if (amount > auction.CurrentPrice || (creator.Id == auction.LastBid.UserId && amount == auction.CurrentPrice))
                 {
                     auction.CurrentPrice = amount;
 
@@ -185,12 +188,21 @@ namespace TrendyShop.Controllers
                 return View("NewAuction", newViewModel);
             }
 
+            Bid nbid = new Bid
+            {
+                amount = viewModel.Auction.Article.Price,
+                user = GetUser(User.Identity.Name),
+                time = new TimeSpan(0)
+            };
+
+            viewModel.Auction.LastBid = nbid;
             viewModel.Auction.User = GetUser(User.Identity.Name); //returns null if user not found
             viewModel.Auction.UserId = User.Identity.Name;
             viewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
-            viewModel.Auction.Start = DateTime.Now;
             viewModel.Auction.Article.Image = UploadFile(viewModel.Image);
             viewModel.Auction.IsFinished = false;
+
+            viewModel.Auction.Start = DateTime.Now;  //This can be changed later to receive a custom date
 
             context.Auctions.Add(viewModel.Auction);//this already updates User and Article
             context.SaveChanges();

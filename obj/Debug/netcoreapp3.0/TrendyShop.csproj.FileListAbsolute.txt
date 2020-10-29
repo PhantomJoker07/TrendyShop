@@ -818,3 +818,4 @@ E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Details.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Index.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\SavedLists.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\PaymentGateway\GetPaymentMethod.cshtml.g.cs

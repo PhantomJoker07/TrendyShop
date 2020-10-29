@@ -10,8 +10,13 @@
     <!-- Page Content -->
     *@{
         TimeSpan elapsed = DateTime.Now - Model.Start;
-        TimeSpan remaining = Model.Duration - elapsed;
-        if (elapsed > Model.Duration) remaining = new TimeSpan(0);
+            TimeSpan remaining = Model.Duration - elapsed;
+            if (elapsed > Model.Duration) remaining = new TimeSpan(0);
+            string winner = "none";
+            if (Model.Price != Model.Article.Price)// && 1==0)
+            {
+                winner = Model.LastBid.user.UserName;
+            }
     }
     <div class="col-lg-7 mx-auto mt-4">
         <div class="card">
@@ -47,7 +52,7 @@
                 }
                 else if (false) /*---------Si está en curso---------*/
                 {
-                    <h5 class="mb-0">Licitador en cabeza: Amalia </h5> @*--------Pendiente Implementacion!!!!!------*@
+                    <h5 class="mb-0">Licitador en cabeza: @winner </h5> @*--------Pendiente Implementacion!!!!!------*@
                 }
                 <div class="d-flex">
                     <h5 class="btn btn-secondary mt-0">Precio Inicial: @Model.Price$</h5>

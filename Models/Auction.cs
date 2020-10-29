@@ -9,9 +9,7 @@ using System.Diagnostics;
 namespace TrendyShop.Models
 {
     public class Auction
-    {
-        public int Id { get; set; }  //old primary key
-        
+    {   
         public string Title { get; set; }
         
         public bool IsNew { get; set; }
@@ -34,6 +32,9 @@ namespace TrendyShop.Models
 
         public bool IsFinished { get; set; }
 
-        List<Bid> Bids { get; set; }
+        [ForeignKey("BidId"), Column(Order = 2)]
+        public int BidId { get; set; }
+
+        public Bid LastBid { get; set; }
     }
 }

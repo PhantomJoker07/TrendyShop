@@ -51,7 +51,7 @@
                 </div>
                 @if (Model.IsFinished)
                 {
-                    <h5>Vendido a: [nombre] </h5> @*--------Pendiente Implementacion!!!!!------*@
+                    <h5>Vendido a: @winner </h5> @*--------Pendiente Implementacion!!!!!------*@
 
                 }
                 else if (!Model.IsFinished) /*---------Si está en curso---------*/
@@ -60,11 +60,11 @@
                 }
                 <div class="d-flex">
                     <h5 class="btn btn-secondary mt-0">Precio Inicial: @Model.Price$</h5>
-                    @if (Model.IsFinished)
+                    @if (Model.IsFinished) // si ya se terminó
                     {
                         <h5 class="ml-2">Precio Final: @Model.Price$</h5> @*--------Pendiente Implementacion!!!!!------*@
                     }
-                    else if (false) /*---------Si está en curso---------*/
+                    else if (!Model.IsFinished) /*---------Si está en curso---------*/
                     {
                         <h5 class="ml-2 btn btn-secondary mt-0">Precio Actual: @Model.Price$</h5> @*--------Pendiente Implementacion!!!!!------*@
                     }

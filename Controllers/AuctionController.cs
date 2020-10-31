@@ -107,9 +107,18 @@ namespace TrendyShop.Controllers
                 AuctionDescription = auction.Article.Description,
                 Price = auction.CurrentPrice,
                 LastBid = auction.LastBid,
-                IsFinished = auction.IsFinished
+                IsFinished = auction.IsFinished,
+                HasStarted = auction.HasStarted,
+                Biders = auction.Biders,
+                Min_Bid = auction.Min_Bid
             };
 
+            //Checks if the auction has started
+            if (auction.Start >= DateTime.Now)
+            {
+                auction.HasStarted = true;
+                result.HasStarted = true;
+            }
             //Checks if the auction is over
             if (auction.Duration < DateTime.Now - auction.Start)
             {
@@ -130,8 +139,7 @@ namespace TrendyShop.Controllers
             if (ModelState.IsValid)
             {
                 double amount = viewModel.BidAmount;
-
-                if (amount > auction.CurrentPrice || (creator.Id == auction.LastBid.UserId && amount == auction.CurrentPrice))
+                if (amount >= auction.CurrentPrice + auction.Min_Bid || (creator.Id == auction.LastBid.UserId && amount == auction.CurrentPrice))
                 {
                     auction.CurrentPrice = amount;
 
@@ -153,12 +161,30 @@ namespace TrendyShop.Controllers
                     auction.CurrentPrice = amount;
                     auction.LastBid = nbid;
                     auction.BidId = nbid.BidId;
+                    auction.Biders = CheckBiders(auction);
                     context.Bids.Add(nbid);
                     context.SaveChanges();
 
                 }
             }
             return RedirectToAction("Details", "Auction", new { id = viewModel.ArticleId }, null);
+        }
+
+        public IActionResult Buy(AuctionViewModel viewModel)
+        {
+            var auction = context.Auctions.Find(viewModel.ArticleId);
+            var creator = context.Users.Find(auction.UserId);
+            context.Entry(auction).Reference(a => a.LastBid).Load();
+
+            if (creator.UserName == User.Identity.Name)
+            {
+                return RedirectToAction("Index", "Auction"); //Si nadie pujó en la subasta
+        
+            }
+
+            //++ POR IMPLEMENTAR ++\\
+
+            return RedirectToAction("Index", "Auction");
         }
 
         public IActionResult NewAuction()
@@ -195,14 +221,22 @@ namespace TrendyShop.Controllers
                 time = new TimeSpan(0)
             };
 
+            viewModel.Auction.Min_Bid = 1; // Cantidad mínima para subir de precio por defecto
+
             viewModel.Auction.LastBid = nbid;
-            viewModel.Auction.User = GetUser(User.Identity.Name); //returns null if user not found
+            viewModel.Auction.User = GetUser(User.Identity.Name); 
             viewModel.Auction.UserId = User.Identity.Name;
             viewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
             viewModel.Auction.Article.Image = UploadFile(viewModel.Image);
+            viewModel.Auction.Biders = 0;
             viewModel.Auction.IsFinished = false;
+            viewModel.Auction.HasStarted = false;
 
-            viewModel.Auction.Start = DateTime.Now;  //This can be changed later to receive a custom date
+            if (viewModel.Auction.Start <= DateTime.Now)
+            {
+                viewModel.Auction.Start = DateTime.Now;
+                viewModel.Auction.HasStarted = true;
+            }
 
             context.Auctions.Add(viewModel.Auction);//this already updates User and Article
             context.SaveChanges();
@@ -252,6 +286,21 @@ namespace TrendyShop.Controllers
                 }
             }
             throw new Exception("User " + UserId + " not found");
+        }
+
+        public int CheckBiders (Auction auction)
+        {
+            int result = auction.Biders;
+            foreach (var bid in context.Bids)
+            {
+                if (bid.user.UserName==User.Identity.Name && bid.AuctionId == auction.ArticleId)
+                {
+                    result -= 1;
+                    break;
+                }
+            }
+            result++;
+            return result;
         }
     }
 }

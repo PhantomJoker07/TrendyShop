@@ -20,5 +20,6 @@ namespace TrendyShop.ViewModels
 
         public string AddDescription { get; set; }
 
+        public bool AlreadyInCart { get; set; }
     }
 }

@@ -89,10 +89,33 @@ namespace TrendyShop.Controllers
 
         public IActionResult Details(int id)
         {
+            bool alreadyInCart = false;
             var add = context.Adds.Find(id);
 
             context.Entry(add).Reference(a => a.User).Load();
             context.Entry(add).Reference(a => a.Article).Load();
+
+            var mySl = (from sc in context.ShoppingCars
+                        join l in context.ShoppingLists
+                        on sc.ShoppingListId equals l.ShoppingListId
+                        where sc.UserId == GetUser(User.Identity.Name).Id && l.IsMainList == true
+                        select new { l.ShoppingListId }).ToList();
+
+            var sl2 = new ShoppingList();
+
+            if (mySl.Count() > 0)
+            {
+                foreach (var item in mySl)
+                {
+                    sl2 = context.ShoppingLists.Find(item.ShoppingListId);
+                }
+            }
+
+            if ((context.ShoppingList_Articles.SingleOrDefault(a => a.ShoppingListId == sl2.ShoppingListId && a.ArticleId == add.ArticleId)) != null)
+            {
+                alreadyInCart = true;
+            }
+
 
             var result = new AddViewModel
             {
@@ -100,7 +123,8 @@ namespace TrendyShop.Controllers
                 UserName = add.User.Alias,
                 Amount = add.Amount,
                 AddDescription = add.Description,
-                User = add.User
+                User = add.User,
+                AlreadyInCart = alreadyInCart
             };
 
             return View(result);

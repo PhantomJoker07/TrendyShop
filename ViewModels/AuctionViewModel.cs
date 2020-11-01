@@ -29,10 +29,16 @@ namespace TrendyShop.ViewModels
 
         public bool IsFinished { get; set; }
 
+        public bool HasStarted { get; set; }
+
+        public int Biders { get; set; }
+
         public double Price { get; set; }
 
         public double BidAmount { get; set; }
 
         public Bid LastBid { get; set; }
+
+        public double Min_Bid { get; set; }
     }
 }

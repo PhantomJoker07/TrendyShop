@@ -32,9 +32,15 @@ namespace TrendyShop.Models
 
         public bool IsFinished { get; set; }
 
+        public bool HasStarted { get; set; }
+
         [ForeignKey("BidId"), Column(Order = 2)]
         public int BidId { get; set; }
 
         public Bid LastBid { get; set; }
+
+        public int Biders{ get; set; }
+
+        public double Min_Bid { get; set; }
     }
 }

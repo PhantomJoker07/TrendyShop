@@ -60,6 +60,13 @@
                         @Html.TextBoxFor(a => a.Auction.Duration, new { @class = "form-control" })
                         @Html.ValidationMessageFor(a => a.Auction.Duration)
                     </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(a => a.Auction.Start)
+                        @Html.TextBoxFor(a => a.Auction.Start, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(a => a.Auction.Start)
+                    </div>
+
                     <div class="d-flex">
                         <button type="submit" class="btn btn-secondary ml-auto">Publicar </button>
                     </div>

@@ -25,6 +25,7 @@ namespace TrendyShop.Controllers
             context = ctx;
             webHostEnvironment = hostEnvironment;
         }
+
         public IActionResult Index()
         {
             var vm = new AuctionIndexViewModel
@@ -63,6 +64,7 @@ namespace TrendyShop.Controllers
             vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => !a.Article.IsNew).ToList();
             return View("Index", vm);
         }
+
         public IActionResult PriceFilter(float minp, float maxp)
         {
             var vm = new AuctionIndexViewModel
@@ -110,22 +112,25 @@ namespace TrendyShop.Controllers
                 IsFinished = auction.IsFinished,
                 HasStarted = auction.HasStarted,
                 Biders = auction.Biders,
-                Min_Bid = auction.Min_Bid
+                Min_Bid = auction.Min_Bid,
+                Paid = auction.Paid,
+                Winner = winner.UserName
             };
 
             //Checks if the auction has started
-            if (auction.Start >= DateTime.Now)
+            if (auction.Start <= DateTime.Now)
             {
                 auction.HasStarted = true;
                 result.HasStarted = true;
+                context.SaveChanges();
             }
             //Checks if the auction is over
             if (auction.Duration < DateTime.Now - auction.Start)
             {
-              auction.IsFinished = true;
-              result.IsFinished = true;
-              context.SaveChanges();
-            }  
+                auction.IsFinished = true;
+                result.IsFinished = true;
+                context.SaveChanges();
+            }
             return View(result);
         }
 
@@ -134,7 +139,6 @@ namespace TrendyShop.Controllers
             var auction = context.Auctions.Find(viewModel.ArticleId);
             var creator = context.Users.Find(auction.UserId);
             context.Entry(auction).Reference(a => a.LastBid).Load();
-
 
             if (ModelState.IsValid)
             {
@@ -159,7 +163,6 @@ namespace TrendyShop.Controllers
                     nbid.AuctionId = viewModel.ArticleId;
                     auction.LastBid = nbid;
                     auction.CurrentPrice = amount;
-                    auction.LastBid = nbid;
                     auction.BidId = nbid.BidId;
                     auction.Biders = CheckBiders(auction);
                     context.Bids.Add(nbid);
@@ -168,23 +171,6 @@ namespace TrendyShop.Controllers
                 }
             }
             return RedirectToAction("Details", "Auction", new { id = viewModel.ArticleId }, null);
-        }
-
-        public IActionResult Buy(AuctionViewModel viewModel)
-        {
-            var auction = context.Auctions.Find(viewModel.ArticleId);
-            var creator = context.Users.Find(auction.UserId);
-            context.Entry(auction).Reference(a => a.LastBid).Load();
-
-            if (creator.UserName == User.Identity.Name)
-            {
-                return RedirectToAction("Index", "Auction"); //Si nadie pujó en la subasta
-        
-            }
-
-            //++ POR IMPLEMENTAR ++\\
-
-            return RedirectToAction("Index", "Auction");
         }
 
         public IActionResult NewAuction()
@@ -201,7 +187,7 @@ namespace TrendyShop.Controllers
 
         public IActionResult CreateNewAuction(NewAuctionViewModel viewModel)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 NewAuctionViewModel newViewModel = new NewAuctionViewModel
@@ -224,7 +210,7 @@ namespace TrendyShop.Controllers
             viewModel.Auction.Min_Bid = 1; // Cantidad mínima para subir de precio por defecto
 
             viewModel.Auction.LastBid = nbid;
-            viewModel.Auction.User = GetUser(User.Identity.Name); 
+            viewModel.Auction.User = GetUser(User.Identity.Name);
             viewModel.Auction.UserId = User.Identity.Name;
             viewModel.Auction.CurrentPrice = viewModel.Auction.Article.Price;
             viewModel.Auction.Article.Image = UploadFile(viewModel.Image);
@@ -243,6 +229,7 @@ namespace TrendyShop.Controllers
 
             return RedirectToAction("Index", "Auction");
         }
+
         private string UploadFile(IFormFile image)
         {
             string uniqueFileName = null;
@@ -288,12 +275,12 @@ namespace TrendyShop.Controllers
             throw new Exception("User " + UserId + " not found");
         }
 
-        public int CheckBiders (Auction auction)
+        public int CheckBiders(Auction auction)
         {
             int result = auction.Biders;
             foreach (var bid in context.Bids)
             {
-                if (bid.user.UserName==User.Identity.Name && bid.AuctionId == auction.ArticleId)
+                if (bid.user.UserName == User.Identity.Name && bid.AuctionId == auction.ArticleId)
                 {
                     result -= 1;
                     break;

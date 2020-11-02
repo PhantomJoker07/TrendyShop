@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TrendyShop.ViewModels
 {
-    public class AddIndexViewModel
+    public class AddsViewModel
     {
         public IEnumerable<Add> Adds { get; set; }
         public IEnumerable<Category> Categories { get; set; }

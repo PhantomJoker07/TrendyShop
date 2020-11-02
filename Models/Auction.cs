@@ -42,5 +42,7 @@ namespace TrendyShop.Models
         public int Biders{ get; set; }
 
         public double Min_Bid { get; set; }
+
+        public bool Paid { get; set; }
     }
 }

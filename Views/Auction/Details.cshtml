@@ -18,9 +18,9 @@
             winner = Model.LastBid.user.UserName;
         }
         int r_days = (int)(remaining.TotalDays);
-        int r_hours = (int)(remaining.TotalHours)%24;
-        int r_minutes = (int)(remaining.TotalMinutes)%60;
-        int r_seconds = (int)(remaining.TotalSeconds)%60;
+        int r_hours = (int)(remaining.TotalHours) % 24;
+        int r_minutes = (int)(remaining.TotalMinutes) % 60;
+        int r_seconds = (int)(remaining.TotalSeconds) % 60;
     }
     <div class="col-lg-7 mx-auto mt-4">
         <div class="card">
@@ -56,17 +56,17 @@
                 }
                 else if (Model.HasStarted && !Model.IsFinished) /*---------Si está en curso---------*/
                 {
-                    <h5 class="mb-0">Licitador en cabeza: @winner </h5> 
+                    <h5 class="mb-0">Licitador en cabeza: @winner </h5>
                 }
                 <div class="d-flex">
                     <h5 class="btn btn-secondary mt-0">Precio Inicial: @Model.Article.Price$</h5>
                     @if (Model.IsFinished) // si ya se terminó
                     {
-                        <h5 class="ml-2">Precio Final: @Model.Price$</h5> 
+                        <h5 class="ml-2">Precio Final: @Model.Price$</h5>
                     }
                     else if (Model.HasStarted && !Model.IsFinished) /*---------Si está en curso---------*/
                     {
-                        <h5 class="ml-2 btn btn-secondary mt-0">Precio Actual: @Model.Price$</h5> 
+                        <h5 class="ml-2 btn btn-secondary mt-0">Precio Actual: @Model.Price$</h5>
                     }
                 </div>
                 <div class="list-group-item">
@@ -88,16 +88,20 @@
                         </form>
                     }
 
-                    @if (SignInManager.IsSignedIn(User) && Model.IsFinished) //For the winner only
+                    @if (SignInManager.IsSignedIn(User) && Model.IsFinished && !Model.Paid && Model.Winner == User.Identity.Name) //For the winner only
                     {
-                        <form asp-controller="Auction" asp-action="Buy" method="post">
+                        <form asp-action="BuyAuctionArticle" asp-controller="Buy" asp-route-uid=@Model.User.Id asp-route-aid=@Model.ArticleId>
+                            <button class="btn btn-dark ml-1" type="submit">Finalizar Subasta</button>
+                        </form>
+                        @*<form asp-controller="Auction" asp-action="Buy" method="post">
                             <div class="row mb-4">
                                 <div class="col-lg-1"></div>
-                                <input type="text" asp-for="ArticleId" data="@Model.Id" id="submit" hidden /> 
+                                <input type="text" asp-for="ArticleId" data="@Model.Id" id="submit" hidden />
                                 <button type="submit" class="bg-dark text-center btn btn-dark col-lg-2">Finalizar Subasta</button>
                             </div>
-                        </form>  
+                        </form>*@
                     }
+
                 </div>
 
             </div>

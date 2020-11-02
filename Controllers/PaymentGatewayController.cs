@@ -24,7 +24,7 @@ namespace TrendyShop.Controllers
         }
 
         //En este caso, como la pasarela está integrada a la plataforma, ya tenemos datos del login del usuario
-        public IActionResult GetPaymentMethod(string userId, int articleId, long orderDateTicks, float charge)
+        public IActionResult GetPaymentMethod(string userId, int articleId, long orderDateTicks, float charge, bool forAuction = false)
         {
             var cards = context.User_Cards.Where(c => c.UserId == userId).ToList();
 
@@ -34,20 +34,10 @@ namespace TrendyShop.Controllers
                 ArticleId = articleId,
                 DateTicks = orderDateTicks,
                 Charge = charge,
-                Cards = cards
+                Cards = cards,
+                ForAuction = forAuction
             };
             return View(pmvm);
-        }
-
-        private bool ValidatePayment(string nameOnCard, string cardNumber)
-        {
-            var random = new Random();
-            var validOperation = random.Next(1, 5);
-
-            if (validOperation == 1)
-                return false;
-
-            return true;
         }
 
         [HttpPost]
@@ -66,8 +56,9 @@ namespace TrendyShop.Controllers
                     Cards = cards,
                     CardNumber = pmvm.CardNumber,
                     NameOnCard = pmvm.NameOnCard,
+                    ForAuction = pmvm.ForAuction
                 };
-                return View(newpmvm);
+                return RedirectToAction("GetPaymentMethod", newpmvm);
             }
 
             var nameOnCard = pmvm.NameOnCard;
@@ -85,33 +76,15 @@ namespace TrendyShop.Controllers
                     CardNumber = cardNumber,
                     NameOnCard = nameOnCard
                 };
-                context.User_Cards.Add(user_card);
-                context.SaveChanges();
+                var cardInDb = context.User_Cards.SingleOrDefault(uc => uc.UserId == user_card.UserId && uc.CardNumber == user_card.CardNumber);
+                if (cardInDb == null)
+                {
+                    context.User_Cards.Add(user_card);
+                    context.SaveChanges();
+                }
             }
-
-            //descomentar cuando funcione lo del $
-            //var validOperation = ValidatePayment(nameOnCard, cardNumber);
-
-            //if(!validOperation)
-            //{
-            //    var cards = context.User_Cards.Where(c => c.UserId == pmvm.UserId).ToList();
-            //    PaymentMethodViewModel newpmvm = new PaymentMethodViewModel
-            //    {
-            //        UserId = pmvm.UserId,
-            //        SellerId = pmvm.SellerId,
-            //        ArticleId = pmvm.ArticleId,
-            //        DateTicks = pmvm.DateTicks,
-            //        Charge = pmvm.Charge,
-            //        Cards = cards,
-            //        CardNumber = pmvm.CardNumber,
-            //        NameOnCard = pmvm.NameOnCard,
-            //        InvalidOperation = true
-            //    };
-            //    return View(newpmvm);
-            //}
-                       
-
-            return RedirectToAction("CloseOrder", "Buy", new { userId = pmvm.UserId, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks });
+          
+            return RedirectToAction("CloseOrder", "Buy", new { userId = pmvm.UserId, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks, forauction = pmvm.ForAuction });
         }
     }
 }

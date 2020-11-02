@@ -15,15 +15,16 @@ namespace TrendyShop.ViewModels
         public long DateTicks { get; set; }
         public float Charge { get; set; }
         public IList<User_Card> Cards { get; set; }
-        public bool InvalidOperation { get; set; }
-        
+        public bool ForAuction { get; set; }
+
         [Display(Name = "Número de tarjeta")]
         public string SelectedCardNumber { get; set; }
 
         [Display(Name = "Número de tarjeta")]
+        [StringLength(18, MinimumLength = 13, ErrorMessage = "La tarjeta debe contener de 13 a 18 dígitos.")]
         public string CardNumber { get; set; }
 
-        [Display(Name = "Nombre de la tarjeta")]
+        [Display(Name = "Nombre de la nueva tarjeta")]
         public string NameOnCard { get; set; }
     }
 }

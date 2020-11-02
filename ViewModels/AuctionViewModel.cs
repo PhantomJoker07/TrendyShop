@@ -40,5 +40,9 @@ namespace TrendyShop.ViewModels
         public Bid LastBid { get; set; }
 
         public double Min_Bid { get; set; }
+
+        public bool Paid { get; set; }
+
+        public string Winner { get; set; }
     }
 }

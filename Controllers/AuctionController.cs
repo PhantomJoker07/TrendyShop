@@ -28,62 +28,174 @@ namespace TrendyShop.Controllers
 
         public IActionResult Index()
         {
+            var date = DateTime.Now;
             var vm = new AuctionIndexViewModel
             {
-                Auctions = context.Auctions.Include(a => a.Article).ToList(),
+                Auctions = context.Auctions.Include(a => a.Article).ToList().Where(a=> a.Start <= date && a.Start + a.Duration > date || a.Start > date),
                 Categories = context.Categories.ToList()
             };
 
             return View(vm);
         }
 
-        public IActionResult CategoryFilter(int categoryId)
+        public IActionResult MyAuctions()
         {
+            var currentUserName = User.Identity.Name;
+            var userId = context.Users.Single(u => u.UserName == currentUserName).Id;
+
+            var date = DateTime.Now;
             var vm = new AuctionIndexViewModel
             {
-                Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList(),
+                Auctions = context.Auctions.Include(a => a.Article).Where(a => a.UserId == userId).ToList().Where(a=> a.Start <= date && a.Start + a.Duration > date || a.Start > date),
                 Categories = context.Categories.ToList()
             };
 
-            return View("Index", vm);
+            return View(vm);
         }
 
-        public IActionResult ConditionFilter(bool isNew)
+        public IActionResult AllFilter(bool myAucts = false)
         {
             var vm = new AuctionIndexViewModel
             {
                 Categories = context.Categories.ToList()
             };
 
-            if (isNew)
+            if (myAucts)
             {
-                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.IsNew).ToList();
-                return View("Index", vm);
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Auctions = context.Auctions.Include(a => a.Article).Where(a => a.UserId == userId).ToList();
+                return View("MyAuctions",vm);
             }
 
-            vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => !a.Article.IsNew).ToList();
+            vm.Auctions = context.Auctions.Include(a => a.Article).ToList();
             return View("Index", vm);
         }
-
-        public IActionResult PriceFilter(float minp, float maxp)
+        
+        public IActionResult CategoryFilter(int categoryId, bool myAucts = false)
         {
             var vm = new AuctionIndexViewModel
             {
-                Categories = context.Categories.ToList(),
-                Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp)).ToList()
+                Categories = context.Categories.ToList()
             };
+
+            if (myAucts)
+            {
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId && a.UserId == userId).ToList();
+                return View("MyAuctions", vm);
+            }
+
+            vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList();
+            return View("Index", vm);
+        }
+
+        public IActionResult ConditionFilter(bool isNew, bool myAucts = false)
+        {
+            var vm = new AuctionIndexViewModel
+            {
+                Categories = context.Categories.ToList()
+            };
+
+            IQueryable<Auction> auctions;
+            if (isNew)
+            {
+                auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.IsNew);
+            }
+            else
+            {
+                auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => !a.Article.IsNew);
+            }
+
+            if (myAucts)
+            {
+                var userName = User.Identity.Name;
+                if (userName != null)
+                {
+                    var userId = context.Users.Single(u => u.UserName == userName).Id;
+                    vm.Auctions = auctions.Where(a => a.UserId == userId).ToList();
+                    return View("MyAuctions", vm);
+                }//else mandar error aqui y en todos los filtros
+            }
+
+            vm.Auctions = auctions.ToList();
+            return View("Index", vm);
+        }
+
+        public IActionResult PriceFilter(float minp, float maxp, bool myAucts = false)
+        {
+            var vm = new AuctionIndexViewModel
+            {
+                Categories = context.Categories.ToList()
+            };
+
+            if (myAucts)
+            {
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp) && a.UserId == userId).ToList();
+                return View("MyAuctions", vm);
+            }
+
+            vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp)).ToList();
 
             return View("Index", vm);
         }
 
-        public IActionResult Search(string search)
+        public IActionResult StateFilter(int state, bool myAucts = false)
         {
             var vm = new AuctionIndexViewModel
             {
-                Categories = context.Categories.ToList(),
-                Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search)).ToList()
+                Categories = context.Categories.ToList()
             };
 
+            var date = DateTime.Now;
+            if (state == 1)//pasadas
+            {
+                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).ToList().Where(a => a.Duration < date - a.Start);
+            }
+            else if (state == 2)//en curso
+            {
+                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).ToList().Where(a => a.Start <= date && a.Start + a.Duration > date);
+
+                //auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Start <= date && a.Start + a.Duration > date);
+            }
+            else//pendientes
+            {
+                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Start > date).ToList();
+            }
+
+            if (myAucts)
+            {
+                var userName = User.Identity.Name;
+                if (userName != null)
+                {
+                    var userId = context.Users.Single(u => u.UserName == userName).Id;
+                    vm.Auctions = vm.Auctions.Where(a => a.UserId == userId);
+                    return View("MyAuctions", vm);
+                }//else mandar error aqui y en todos los filtros
+            }
+
+            return View("Index", vm);
+        }
+
+        public IActionResult Search(string search, bool myAucts = false)
+        {
+            var vm = new AuctionIndexViewModel
+            {
+                Categories = context.Categories.ToList()
+            };
+
+            if (myAucts)
+            {
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search) && a.UserId == userId).ToList();
+                return View("MyAuctions", vm);
+            }
+
+            vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search)).ToList();
             return View("Index", vm);
         }
 
@@ -227,7 +339,7 @@ namespace TrendyShop.Controllers
             context.Auctions.Add(viewModel.Auction);//this already updates User and Article
             context.SaveChanges();
 
-            return RedirectToAction("Index", "Auction");
+            return RedirectToAction("MyAuctions", "Auction");
         }
 
         private string UploadFile(IFormFile image)
@@ -288,6 +400,23 @@ namespace TrendyShop.Controllers
             }
             result++;
             return result;
+        }
+        
+        public ActionResult Delete(int aid)
+        {
+            var auction = context.Auctions.Include(a => a.Article)
+                .Single(a=>a.ArticleId == aid);
+
+            var date = DateTime.Now;
+            if(auction.Start <= date && auction.Start + auction.Duration >= date)
+            {
+                return RedirectToAction("MyAuctions", "Auction");
+            }
+            context.Articles.Remove(auction.Article);
+            context.Auctions.Remove(auction);
+            context.SaveChanges();
+
+            return RedirectToAction("MyAuctions", "Auction");
         }
     }
 }

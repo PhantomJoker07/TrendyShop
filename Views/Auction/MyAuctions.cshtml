@@ -1,0 +1,161 @@
+﻿@using TrendyShop.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model AuctionIndexViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="col-lg-4 mt-4 mb-3">Mis Subastas</h1>
+
+        <form asp-action="Search" asp-controller="Auction">
+            <div class="d-flex">
+                <div class="ml-auto">
+                    <div class="d-flex">
+                        <input type="search" class="form-control" id="search" name="search">
+                        <input type="hidden" id="myAucts" name="myAucts" value="True">
+                        <button type="submit" class="btn btn-dark ml-1">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index">Inicio</a>
+        </li>
+        <li class="breadcrumb-item active">Subastas</li>
+    </ol>
+
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-lg-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="navbar-nav flex-column">
+                        <li class="card-title border-bottom h2">
+                            Filtrar por...
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="collapse" aria-expanded="false" data-target="#submenu-0" aria-controls="submenu-0"><i class="fas fa-dollar-sign"></i> Precio</a>
+                            <div id="submenu-0" class="collapse submenu" style="">
+                                <form asp-controller="Auction" asp-action="PriceFilter">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item mb-1 ml-4">
+                                            <div class="list-group-item">
+                                                <div class="d-flex flex-column">
+                                                    <label for="minp">Min</label>
+                                                    <input type="number" name="minp" id="minp" />
+
+                                                    <label for="maxp">Max</label>
+                                                    <input type="number" name="maxp" id="maxp" />
+
+                                                    <input type="hidden" id="myAucts" name="myAucts" value="True">
+                                                </div>
+                                                <div class="d-flex">
+                                                    <button type="submit" class="btn btn-dark mt-3 ml-auto">Filtrar</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fas fa-chart-bar"></i> Categoría <span class="badge badge-success"></span></a>
+                            <div id="submenu-1" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    @foreach (Category cat in Model.Categories)
+                                    {
+                                        <li class="nav-item mb-1 ml-4">
+                                            @Html.ActionLink(cat.Name, "CategoryFilter", "Auction", new { categoryId = cat.CategoryId, myAucts = true })
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1"><i class="fas fa-gift"></i> Condición</a>
+                            <div id="submenu-1-1" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("Nuevo", "ConditionFilter", "Auction", new { isNew = true, myAucts = true })
+                                    </li>
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("De Uso", "ConditionFilter", "Auction", new { isNew = false, myAucts = true })
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2"><i class="fas fa-parachute-box"></i> Estado</a>
+                            <div id="submenu-1-2" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("Cerradas", "StateFilter", "Auction", new { state = 1, myAucts = true })
+                                    </li>
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("En curso", "StateFilter", "Auction", new { state = 2, myAucts = true })
+                                    </li>
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("Pendientes", "StateFilter", "Auction", new { state = 3, myAucts = true })
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        @*<li class="nav-item">
+                                <a href="/Auction/Active "></a>
+                            </li>*@
+                        <li class="nav-item">
+                            <a asp-action="AllFilter" asp-controller="Auction" asp-route-myAucts="True"><i class="fas fa-globe"></i> Ver todos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9 mb-4">
+            <h2>Subastas</h2>
+
+            @foreach (Auction a in Model.Auctions)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <img src="~/images/@a.Article.Image" class="img-fluid rounded" height="200" width="300" />
+                        <h4 class="card-title border-bottom">@a.Title</h4>
+                        <div class="d-flex">
+                            <p><i class="far fa-calendar-alt"></i> @a.Start.ToString("dd/MM/yy")</p>
+                            <p class="ml-2"><i class="far fa-clock"></i> @a.Start.ToString("hh:mm tt")</p>
+                            <p class="ml-2"><i class="fas fa-hourglass-end"></i> @a.Duration</p>
+                        </div>
+                        <p>Artículo: @a.Article.Name</p>
+
+                        <p class="card-text">@a.Article.Description</p>
+                        <div class="d-flex">
+                            <div class="ml-auto">
+                                @*<a class="btn btn-primary">Unirse </a>*@
+                                @Html.ActionLink("Eliminar", "Delete", "Auction", new { aid = a.ArticleId }, null)
+                                @Html.ActionLink("Detalles", "Details", "Auction", new { id = a.ArticleId }, null)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <!-- /.container -->
+    <!-- Footer -->
+    <!-- Bootstrap core JavaScript -->
+
+</body>
+
+</html>

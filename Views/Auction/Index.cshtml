@@ -92,10 +92,26 @@
                             </div>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2"><i class="fas fa-parachute-box"></i> Estado</a>
+                            <div id="submenu-1-2" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("Cerradas", "StateFilter", "Auction", new { state = 1})
+                                    </li>
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("En curso", "StateFilter", "Auction", new { state = 2})
+                                    </li>
+                                    <li class="nav-item mb-1 ml-4">
+                                        @Html.ActionLink("Pendientes", "StateFilter", "Auction", new { state = 3})
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
                             <a href="/Auction/Active "></a>
                         </li>
                         <li class="nav-item">
-                            <a href="/Auction/Index"><i class="fas fa-globe"></i> Ver todos</a>
+                            <a href="/Auction/AllFilter"><i class="fas fa-globe"></i> Ver todos</a>
                         </li>
                     </ul>
                 </div>

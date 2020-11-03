@@ -989,3 +989,5 @@ B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\ne
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.pdb
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAddArticle.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAuctionArticle.cshtml.g.cs
+B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\MyAdds.cshtml.g.cs
+B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\MyAuctions.cshtml.g.cs

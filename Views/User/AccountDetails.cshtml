@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model TrendyShop.ViewModels.UserViewModel
 @using Microsoft.AspNetCore.Identity;
 @inject SignInManager<User> SignInManager
 @{
@@ -11,22 +11,33 @@
         <div class="card-body">
             <!-- Post Content Column -->
             <!-- Preview Image -->
-            <img class="img-fluid rounded" src="~/images/@Model.ProfilePicture" height="200" width="300" />
-            <h1 class="card-title border-bottom">@Model.FirstName @Model.LastName</h1>
-            <h5><i class="fas fa-phone"></i> @Model.PhoneNumber</h5>
-            <h5><i class="fas fa-fw fa-envelope"></i> @Model.Email</h5>
             <div class="d-flex">
-                <h5>Total de Ventas: @Model.TotalSales</h5>
-                <h5 class="ml-3"><i class="fas fa-star"></i> @Model.Rating</h5>
+                <img class="img-fluid rounded" src="~/images/@Model.User.ProfilePicture" height="200" width="300" />
+                <form asp-action="ChangeProfilePicture" asp-controller="User" asp-route-userId="@Model.User.Id" asp-route-image="@Model.Image" enctype="multipart/form-data">
+                    <div class="custom-file d-flex">
+                        <label class="custom-file-label ml-2" for="customFile" style="width:100px">Editar Foto</label>
+                        <input asp-for="Image" class="custom-file-input mr-3" id="customFile" name="image" style="width:50px" />
+                        <button class="btn btn-dark ml-5" type="submit">Guardar</button>
+                        <span asp-validation-for="Image"></span>
+                    </div>
+                </form>
+            </div>
+            <h1 class="card-title border-bottom">@Model.User.FirstName @Model.User.LastName</h1>
+            <h5><i class="fas fa-phone"></i> @Model.User.PhoneNumber</h5>
+            <h5><i class="fas fa-fw fa-envelope"></i> @Model.User.Email</h5>
+            <div class="d-flex">
+                <h5>Total de Ventas: @Model.User.TotalSales</h5>
+                <h5 class="ml-3"><i class="fas fa-star"></i> @Model.User.Rating</h5>
 
             </div>
-            <h5 class="card-text">@Model.Description</h5>
+            <h5 class="card-text">@Model.User.Description</h5>
 
-            @if (SignInManager.IsSignedIn(User) && User.Identity.Name.Equals(Model.UserName))
+            @if (SignInManager.IsSignedIn(User) && User.Identity.Name.Equals(Model.User.UserName))
             {
                 <div class="d-flex">
                     <div class="ml-auto">
-                        <a class="card-title btn btn-secondary" asp-action="Edit" asp-controller="User" asp-route-userName="@Model.UserName">Editar</a>
+                        <a class="card-title btn btn-secondary" asp-action="Edit" asp-controller="User" asp-route-userName="@Model.User.UserName">Editar</a>
+                        <a class="card-title btn btn-secondary" asp-action="ChangePassword" asp-controller="User" asp-route-userId="@SignInManager.UserManager.GetUserId(User)">Cambiar Contraseña</a>
                     </div>
                 </div>
             }

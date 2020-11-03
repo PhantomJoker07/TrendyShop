@@ -1,7 +1,7 @@
 ﻿@using TrendyShop.ViewModels
 
 @*@model IEnumerable<Add>*@
-@model AddIndexViewModel
+@model AddsViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,6 +75,12 @@
                                             @Html.ActionLink(cat.Name, "CategoryFilter", "Add", new { categoryId = cat.CategoryId })
                                         </li>
                                     }
+                                    @if (Model.UserIsAdmin)
+                                    {
+                                        <li class="nav-item mb-1 ml-4">
+                                            <a href="#" data-toggle="modal" data-target="#CategoryModal"><i class="fas fa-plus"></i> Añadir Categoría</a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </li>
@@ -91,8 +97,8 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item" >
-                            <a href="/Add/Index" ><i class="fas fa-globe"></i> Ver todos</a>
+                        <li class="nav-item">
+                            <a href="/Add/Index"><i class="fas fa-globe"></i> Ver todos</a>
                         </li>
                     </ul>
                 </div>
@@ -127,15 +133,34 @@
             }
 
         </div>
-        @*<div class="col-lg-1 card-footer my-4">
-                @Html.ActionLink("Nuevo Anuncio", "NewAdd", "Add", null)
 
-            </div>*@
+        <div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    @*<div class="modal-header">
+                        <h5 class="modal-title" id="CategoryModalLongTitle"></h5>*@
+                        
+                    @*</div>*@
+                    <div class="modal-body">
+                        <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <form asp-action="SaveAddCategory" asp-controller="User">
+                            <div class="flex-column">
+                                @Html.LabelFor(m => m.CategoryName)
+                                <div class="d-flex">
+                                    @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-group" })
+                                    @Html.ValidationMessageFor(m => m.CategoryName)
+                                    <button class="btn btn-secondary ml-2 form-group" type="submit">Añadir</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
     </div>
-
-    <!-- /.container -->
-    <!-- Bootstrap core JavaScript -->
-
 </body>
 
 </html>

@@ -8,34 +8,35 @@ using TrendyShop.ViewModels;
 using TrendyShop.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
+using Microsoft.AspNetCore.Identity;
+
 namespace TrendyShop.Data
 {
     public class DbInitializer
     {
-        public static void Initialize(EFDbContext context)
+        public static async Task Initialize(EFDbContext context, RoleManager<IdentityRole> _roleManager, UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            //context.Database.Migrate();
-            context.Database.EnsureCreated();
-            Fill_Categories(context);
-        }
-
-        public static void Fill_Categories (EFDbContext context)
-        {
-            Category[] categories =
+            //Creating roles
+            if (!await _roleManager.RoleExistsAsync("Admin"))
             {
-                new Category { Name = "Unknown"},
-                new Category { Name = "Laptop" },
-                new Category { Name = "Celular" },
-                new Category { Name = "PC de escritorio" },
-                new Category { Name = "Componente" },
-            };
-
-
-            if (!context.Categories.Any())
-            {
-                foreach (var cat in categories) context.Categories.Add(cat);
-                context.SaveChanges();
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
             }
+            if (!await _roleManager.RoleExistsAsync("Customer"))
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Customer"));
+            }
+
+            if(context.Users.Find("defaultAdmin") == null)
+            {
+                var user = new User { UserName = "defaultAdmin" };
+                var result = await userManager.CreateAsync(user, "def@ultP@ssw0rd");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
+           
         }
+       
     }
 }

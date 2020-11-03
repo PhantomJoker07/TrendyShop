@@ -11,7 +11,7 @@
             @*@using (Html.BeginForm("EffectBuy", "Buy", new { aid = @Model.Add.ArticleId, uid = @Model.Add.UserId, card = @Model.Card, amountToBuy = @Model.AmountToBuy }))*@
             @using (Html.BeginForm("FinishPayment", "PaymentGateway", FormMethod.Post, new { id = "pform" }))
             {
-                <h3>Añada una tarjeta para realizar el pago:</h3>
+                <h3>@*Añada una tarjeta para realizar el pago:*@</h3>
 
                 <div class=" form-group">
                     @Html.LabelFor(m => m.NameOnCard)
@@ -25,7 +25,7 @@
                     @Html.ValidationMessageFor(m => m.CardNumber)
                 </div>
 
-                <h3>O elija una de las registradas:</h3>
+                <h3>O escoja una de las registradas:</h3>
 
                 //podemos actually tener un card que sea una clase con NameOnCard y CardNumber
                 <div class=" form-group">
@@ -38,52 +38,18 @@
                 @Html.HiddenFor(m => m.ArticleId)
                 @Html.HiddenFor(m => m.DateTicks)
                 @Html.HiddenFor(m => m.Charge)
+                @Html.HiddenFor(m => m.ForAuction)
             }
 
 
             <div class="d-flex">
                 <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pago</button>
-
-                @*descomentar y eliminar el de arriba si se arregla lo de $*@
-                @*<button class="btn btn-secondary ml-auto" onclick="insertData()">Realizar pago</button>*@
-
-                <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks>
+                <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks asp-route-forAuction=@Model.ForAuction>
                     <button class="btn btn-dark ml-1" type="submit">Cancelar</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="WarningModalLongTitle">No se pudo avalar la transacción</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h3>Lo sentimos, al parecer la tarjeta seleccionada no cuenta con fondos suficientes</h3>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary ml-auto" data-dismiss="modal">Elegir otra</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div>
-    @if (Model.InvalidOperation)
-    {
-        @section scripts {
-            <script type="text/javascript">
-                $('#warningModal').modal()
-            </script>
-        }
-    }
 </div>
 
 <div class="modal fade" id="confirmodal" tabindex="-1" role="dialog" aria-labelledby="ConfirmationModal" aria-hidden="true">
@@ -97,10 +63,6 @@
             </div>
             <div class="modal-body">
                 <h6>Se descontará @Model.Charge de su cuenta. ¿Desea continuar?</h6>
-
-                @*<div class="d-flex">
-                        <input onclick="finishOperation()" class="ml-1  btn-dark" value="Continuar" />
-                    </div>*@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary ml-auto" onclick="finishOperation()">Continuar</button>
@@ -111,6 +73,7 @@
 </div>
 
 <script>
+    var usedCards = []
     function insertData() {
         var isValid = validateForm();
 
@@ -126,9 +89,23 @@
         cardNumberDDL = dropDownList.options[dropDownList.selectedIndex].text;
 
         //cards most have from 13 - 18 digits
-        if (cardNumberDDL == "" && (nameOnCard == "" || (cardNumber.length < 13 || cardNumber.length > 18))) {
-            alert("Por favor especifique un número y nombre de tarjeta válidos para efectuar su compra");
+        if (cardNumberDDL != "" && (nameOnCard != "" || cardNumber != "")) {
+            alert("Sólo puede elegir una tarjeta para realizar el pago.")
             return false;
+        }
+        if (cardNumberDDL == "" && nameOnCard == "" &&  cardNumber == "") {
+            alert("Debe elegir una tarjeta para realizar el pago.")
+            return false;
+        }
+        if (cardNumberDDL == "") {
+            if (nameOnCard == "") {
+                alert("Por favor especifique un nombre de tarjeta válido.");
+                return false;
+            }
+            if (isNaN(cardNumber) || cardNumber.length < 13 || cardNumber.length > 18) {
+                alert("Por favor especifique un número de tarjeta válido. Debe contener entre 13 y 18 dígitos.");
+                return false;
+            }
         }
         return true;
     }
@@ -137,11 +114,23 @@
         isValid = validateForm();
 
         if (isValid) {
+            newCardNumber = document.getElementById("CardNumber").value;
+            var dropDownList = document.getElementById("SelectedCardNumber");
+            cardNumberDDL = dropDownList.options[dropDownList.selectedIndex].text;
+            if (cardNumberDDL == "" && newCardNumber != "") {
+                cardNumber = newCardNumber;
+            }
+            else {
+                cardNumber = cardNumberDDL;
+            }
+
             random = Math.floor((Math.random() * 10) + 1);
 
-            //este if else, el isvalid y el random pueden eliminarse si se logra que funcione el llamado a modal
-            if (random === 1) {
-                alert("Lo sentimos, al parecer la tarjeta seleccionada no cuenta con fondos suficientes. Por favor seleccione otra");
+            if (random === 1 || usedCards.includes(cardNumber)) {
+                if (!usedCards.includes(cardNumber)) {
+                    usedCards.push(cardNumber);
+                }
+                alert("Lo sentimos, al parecer la tarjeta seleccionada no cuenta con fondos suficientes. Por favor seleccione otra.");
             }
             else {
                 submitForm();

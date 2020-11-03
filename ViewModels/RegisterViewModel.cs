@@ -36,5 +36,10 @@ namespace TrendyShop.ViewModels
         public string Confirmation { get; set; }
 
         public IFormFile Image { get; set; }
+
+        public bool UserIsAdmin { get; set; }
+
+        [Display(Name ="Crear como administrador")]
+        public bool CreateAsAdmin { get; set; }
     }
 }

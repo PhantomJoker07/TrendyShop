@@ -1,0 +1,94 @@
+﻿@model TrendyShop.ViewModels.BuyAuctionArticleViewModel
+
+@{
+    ViewData["Title"] = "BuyAuctionArticle";
+}
+
+<div class="col-lg-5 mx-auto mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title border-bottom">Felicidades por su reciente apuesta ganadora.</h5>
+            <h5 class="card-title border-bottom">Llegó la hora de adquirir su @Model.Auction.Article.Name</h5>
+            @using (Html.BeginForm("EffectAuctionBuy", "Buy", FormMethod.Post, new { id = "bform" }))
+            {
+                <div class=" form-group">
+                    @Html.LabelFor(m => m.Address)
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "address" })
+                    @Html.ValidationMessageFor(m => m.Address)
+                </div>
+
+                <div class="d-flex">
+                    <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pedido</button>
+                    <button class="btn btn-dark ml-1" type="button" onclick="location.pathname='/Add'">Cancelar</button>
+                </div>
+
+                @Html.HiddenFor(m => m.Auction.UserId)
+                @Html.HiddenFor(m => m.Auction.ArticleId)
+                @Html.HiddenFor(m => m.Auction.Article.Name)
+                @Html.HiddenFor(m => m.Auction.Article.Price)
+                @Html.HiddenFor(m => m.CustomerId)
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmodal" tabindex="-1" role="dialog" aria-labelledby="ConfirmationModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="ConfirmationModalLongTitle">¿Está seguro que desea realizar esta compra?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Se aplicará un extra por el envio.</h5>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary ml-auto" onclick="finishOperation()">Continuar</button>
+                <button class="btn btn-dark ml-1" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var shippingCharge = 0;
+
+    document.getElementById("amount").select();
+    
+    function validateForm() {
+        var address = document.getElementById('address').value;
+
+        if (address == "" || address == null){
+            alert("Por favor especifique una dirección a la cual enviar su más reciente adquisición.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function finishOperation() {
+        isvalid = validateForm();
+        if (isvalid) {
+            saveShippingCharge();
+            submitForm();
+        }
+    }
+
+    function submitForm() {
+        document.getElementById('bform').submit();
+    }
+
+    function saveShippingCharge() {
+        shippingCharge = Math.floor((Math.random() * 10) + 1);
+
+        form = document.getElementById('bform');
+
+        var input = document.createElement("INPUT");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("value", shippingCharge);
+        input.setAttribute("name", "ShippingCharge");
+        form.appendChild(input);
+    }
+</script>

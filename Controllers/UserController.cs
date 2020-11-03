@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrendyShop.Controllers
 {
@@ -32,7 +33,9 @@ namespace TrendyShop.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            bool isAdmin = User.IsInRole("Admin");
+            var vm = new RegisterViewModel { UserIsAdmin = isAdmin };
+            return View(vm);
         }
 
         [HttpPost]
@@ -55,6 +58,11 @@ namespace TrendyShop.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (model.CreateAsAdmin)
+                        await userManager.AddToRoleAsync(user, "Admin");
+                    else
+                        await userManager.AddToRoleAsync(user, "Customer");
+
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -117,8 +125,18 @@ namespace TrendyShop.Controllers
 
         public IActionResult AccountDetails(string userName)
         {
-            var account = userManager.Users.FirstOrDefault(e => e.UserName.Equals(userName));
-            return View(account);
+            var user = userManager.Users.FirstOrDefault(e => e.UserName.Equals(userName));
+            var vm = new UserViewModel { User = user };
+            return View(vm);
+        }
+
+        public IActionResult ChangeProfilePicture(string userId, IFormFile image)
+        {
+            var user = context.Users.Find(userId);
+            user.ProfilePicture = UploadFile(image);
+            context.SaveChanges();
+
+            return RedirectToAction("AccountDetails", new { userName = user.UserName });
         }
 
         [HttpGet]
@@ -133,7 +151,6 @@ namespace TrendyShop.Controllers
                 Email = account.Email,
                 Details = account.Description,
                 PhoneNumber = account.PhoneNumber,
-                CurrentProfilePicture = account.ProfilePicture
             };
             return View(model);
         }
@@ -150,33 +167,11 @@ namespace TrendyShop.Controllers
                 account.LastName = model.LastName;
                 account.PhoneNumber = model.PhoneNumber;
                 account.Description = model.Details;
-                account.ProfilePicture = UploadFile(model.Image);
                 var result = await userManager.UpdateAsync(account);
 
                 if (result.Succeeded)
                 {
-                    if (model.NewPassword != null
-                    || model.OldPassword != null
-                    || model.Confirmation != null)
-                    {
-                        var change_result = await userManager.ChangePasswordAsync(account, model.OldPassword, model.NewPassword);
-                        if (change_result.Succeeded)
-                        {
-                            return RedirectToAction("AccountDetails", new { userName = account.UserName });
-                        }
-                        else
-                        {
-                            foreach (var error in change_result.Errors)
-                            {
-                                ModelState.AddModelError("", error.Description);
-                            }
-                            return View(model);
-                        }
-                    }
-                    else
-                    {
-                        return View(model);
-                    }
+                    return RedirectToAction("AccountDetails", new { userName = account.UserName });
                 }
                 else
                 {
@@ -187,6 +182,39 @@ namespace TrendyShop.Controllers
                 }
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public  IActionResult ChangePassword(string userId)
+        {
+            var vm = new ChangePasswordViewModel { UserId = userId};
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveChangedPassword(ChangePasswordViewModel model)
+        {
+            var user = await userManager.FindByIdAsync(model.UserId);
+            var change_result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            if (change_result.Succeeded)
+            {
+                return RedirectToAction("AccountDetails", new { userName = user.UserName });
+            }
+            else
+            {
+                return RedirectToAction("ChangePassword", new { userId = user.Id });
+            }
+        }
+
+        public IActionResult SaveAddCategory(string categoryName)
+        {
+            if(categoryName != null)
+            {
+                context.Categories.Add(new Category { Name = categoryName });
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Add");
         }
     }
 }

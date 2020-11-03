@@ -165,7 +165,6 @@ namespace TrendyShop.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ArticleId");
@@ -218,20 +217,29 @@ namespace TrendyShop.Migrations
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BidId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Biders")
+                        .HasColumnType("int");
+
                     b.Property<double>("CurrentPrice")
                         .HasColumnType("float");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<bool>("HasStarted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsNew")
                         .HasColumnType("bit");
+
+                    b.Property<double>("Min_Bid")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -244,9 +252,37 @@ namespace TrendyShop.Migrations
 
                     b.HasKey("ArticleId");
 
+                    b.HasIndex("BidId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Auctions");
+                });
+
+            modelBuilder.Entity("TrendyShop.Models.Bid", b =>
+                {
+                    b.Property<int>("BidId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AuctionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("amount")
+                        .HasColumnType("float");
+
+                    b.Property<TimeSpan>("time")
+                        .HasColumnType("time");
+
+                    b.HasKey("BidId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bids");
                 });
 
             modelBuilder.Entity("TrendyShop.Models.Category", b =>
@@ -267,8 +303,14 @@ namespace TrendyShop.Migrations
 
             modelBuilder.Entity("TrendyShop.Models.Order", b =>
                 {
-                    b.Property<string>("OrderId")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -276,31 +318,17 @@ namespace TrendyShop.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("Paid")
                         .HasColumnType("bit");
-
-                    b.Property<string>("SellerId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("ShippingCharge")
                         .HasColumnType("real");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("Date", "CustomerId", "ArticleId");
 
                     b.HasIndex("ArticleId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("SellerId");
 
                     b.ToTable("Orders");
                 });
@@ -450,8 +478,8 @@ namespace TrendyShop.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CardNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("CardNumber")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NameOnCard")
                         .HasColumnType("nvarchar(max)");
@@ -522,9 +550,7 @@ namespace TrendyShop.Migrations
 
                     b.HasOne("TrendyShop.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("TrendyShop.Models.Article", b =>
@@ -544,7 +570,20 @@ namespace TrendyShop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TrendyShop.Models.Bid", "LastBid")
+                        .WithMany()
+                        .HasForeignKey("BidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TrendyShop.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TrendyShop.Models.Bid", b =>
+                {
+                    b.HasOne("TrendyShop.Models.User", "user")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -559,11 +598,9 @@ namespace TrendyShop.Migrations
 
                     b.HasOne("TrendyShop.Models.User", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("TrendyShop.Models.User", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TrendyShop.Models.ShoppingCar", b =>

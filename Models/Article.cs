@@ -36,6 +36,7 @@ namespace TrendyShop.Models
         [Display(Name = "Nuevo")]
         public bool IsNew { get; set; }
 
+        [Display(Name = "Imagen")]
         public string Image { get; set; }
     }
 }

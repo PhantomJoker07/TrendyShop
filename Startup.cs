@@ -37,6 +37,11 @@ namespace TrendyShop
                     .AddEntityFrameworkStores<EFDbContext>();
             services.AddMvc().AddXmlSerializerFormatters();
             services.AddScoped<IUserRepository, SQLUserRepository>();
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.LoginPath = new PathString("/User/Login");
+                opt.AccessDeniedPath = new PathString("/User/Login");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,9 +62,10 @@ namespace TrendyShop
 
             app.UseRouting();
 
-           // app.UseAuthorization();
 
             app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

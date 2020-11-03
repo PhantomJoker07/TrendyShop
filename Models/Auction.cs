@@ -10,6 +10,7 @@ namespace TrendyShop.Models
 {
     public class Auction
     {   
+        [Display(Name ="Título")]
         public string Title { get; set; }
         
         public bool IsNew { get; set; }
@@ -26,8 +27,10 @@ namespace TrendyShop.Models
 
         public double CurrentPrice { get; set; }
 
+        [Display(Name = "Duración")]
         public TimeSpan Duration { get; set; }
 
+        [Display(Name = "Fecha de inicio")]
         public DateTime Start { get; set; }
 
         public bool IsFinished { get; set; }

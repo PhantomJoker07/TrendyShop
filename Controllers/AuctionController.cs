@@ -30,7 +30,8 @@ namespace TrendyShop.Controllers
             var vm = new AuctionIndexViewModel
             {
                 Auctions = context.Auctions.Include(a => a.Article).ToList(),
-                Categories = context.Categories.ToList()
+                Categories = context.Categories.ToList(),
+                UserIsAdmin = User.IsInRole("Admin")
             };
 
             return View(vm);

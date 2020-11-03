@@ -819,3 +819,4 @@ E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\SavedLists.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\PaymentGateway\GetPaymentMethod.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.csprojAssemblyReference.cache
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\PaymentGateway\GetPaymentMethod.cshtml.g.cs

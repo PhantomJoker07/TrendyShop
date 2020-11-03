@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using TrendyShop.Models;
 using TrendyShop.ViewModels;
 using TrendyShop.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrendyShop.Controllers
 {
@@ -28,7 +29,6 @@ namespace TrendyShop.Controllers
 
         public IActionResult Index()
         {
-            DbInitializer.Initialize(context);
             var adds = (from add in context.Adds
                            join article in context.Articles
                            on add.ArticleId equals article.ArticleId

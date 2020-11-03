@@ -32,7 +32,8 @@ namespace TrendyShop.Controllers
             var vm = new AuctionIndexViewModel
             {
                 Auctions = context.Auctions.Include(a => a.Article).ToList().Where(a=> a.Start <= date && a.Start + a.Duration > date || a.Start > date),
-                Categories = context.Categories.ToList()
+                Categories = context.Categories.ToList(),
+                UserIsAdmin = User.IsInRole("Admin")
             };
 
             return View(vm);

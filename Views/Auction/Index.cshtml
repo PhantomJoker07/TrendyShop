@@ -75,6 +75,12 @@
                                             @Html.ActionLink(cat.Name, "CategoryFilter", "Auction", new { categoryId = cat.CategoryId })
                                         </li>
                                     }
+                                    @if (Model.UserIsAdmin)
+                                    {
+                                        <li class="nav-item mb-1 ml-4">
+                                            <a href="#" data-toggle="modal" data-target="#CategoryModal"><i class="fas fa-plus"></i> Añadir Categoría</a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </li>
@@ -147,7 +153,27 @@
 
         </div>
     </div>
-
+    <div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form asp-action="SaveAddCategory" asp-controller="User">
+                        <div class="flex-column">
+                            @Html.LabelFor(m => m.CategoryName)
+                            <div class="d-flex">
+                                @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-group" })
+                                @Html.ValidationMessageFor(m => m.CategoryName)
+                                <button class="btn btn-secondary ml-2 form-group" type="submit">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- /.container -->
     <!-- Footer -->
     <!-- Bootstrap core JavaScript -->

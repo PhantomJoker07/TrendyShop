@@ -63,7 +63,7 @@
 
                     <div class="form-group">
                         @Html.LabelFor(a => a.Auction.Start)
-                        @Html.TextBoxFor(a => a.Auction.Start, new { @class = "form-control" })
+                        @Html.TextBoxFor(a => a.Auction.Start, new { @class = "form-control", @type = "datetime-local" })
                         @Html.ValidationMessageFor(a => a.Auction.Start)
                     </div>
 

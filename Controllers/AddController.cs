@@ -13,9 +13,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrendyShop.Controllers
 {
+    [Authorize]
     public class AddController : Controller
     {
         private EFDbContext context;
@@ -26,7 +28,8 @@ namespace TrendyShop.Controllers
             webHostEnvironment = hostEnvironment;
             context = ctx;
         }
-
+        
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var vm = new AddsViewModel
@@ -45,7 +48,8 @@ namespace TrendyShop.Controllers
             var avm = new AddsViewModel
             {
                 Categories = context.Categories.ToList(),
-                Adds = context.Adds.Include(a => a.User).Include(a => a.Article).Where(a => a.UserId == userId && a.Amount > 0).ToList()
+                Adds = context.Adds.Include(a => a.User).Include(a => a.Article).Where(a => a.UserId == userId && a.Amount > 0).ToList(),
+                UserIsAdmin = User.IsInRole("Admin")
             };
 
             return View(avm);
@@ -159,7 +163,8 @@ namespace TrendyShop.Controllers
             vm.Adds = context.Adds.Include(a => a.User).Include(a => a.Article).ToList();
             return View("Index", vm);
         }
-        
+
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             bool alreadyInCart = false;

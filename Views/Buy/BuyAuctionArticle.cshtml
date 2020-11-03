@@ -1,20 +1,16 @@
-﻿@model TrendyShop.ViewModels.BuyViewModel
+﻿@model TrendyShop.ViewModels.BuyAuctionArticleViewModel
+
 @{
-    ViewData["Title"] = "Compra";
+    ViewData["Title"] = "BuyAuctionArticle";
 }
 
 <div class="col-lg-5 mx-auto mt-4">
     <div class="card">
         <div class="card-body">
-            <h1 class="card-title border-bottom">Compra de @Model.Add.Article.Name</h1>
-            @using (Html.BeginForm("EffectBuy", "Buy", FormMethod.Post, new { id = "bform" }))
+            <h5 class="card-title border-bottom">Felicidades por su reciente apuesta ganadora.</h5>
+            <h5 class="card-title border-bottom">Llegó la hora de adquirir su @Model.Auction.Article.Name</h5>
+            @using (Html.BeginForm("EffectAuctionBuy", "Buy", FormMethod.Post, new { id = "bform" }))
             {
-                <div class=" form-group">
-                    @Html.LabelFor(m => m.AmountToBuy)
-                    @Html.TextBoxFor(m => m.AmountToBuy, new { @class = "form-control", @id = "amount" })
-                    @Html.ValidationMessageFor(m => m.AmountToBuy)
-                </div>
-
                 <div class=" form-group">
                     @Html.LabelFor(m => m.Address)
                     @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "address" })
@@ -23,15 +19,13 @@
 
                 <div class="d-flex">
                     <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pedido</button>
-                    @*descomentar y el eliminar el de arriba si se arregla lo del $*@
-                    @*<button class="btn btn-secondary ml-auto" type="button" onclick="insertData()">Realizar pedido</button>*@
                     <button class="btn btn-dark ml-1" type="button" onclick="location.pathname='/Add'">Cancelar</button>
                 </div>
 
-                @Html.HiddenFor(m => m.Add.UserId)
-                @Html.HiddenFor(m => m.Add.ArticleId)
-                @Html.HiddenFor(m => m.Add.Article.Name)
-                @Html.HiddenFor(m => m.Add.Article.Price)
+                @Html.HiddenFor(m => m.Auction.UserId)
+                @Html.HiddenFor(m => m.Auction.ArticleId)
+                @Html.HiddenFor(m => m.Auction.Article.Name)
+                @Html.HiddenFor(m => m.Auction.Article.Price)
                 @Html.HiddenFor(m => m.CustomerId)
             }
         </div>
@@ -42,15 +36,13 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ConfirmationModalLongTitle">Confirmación de compra</h5>
+                <h4 class="modal-title" id="ConfirmationModalLongTitle">¿Está seguro que desea realizar esta compra?</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h1 id="total"></h1>
-                <h1 id="shippingCharge"> </h1>
-
+                <h5>Se aplicará un extra por el envio.</h5>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary ml-auto" onclick="finishOperation()">Continuar</button>
@@ -64,44 +56,16 @@
     var shippingCharge = 0;
 
     document.getElementById("amount").select();
-
-    function insertData() {
-        var valResult = validateForm();
-
-        if (valResult) {
-            updateValues();
-            $('#confirmodal').modal();
-            //document.getElementById("confirmodal").modal()
-            //$('#confirmodal').modal('show');
-        }
-    }
-
+    
     function validateForm() {
-        var amount = parseInt(document.getElementById('amount').value);
-        var amountAvailable = @Model.Add.Amount;
         var address = document.getElementById('address').value;
-              
-        if (amount == "" || isNaN(amount) || amount > amountAvailable) {
-            alert("Por favor especifique una cantidad positiva y menor que la restante para su compra");
-            return false;
-        }
 
         if (address == "" || address == null){
-            alert("Por favor especifique una dirección a la cual enviar el pedido");
+            alert("Por favor especifique una dirección a la cual enviar su más reciente adquisición.");
             return false;
         }
 
         return true;
-    }
-
-    function updateValues() {
-        var amount = parseFloat(document.getElementById('amount').value);
-        var articlePrice = @Model.Add.Article.Price;
-        var total = amount * articlePrice;
-        shippingCharge = Math.floor((Math.random() * 10) + 1);//random
-
-        document.getElementById('total').innerHTML = "Total: " + total;
-        document.getElementById('shippingCharge').innerHTML = "Costo por envío: " + shippingCharge;
     }
 
     function finishOperation() {
@@ -117,7 +81,7 @@
     }
 
     function saveShippingCharge() {
-        shippingCharge = Math.floor((Math.random() * 10) + 1);//eliminar esta linea si se arregla lo del $
+        shippingCharge = Math.floor((Math.random() * 10) + 1);
 
         form = document.getElementById('bform');
 

@@ -1,5 +1,6 @@
 ﻿@using TrendyShop.ViewModels
 @model AddViewModel
+@using Microsoft.AspNetCore.Identity;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,14 +30,19 @@
                 @Model.AddDescription
             </div>
             <div class="card-footer d-flex">
-                @Html.ActionLink("Comprar", "Buy", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "ml-2 mt-2" })
-                @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, new { @class = "ml-2 mt-2" })
-                @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, new { @class = "ml-2 mt-2" })
+                @if (Model.User.UserName != User.Identity.Name)
+                {
+                    @Html.ActionLink("Comprar", "BuyAddArticle", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "ml-2 mt-2" })
+                }
+                else
+                {
+                    @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, new { @class = "ml-2 mt-2" })
+                    @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, new { @class = "ml-2 mt-2" })
+                }
 
                 @if (Model.AlreadyInCart)
                 {
                     <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#Alreadymodal">Añadir al Carrito</button>
-
                 }
                 else
                 {

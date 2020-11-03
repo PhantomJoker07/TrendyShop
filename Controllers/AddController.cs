@@ -22,6 +22,7 @@ namespace TrendyShop.Controllers
     {
         private EFDbContext context;
         private IWebHostEnvironment webHostEnvironment;
+
         public AddController(EFDbContext ctx, IWebHostEnvironment hostEnvironment)
         {
             webHostEnvironment = hostEnvironment;
@@ -31,7 +32,7 @@ namespace TrendyShop.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            var vm = new AddIndexViewModel
+            var vm = new AddsViewModel
             {
                 Categories = context.Categories.ToList(),
                 Adds = context.Adds.Include(a => a.User).Include(a => a.Article).ToList(),
@@ -40,10 +41,10 @@ namespace TrendyShop.Controllers
 
             return View(vm);
         }
-
+        
         public IActionResult ConditionFilter(bool isNew)
         {
-            var vm = new AddIndexViewModel
+            var vm = new AddsViewModel
             {
                 Categories = context.Categories.ToList()
             };
@@ -60,7 +61,7 @@ namespace TrendyShop.Controllers
 
         public IActionResult CategoryFilter(int categoryId)
         {
-            var vm = new AddIndexViewModel
+            var vm = new AddsViewModel
             {
                 Categories = context.Categories.ToList(),
                 Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList()
@@ -71,7 +72,7 @@ namespace TrendyShop.Controllers
 
         public IActionResult PriceFilter(float minp, float maxp)
         {
-            var vm = new AddIndexViewModel
+            var vm = new AddsViewModel
             {
                 Categories = context.Categories.ToList(),
                 Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp)).ToList()
@@ -82,7 +83,7 @@ namespace TrendyShop.Controllers
 
         public IActionResult Search(string search)
         {
-            var vm = new AddIndexViewModel
+            var vm = new AddsViewModel
             {
                 Categories = context.Categories.ToList(),
                 Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search)).ToList()
@@ -212,7 +213,6 @@ namespace TrendyShop.Controllers
 
             return View(viewModel);
         }
-
 
         [HttpPost]
         public ActionResult SaveEdition(EditAddViewModel editAddViewModel)

@@ -8,7 +8,7 @@ using TrendyShop.Models;
 
 namespace TrendyShop.ViewModels
 {
-    public class BuyViewModel
+    public class BuyAddArticleViewModel
     {
         //public int Id { get; set; }
 
@@ -20,15 +20,16 @@ namespace TrendyShop.ViewModels
         //public User Customer { get; set; }
 
 
-        [Range(1,int.MaxValue, ErrorMessage ="Especifique una cantidad válida para su compra")]
+        [Range(1, int.MaxValue, ErrorMessage ="Especifique una cantidad válida para su compra")]
         [Display(Name = "Cantidad a ordenar")]
-        [Required(ErrorMessage ="Por favor especifique el número de artículos que desea adquirir")]
+        //[Required(ErrorMessage ="Por favor especifique el número de artículos que desea adquirir")]
         public int AmountToBuy { get; set; }
 
         [Display(Name = "¿Utilizar dirección asociada a tarjeta?")]
         public bool ShippingToCardAddress { get; set; }
 
         [Display(Name = "Dirección de envio")]
+        [Required(ErrorMessage ="Especifique una dirección para el envío")]
         public string Address { get; set; }
 
         //En menos de una semana, en el proximo mes, blabla 

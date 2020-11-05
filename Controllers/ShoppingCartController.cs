@@ -144,7 +144,8 @@ namespace TrendyShop.Controllers
 
         public IActionResult BuyCart()
         {
-            
+            var notBought = new List<Article>();
+            bool notB = false;
             var userid = GetUser(User.Identity.Name).Id;
 
             var cartItems = (from a in context.ShoppingCars
@@ -166,7 +167,12 @@ namespace TrendyShop.Controllers
 
                     ad.Amount -= item.Amount;
                     ad.User.TotalSales++;
-                 
+
+                }
+                else
+                {
+                    notB = true;
+                    notBought.Add(ad.Article);
                 }
                
             }
@@ -199,6 +205,11 @@ namespace TrendyShop.Controllers
             }
             context.SaveChanges();
 
+            if (notB)
+            {
+                return View("NoBuy", notBought);
+            }
+
             return RedirectToAction("Index", "Add");
         }
 
@@ -227,12 +238,13 @@ namespace TrendyShop.Controllers
         
         public IActionResult SaveShoppingList(ShoppingCartViewModel shoppingCartViewModel)
         {
-            var sl = context.ShoppingLists.Find(shoppingCartViewModel.ShoppingListId);
-
-            sl.IsSaved = true;
-            sl.Name = shoppingCartViewModel.ShoppListName;
-            context.SaveChanges();
-
+            var sl = context.ShoppingLists.SingleOrDefault(s => s.ShoppingListId == shoppingCartViewModel.ShoppingListId);
+            if(sl != null) 
+            {
+                sl.IsSaved = true;
+                sl.Name = shoppingCartViewModel.ShoppListName;
+                context.SaveChanges();
+            }
             return RedirectToAction("Index", "ShoppingCart");
         }
 
@@ -284,18 +296,18 @@ namespace TrendyShop.Controllers
 
         public IActionResult DeleteListIndex(int sid)
         {
-            var list = context.ShoppingLists.Find(sid);
-            if (list.IsSaved)
+            var list = context.ShoppingLists.SingleOrDefault(s =>s.ShoppingListId == sid);
+            if(list != null)
             {
-                list.IsMainList = false;
+                if (list.IsSaved)
+                {
+                    list.IsMainList = false;
+                }
+                else
+                {
+                    DeleteShoppingList(sid);
+                }
             }
-            else
-            {
-                DeleteShoppingList(sid);
-            }
-
-
-
             return RedirectToAction("Index", "ShoppingCart");
         }
 

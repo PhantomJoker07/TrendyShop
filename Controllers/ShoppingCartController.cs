@@ -21,9 +21,6 @@ namespace TrendyShop.Controllers
             context = ctx;
         }
 
-
-
-
         public IActionResult Index()
         {
             var userid = GetUser(User.Identity.Name).Id;
@@ -32,24 +29,23 @@ namespace TrendyShop.Controllers
                            join b in context.ShoppingLists on a.ShoppingListId equals b.ShoppingListId
                            join c in context.ShoppingList_Articles on b.ShoppingListId equals c.ShoppingListId
                            where b.IsMainList == true && a.UserId == userid
-                           select new { c.Article, c.Amount, b.ShoppingListId });   
+                           select new { c.Article, c.Amount, b.ShoppingListId });
 
 
             List<ShoppingListViewModel> CartItems = new List<ShoppingListViewModel>();
             int sl = 0;
-            float TotalPrice = 0;
+            double TotalPrice = 0;
             foreach (var item in cartArt)
             {
-
                 sl = item.ShoppingListId;
                 CartItems.Add(new ShoppingListViewModel
                 {
                     Article = item.Article,
                     ArticleId = item.Article.ArticleId,
                     Amount = item.Amount,
-                    Price = (int)item.Article.Price * item.Amount
+                    Price = item.Article.Price
                 });
-                TotalPrice += (int)item.Article.Price * item.Amount;
+                TotalPrice += item.Article.Price * item.Amount;
             }
 
             var shoppingCartItem = new ShoppingCartViewModel
@@ -78,7 +74,7 @@ namespace TrendyShop.Controllers
                         where sc.UserId == GetUser(User.Identity.Name).Id && l.IsMainList == true
                         select new { l.ShoppingListId }).ToList();
 
-       
+
             var sl2 = new ShoppingList();
             if (mySl.Count() == 0)
             {
@@ -141,7 +137,6 @@ namespace TrendyShop.Controllers
             return RedirectToAction("Index", "Add");
         }
 
-
         public IActionResult BuyCart()
         {
             var notBought = new List<Article>();
@@ -152,8 +147,8 @@ namespace TrendyShop.Controllers
                              join b in context.ShoppingLists on a.ShoppingListId equals b.ShoppingListId
                              join c in context.ShoppingList_Articles on b.ShoppingListId equals c.ShoppingListId
                              where b.IsMainList == true && a.UserId == userid
-                             select new { c.Article, c.Amount }).ToList();   
-            if(cartItems.Count ==0)
+                             select new { c.Article, c.Amount }).ToList();
+            if (cartItems.Count == 0)
                 return RedirectToAction("Index", "ShoppingCart");
 
 
@@ -174,7 +169,7 @@ namespace TrendyShop.Controllers
                     notB = true;
                     notBought.Add(ad.Article);
                 }
-               
+
             }
 
             var mySl = (from sc in context.ShoppingCars
@@ -182,18 +177,16 @@ namespace TrendyShop.Controllers
                         on sc.ShoppingListId equals l.ShoppingListId
                         where sc.UserId == userid && l.IsMainList == true
                         select new { l.ShoppingListId }).ToList();
-
             var sl = new ShoppingList();
 
-            foreach (var item in mySl)
-            {
-                sl = context.ShoppingLists.Find(item.ShoppingListId);
-            }
-
+            //foreach (var item in mySl)
+            //{
+            //    sl = context.ShoppingLists.Find(item.ShoppingListId);
+            //}
+            sl = context.ShoppingLists.SingleOrDefault(sl=>sl.ShoppingListId == mySl.First().ShoppingListId);
 
             if (sl != null)
             {
-
                 if (sl.IsSaved)
                 {
                     sl.IsMainList = false;
@@ -213,14 +206,12 @@ namespace TrendyShop.Controllers
             return RedirectToAction("Index", "Add");
         }
 
-
-
         public IActionResult DeleteArticle(int slid, int aid)
         {
             var art = context.ShoppingList_Articles.Single(a => (a.ShoppingListId == slid && a.ArticleId == aid));
             context.ShoppingList_Articles.Remove(art);
             var sl = context.ShoppingList_Articles.Where(a => a.ShoppingListId == slid);
-            if(sl.Count() == 0)
+            if (sl.Count() == 0)
             {
                 var l = context.ShoppingLists.Find(slid);
                 context.ShoppingLists.Remove(l);
@@ -232,14 +223,10 @@ namespace TrendyShop.Controllers
             return RedirectToAction("Index", "ShoppingCart");
         }
 
-
-
-
-        
         public IActionResult SaveShoppingList(ShoppingCartViewModel shoppingCartViewModel)
         {
             var sl = context.ShoppingLists.SingleOrDefault(s => s.ShoppingListId == shoppingCartViewModel.ShoppingListId);
-            if(sl != null) 
+            if (sl != null)
             {
                 sl.IsSaved = true;
                 sl.Name = shoppingCartViewModel.ShoppListName;
@@ -247,7 +234,6 @@ namespace TrendyShop.Controllers
             }
             return RedirectToAction("Index", "ShoppingCart");
         }
-
 
         public IActionResult SavedLists()
         {
@@ -260,7 +246,6 @@ namespace TrendyShop.Controllers
 
             return View(saved);
         }
-
 
         public IActionResult LoadShoppingList(int sid)
         {
@@ -293,11 +278,10 @@ namespace TrendyShop.Controllers
 
         }
 
-
         public IActionResult DeleteListIndex(int sid)
         {
-            var list = context.ShoppingLists.SingleOrDefault(s =>s.ShoppingListId == sid);
-            if(list != null)
+            var list = context.ShoppingLists.SingleOrDefault(s => s.ShoppingListId == sid);
+            if (list != null)
             {
                 if (list.IsSaved)
                 {
@@ -336,8 +320,6 @@ namespace TrendyShop.Controllers
             return View(viewmodel);
         }
 
-
-
         public User GetUser(string UserId)
         {
             var users = context.Users;
@@ -350,6 +332,5 @@ namespace TrendyShop.Controllers
             }
             throw new Exception("User " + UserId + " not found");
         }
-
     }
 }

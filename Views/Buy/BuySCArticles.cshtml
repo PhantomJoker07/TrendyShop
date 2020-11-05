@@ -1,0 +1,125 @@
+﻿@model TrendyShop.ViewModels.BuySCArticleViewModel
+@*@{
+        ViewData["Title"] = "BuySCArticles";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
+
+<div class="col-lg-5 mx-auto mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title border-bottom">Compra de artículos del carrito</h3>
+            @using (Html.BeginForm("EffectSCBuy", "Buy", FormMethod.Post, new { id = "bform" }))
+            {
+                <div class=" form-group">
+                    @Html.LabelFor(m => m.Address)
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "address" })
+                    @Html.ValidationMessageFor(m => m.Address)
+                </div>
+
+                <div class="d-flex">
+                    <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pedido</button>
+                    <button class="btn btn-dark ml-1" type="button" onclick="location.pathname='/Add'">Cancelar</button>
+                </div>
+
+                @for (int i = 0; i < Model.SCArticles.Count(); i++)
+                {
+                    @Html.HiddenFor(m => m.SCArticles[i].ArticleId)
+                    @Html.HiddenFor(m => m.SCArticles[i].Name)
+                    @Html.HiddenFor(m => m.SCArticles[i].Amount)
+                    @Html.HiddenFor(m => m.SCArticles[i].Price)
+                    @Html.HiddenFor(m => m.SCArticles[i].TotalPrice)
+
+                }
+                @Html.HiddenFor(m => m.CustomerId)
+                @Html.HiddenFor(m => m.Total)
+                @Html.HiddenFor(m => m.Incomplete)
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmodal" tabindex="-1" role="dialog" aria-labelledby="ConfirmationModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="ConfirmationModalLongTitle">¿Está seguro que desea realizar esta compra?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (Model.Incomplete)
+                {
+                    <h5>Lo sentimos pero algunos de los productos solicitados se han agotado, la lista de compra a efectuar se redujo a:</h5>
+                }
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                    @foreach (var article in Model.SCArticles)
+                    {
+                        <tr>
+                            <td>@article.Name</td>
+                            <td>@article.Price</td>
+                            <td>@article.Amount</td>
+                            <td>@article.TotalPrice</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>@Model.Total </td>
+                    </tr>
+                </table>
+                <h5>Se aplicará un extra por el envio.</h5>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary ml-auto" onclick="finishOperation()">Continuar</button>
+                <button class="btn btn-dark ml-1" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var shippingCharge = 0;
+
+    function validateForm() {
+        var address = document.getElementById('address').value;
+
+        if (address == "" || address == null) {
+            alert("Por favor especifique una dirección a la cual enviar su más reciente adquisición.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function finishOperation() {
+        isvalid = validateForm();
+        if (isvalid) {
+            saveShippingCharge();
+            submitForm();
+        }
+    }
+
+    function submitForm() {
+        document.getElementById('bform').submit();
+    }
+
+    function saveShippingCharge() {
+        shippingCharge = Math.floor((Math.random() * 10) + 1);
+
+        form = document.getElementById('bform');
+
+        var input = document.createElement("INPUT");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("value", shippingCharge);
+        input.setAttribute("name", "ShippingCharge");
+        form.appendChild(input);
+    }
+</script>

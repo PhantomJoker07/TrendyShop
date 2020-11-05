@@ -353,6 +353,9 @@ namespace TrendyShop.Migrations
                     b.Property<bool>("Paid")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("SharedOrder")
+                        .HasColumnType("bit");
+
                     b.Property<float>("ShippingCharge")
                         .HasColumnType("real");
 

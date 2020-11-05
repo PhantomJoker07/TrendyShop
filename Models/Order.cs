@@ -43,5 +43,7 @@ namespace TrendyShop.Models
 
         //paid or pending
         public bool Paid { get; set; }
+
+        public bool SharedOrder { get; set; }
     }
 }

@@ -29,9 +29,10 @@
                 </div>
                 @Model.AddDescription
             </div>
-            <div class="card-footer d-flex">
-                @if (Model.User.UserName != User.Identity.Name)
-                {
+            @if (Model.User.UserName != User.Identity.Name)
+            {
+                <div class="card-footer d-flex">
+
                     @Html.ActionLink("Comprar", "BuyAddArticle", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "ml-2 mt-2" })
                     @if (Model.AlreadyInCart)
                     {
@@ -42,13 +43,14 @@
                         <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#nimodal">Añadir al Carrito</button>
 
                     }
-                }
-                @*else
-                    {
-                        @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, new { @class = "ml-2 mt-2" })
-                        @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, new { @class = "ml-2 mt-2" })
-                    }*@
-            </div>
+                </div>
+
+            }
+            @*else
+        {
+            @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, new { @class = "ml-2 mt-2" })
+            @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, new { @class = "ml-2 mt-2" })
+        }*@
         </div>
     </div>
 

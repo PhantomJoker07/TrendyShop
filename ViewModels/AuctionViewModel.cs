@@ -44,5 +44,7 @@ namespace TrendyShop.ViewModels
         public bool Paid { get; set; }
 
         public string Winner { get; set; }
+        
+        public string Deadline { get; set; }
     }
 }

@@ -8,11 +8,11 @@
 
 <body>
     <!-- Page Content -->
-    *@{
+    @**@{
         TimeSpan elapsed = DateTime.Now - Model.Start;
         TimeSpan remaining = Model.Duration - elapsed;
         if (elapsed > Model.Duration) remaining = new TimeSpan(0);
-        string winner = "none";
+        string winner = "-";
         if (Model.Biders > 0)
         {
             winner = Model.LastBid.user.UserName;
@@ -21,7 +21,7 @@
         int r_hours = (int)(remaining.TotalHours) % 24;
         int r_minutes = (int)(remaining.TotalMinutes) % 60;
         int r_seconds = (int)(remaining.TotalSeconds) % 60;
-    }
+    }*@
     <div class="col-lg-7 mx-auto mt-4">
         <div class="card">
             <div class="card-body">
@@ -45,7 +45,15 @@
                         <p title="Fecha"><i class="far fa-calendar-alt"></i> @Model.Start.ToString("dd/MM/yy")</p>
                     }
                     <p title="Hora de inicio" class="ml-2"><i class="far fa-clock"></i> @Model.Start.ToString("hh:mm tt")</p>
-                    <p title="Tiempo restante" class="ml-2"><i class="fas fa-hourglass-end"></i> @r_days : @r_hours : @r_minutes : @r_seconds </p>
+                    <p title="Tiempo restante (días/horas/min/seg)" class="ml-2">
+                        <i class="fas fa-hourglass-end"></i>
+                        <div id="clockdiv">
+                            <span class="days"></span>:
+                            <span class="hours"></span>:
+                            <span class="minutes"></span>:
+                            <span class="seconds"></span>
+                        </div>
+                    </p>
                     <h5 title="Participantes" class="ml-2"><i class="fas fa-users"></i> @Model.Biders</h5>
 
                 </div>
@@ -98,5 +106,48 @@
         </div>
     </div>
 </body>
-
 </html>
+<script>
+    function getTimeRemaining(endtime) {
+        const total = Date.parse(endtime) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+        return {
+            total,
+            days,
+            hours,
+            minutes,
+            seconds
+        };
+    }
+
+    function initializeClock(id, endtime) {
+        const clock = document.getElementById(id);
+        const daysSpan = clock.querySelector('.days');
+        const hoursSpan = clock.querySelector('.hours');
+        const minutesSpan = clock.querySelector('.minutes');
+        const secondsSpan = clock.querySelector('.seconds');
+
+        function updateClock() {
+            const t = getTimeRemaining(endtime);
+
+            daysSpan.innerHTML = t.days;
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+            if (t.total <= 0) {
+                clearInterval(timeinterval);
+            }
+        }
+
+        updateClock();
+        const timeinterval = setInterval(updateClock, 1000);
+    }
+
+    const deadline = new Date( "@Model.Deadline");
+    initializeClock('clockdiv', deadline);
+</script>

@@ -17,6 +17,9 @@ namespace TrendyShop.ViewModels
 
         public float Total { get; set; }
 
+        public bool NotBuy { get; set; }
+
+
         [Display(Name = "Propietario de la Tarjeta")]
         public string CreditCardName { get; set; }
 

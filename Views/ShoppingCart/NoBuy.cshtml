@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "NoBuy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<Article>
+<div class="col-lg-5 mx-auto mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title border-bottom">Lo sentimos, los siguientes artículos no se encuentran disponibles</h1>
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>@item.Name</li>
+                }
+            </ul>
+        </div>
+        <div class="card-footer"> <button type="button" class="btn btn-secondary ml-auto" onclick="location.pathname='/Add'">Continuar</button></div>  @*Poner lo de la pasarela aqui*@
+    </div>
+</div>

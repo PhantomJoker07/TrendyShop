@@ -622,7 +622,6 @@ E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\Details.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\Index.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\NewAuction.cshtml.g.cs
-E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\Buy.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\About.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\Contact.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\Index.cshtml.g.cs
@@ -787,7 +786,6 @@ C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\Ne
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\Details.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\Index.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\NewAuction.cshtml.g.cs
-C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\Buy.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\About.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\Contact.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Home\Index.cshtml.g.cs
@@ -991,4 +989,15 @@ B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\ne
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAuctionArticle.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\MyAdds.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\MyAuctions.cshtml.g.cs
-B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\ChangePassword.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\MyAdds.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\MyAuctions.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAddArticle.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAuctionArticle.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\ChangePassword.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Add\MyAdds.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Auction\MyAuctions.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAddArticle.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAuctionArticle.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\PaymentGateway\GetPaymentMethod.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\ChangePassword.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\NoBuy.cshtml.g.cs

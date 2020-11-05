@@ -210,6 +210,9 @@ namespace TrendyShop.Controllers
 
             var winner = context.Users.Find(auction.LastBid.UserId);
 
+            var d = auction.Start - auction.Duration;
+            //string deadline = "2020-11-06";
+            string deadline = (auction.Start - auction.Duration).ToString("yyyy-MM-dd hh:mm");
             var result = new AuctionViewModel
             {
                 UserName = auction.User.UserName,
@@ -227,7 +230,8 @@ namespace TrendyShop.Controllers
                 Biders = auction.Biders,
                 Min_Bid = auction.Min_Bid,
                 Paid = auction.Paid,
-                Winner = winner.UserName
+                Winner = winner.UserName,
+                Deadline = deadline
             };
 
             //Checks if the auction has started

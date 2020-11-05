@@ -55,6 +55,7 @@ namespace TrendyShop.Controllers
             return View(avm);
         }
 
+      
         public IActionResult ConditionFilter(bool isNew, bool myAdds = false)
         {
             var vm = new AddsViewModel
@@ -168,32 +169,36 @@ namespace TrendyShop.Controllers
         public IActionResult Details(int id)
         {
             bool alreadyInCart = false;
-            var add = context.Adds.Find(id);
+           
 
-            context.Entry(add).Reference(a => a.User).Load();
-            context.Entry(add).Reference(a => a.Article).Load();
+               
+                var add = context.Adds.Find(id);
+                context.Entry(add).Reference(a => a.User).Load();
+                context.Entry(add).Reference(a => a.Article).Load();
 
-            var mySl = (from sc in context.ShoppingCars
-                        join l in context.ShoppingLists
-                        on sc.ShoppingListId equals l.ShoppingListId
-                        where sc.UserId == GetUser(User.Identity.Name).Id && l.IsMainList == true
-                        select new { l.ShoppingListId }).ToList();
-
-            var sl2 = new ShoppingList();
-
-            if (mySl.Count() > 0)
+            if (User.Identity == null)
             {
-                foreach (var item in mySl)
+                var mySl = (from sc in context.ShoppingCars
+                            join l in context.ShoppingLists
+                            on sc.ShoppingListId equals l.ShoppingListId
+                            where sc.UserId == GetUser(User.Identity.Name).Id && l.IsMainList == true
+                            select new { l.ShoppingListId }).ToList();
+
+                var sl2 = new ShoppingList();
+
+                if (mySl.Count() > 0)
                 {
-                    sl2 = context.ShoppingLists.Find(item.ShoppingListId);
+                    foreach (var item in mySl)
+                    {
+                        sl2 = context.ShoppingLists.Find(item.ShoppingListId);
+                    }
+                }
+
+                if ((context.ShoppingList_Articles.SingleOrDefault(a => a.ShoppingListId == sl2.ShoppingListId && a.ArticleId == add.ArticleId)) != null)
+                {
+                    alreadyInCart = true;
                 }
             }
-
-            if ((context.ShoppingList_Articles.SingleOrDefault(a => a.ShoppingListId == sl2.ShoppingListId && a.ArticleId == add.ArticleId)) != null)
-            {
-                alreadyInCart = true;
-            }
-
 
             var result = new AddViewModel
             {
@@ -243,6 +248,14 @@ namespace TrendyShop.Controllers
             return RedirectToAction("MyAdds", "Add");
         }
 
+        public IActionResult ChangePicture(int articleId, IFormFile Image)
+        {
+            var article = context.Articles.Find(articleId);
+            article.Image = UploadedFile(Image);
+            context.SaveChanges();
+
+            return RedirectToAction("Details", new { id = article.ArticleId});
+        }
         private string UploadedFile(IFormFile image)
         {
             string uniqueFileName = null;
@@ -346,6 +359,5 @@ namespace TrendyShop.Controllers
             }
             throw new Exception("User " + UserId + " not found");
         }
-
     }
 }

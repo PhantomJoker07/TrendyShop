@@ -14,7 +14,7 @@
 
 <body>
     <div class="row">
-        <div class="col-lg-8 mb-4 mx-auto mt-4">
+        <div class="col-lg-8 mb-4 mx-auto">
             <div class="card">
                 <div class="card-body">
                     <h1 class="card-title border-bottom">
@@ -26,7 +26,8 @@
                             <th>Marca</th>
                             <th>Cantidad</th>
                             <th>Precio Total</th>
-                            <th class="text-right"><button class="btn btn-dark">Eliminar lista</button></th> @*Pending implementation*@
+                            <th>  @Html.ActionLink("Eliminar Lista", "DeleteListIndex", "ShoppingCart", new { sid = Model.ShoppingListId }, new { @class = "ml-auto" })</th>
+
                         </tr>
                         @foreach (var art in Model.ShoppingList)
                         {
@@ -34,14 +35,6 @@
                                 <td>@art.Article.Name</td>
                                 <td>@art.Article.Brand</td>
                                 <td>@art.Amount</td>
-                                @*<td>
-                                        <form asp-action="UpdateQuantity" asp-controller="ShoppingCart">
-                                            <input type="hidden" id="slart" name="slart" value="@art." />
-                                            <input type="number" name="quantity" value="@art.Amount" />
-
-                                            <input type="submit" />
-                                        </form>
-                                    </td>*@
                                 <td>@art.TotalPrice$</td>
                                 <td>@Html.ActionLink("", "DeleteArticle", "ShoppingCart", new { slid = @Model.ShoppingListId, aid = @art.ArticleId }, new { @class = "fas fa-trash-alt" })</td>
                             </tr>
@@ -67,10 +60,10 @@
                 </div>
 
             </div>
-
+            <button type="button" class="btn btn-secondary ml-auto" onclick="location.pathname='/ShoppingCart/BuyCart'">Comprar Carrito</button>
         </div>
 
-        <div class="col-lg-3 mb-4 mt-4">
+        @*<div class="col-lg-3 mb-4 mt-4">
             <div class="card ">
                 
                 <div class="card-body">
@@ -95,7 +88,7 @@
                         }
                     </div>
                 </div>
-        </div>
+        </div>*@
     </div>
 </body>
 </html>

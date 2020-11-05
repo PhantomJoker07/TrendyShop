@@ -12,13 +12,14 @@
     <div class="container">
 
         <!-- Page Heading/Breadcrumbs -->
-        <h1 class="col-lg-4 mt-4 mb-3">Subastas</h1>
+        <h1 class="col-lg-4 mt-4 mb-3">Mis Subastas</h1>
 
         <form asp-action="Search" asp-controller="Auction">
             <div class="d-flex">
                 <div class="ml-auto">
                     <div class="d-flex">
                         <input type="search" class="form-control" id="search" name="search">
+                        <input type="hidden" id="myAucts" name="myAucts" value="True">
                         <button type="submit" class="btn btn-dark ml-1">Buscar</button>
                     </div>
                 </div>
@@ -55,6 +56,8 @@
 
                                                     <label for="maxp">Max</label>
                                                     <input type="number" name="maxp" id="maxp" />
+
+                                                    <input type="hidden" id="myAucts" name="myAucts" value="True">
                                                 </div>
                                                 <div class="d-flex">
                                                     <button type="submit" class="btn btn-dark mt-3 ml-auto">Filtrar</button>
@@ -72,13 +75,7 @@
                                     @foreach (Category cat in Model.Categories)
                                     {
                                         <li class="nav-item mb-1 ml-4">
-                                            @Html.ActionLink(cat.Name, "CategoryFilter", "Auction", new { categoryId = cat.CategoryId })
-                                        </li>
-                                    }
-                                    @if (Model.UserIsAdmin)
-                                    {
-                                        <li class="nav-item mb-1 ml-4">
-                                            <a href="#" data-toggle="modal" data-target="#CategoryModal"><i class="fas fa-plus"></i> Añadir Categoría</a>
+                                            @Html.ActionLink(cat.Name, "CategoryFilter", "Auction", new { categoryId = cat.CategoryId, myAucts = true })
                                         </li>
                                     }
                                 </ul>
@@ -89,10 +86,10 @@
                             <div id="submenu-1-1" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
                                     <li class="nav-item mb-1 ml-4">
-                                        @Html.ActionLink("Nuevo", "ConditionFilter", "Auction", new { isNew = true })
+                                        @Html.ActionLink("Nuevo", "ConditionFilter", "Auction", new { isNew = true, myAucts = true })
                                     </li>
                                     <li class="nav-item mb-1 ml-4">
-                                        @Html.ActionLink("De Uso", "ConditionFilter", "Auction", new { isNew = false })
+                                        @Html.ActionLink("De Uso", "ConditionFilter", "Auction", new { isNew = false, myAucts = true })
                                     </li>
                                 </ul>
                             </div>
@@ -102,22 +99,22 @@
                             <div id="submenu-1-2" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
                                     <li class="nav-item mb-1 ml-4">
-                                        @Html.ActionLink("Cerradas", "StateFilter", "Auction", new { state = 1})
+                                        @Html.ActionLink("Cerradas", "StateFilter", "Auction", new { state = 1, myAucts = true })
                                     </li>
                                     <li class="nav-item mb-1 ml-4">
-                                        @Html.ActionLink("En curso", "StateFilter", "Auction", new { state = 2})
+                                        @Html.ActionLink("En curso", "StateFilter", "Auction", new { state = 2, myAucts = true })
                                     </li>
                                     <li class="nav-item mb-1 ml-4">
-                                        @Html.ActionLink("Pendientes", "StateFilter", "Auction", new { state = 3})
+                                        @Html.ActionLink("Pendientes", "StateFilter", "Auction", new { state = 3, myAucts = true })
                                     </li>
                                 </ul>
                             </div>
                         </li>
+                        @*<li class="nav-item">
+                                <a href="/Auction/Active "></a>
+                            </li>*@
                         <li class="nav-item">
-                            <a href="/Auction/Active "></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Auction/AllFilter"><i class="fas fa-globe"></i> Ver todos</a>
+                            <a asp-action="AllFilter" asp-controller="Auction" asp-route-myAucts="True"><i class="fas fa-globe"></i> Ver todos</a>
                         </li>
                     </ul>
                 </div>
@@ -144,6 +141,7 @@
                         <div class="d-flex">
                             <div class="ml-auto">
                                 @*<a class="btn btn-primary">Unirse </a>*@
+                                @Html.ActionLink("Eliminar", "Delete", "Auction", new { aid = a.ArticleId }, null)
                                 @Html.ActionLink("Detalles", "Details", "Auction", new { id = a.ArticleId }, null)
                             </div>
                         </div>
@@ -153,27 +151,7 @@
 
         </div>
     </div>
-    <div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <form asp-action="SaveAddCategory" asp-controller="User">
-                        <div class="flex-column">
-                            @Html.LabelFor(m => m.CategoryName)
-                            <div class="d-flex">
-                                @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-group" })
-                                @Html.ValidationMessageFor(m => m.CategoryName)
-                                <button class="btn btn-secondary ml-2 form-group" type="submit">Añadir</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- /.container -->
     <!-- Footer -->
     <!-- Bootstrap core JavaScript -->

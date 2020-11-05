@@ -28,7 +28,8 @@
     <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="padding:initial">
         <div class="container">
-            <a class="navbar-brand" href="/" style="font-family: fantasy; color:#ffc107;">TrendyShop</a>
+            <a href="/"><img src="~/images/logo_icon.png" height="50" width="50"></a>
+            <a class="navbar-brand" href="/" style="font-family: fantasy; color:#ffc107;">TrendyShop </a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -43,6 +44,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                                 <a class="dropdown-item" href="/Add/NewAdd">Nuevo Anuncio</a>
+                                <a class="dropdown-item" href="/Add/MyAdds">Mis Anuncios</a>
+                                @*                                <a class="dropdown-item" asp-action="MyAdds" asp-controller="Add" asp-route-currentUserName="@User.Identity.Name">Mis Anuncios</a>*@
                                 <a class="dropdown-item" href="/Add">Anuncios</a>
                             </div>
                         </li>
@@ -53,6 +56,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                                 <a class="dropdown-item" href="/Auction/NewAuction">Nueva Subasta</a>
+                                <a class="dropdown-item" href="/Auction/MyAuctions">Mis Subastas</a>
+                                @*                                <a class="dropdown-item" asp-action="MyAuctions" asp-controller="Auction" asp-route-currentUserName="@User.Identity.Name">Mis Subastas</a>*@
                                 <a class="dropdown-item" href="/Auction">Subastas</a>
                             </div>
                         </li>
@@ -98,18 +103,18 @@
                     }
                     else
                     {
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Usuario
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                        <a class="dropdown-item" href="/User/Login">Entrar</a>
-                        <a class="dropdown-item" href="/User/Register">Registrar</a>
-                    </div>
-                </li>
-                            }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Usuario
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                                <a class="dropdown-item" href="/User/Login">Entrar</a>
+                                <a class="dropdown-item" href="/User/Register">Registrar</a>
+                            </div>
+                        </li>
+                    }
 
-                    </ul>
+                </ul>
             </div>
         </div>
     </nav>

@@ -35,60 +35,132 @@ namespace TrendyShop.Controllers
             var vm = new AddsViewModel
             {
                 Categories = context.Categories.ToList(),
-                Adds = context.Adds.Include(a => a.User).Include(a => a.Article).ToList(),
-                UserIsAdmin = User.IsInRole("Admin")
+                Adds = context.Adds.Include(a => a.User).Include(a => a.Article).Where(a => a.Amount > 0).ToList()
             };
 
             return View(vm);
         }
-        
-        public IActionResult ConditionFilter(bool isNew)
+
+        public IActionResult MyAdds()
+        {
+            string currentUserName = User.Identity.Name;
+            var userId = context.Users.Single(u => u.UserName == currentUserName).Id;
+            var avm = new AddsViewModel
+            {
+                Categories = context.Categories.ToList(),
+                Adds = context.Adds.Include(a => a.User).Include(a => a.Article).Where(a => a.UserId == userId && a.Amount > 0).ToList(),
+                UserIsAdmin = User.IsInRole("Admin")
+            };
+
+            return View(avm);
+        }
+
+        public IActionResult ConditionFilter(bool isNew, bool myAdds = false)
         {
             var vm = new AddsViewModel
             {
                 Categories = context.Categories.ToList()
             };
 
+            IQueryable<Add> adds;
             if (isNew)
             {
-                vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.IsNew).ToList();
-                return View("Index", vm);
+                adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.IsNew);
+            }
+            else
+            {
+                adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => !a.Article.IsNew);
             }
 
-            vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => !a.Article.IsNew).ToList();
-            return View("Index", vm);
-        }
-
-        public IActionResult CategoryFilter(int categoryId)
-        {
-            var vm = new AddsViewModel
+            if (myAdds)
             {
-                Categories = context.Categories.ToList(),
-                Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList()
-            };
+                var userName = User.Identity.Name;
+                if (userName != null)
+                {
+                    var userId = context.Users.Single(u => u.UserName == userName).Id;
+                    vm.Adds = adds.Where(a => a.UserId == userId).ToList();
+                    return View("MyAdds", vm);
+                }//else mandar error aqui y en todos los filtros
+            }
 
-            return View("Index", vm);
-        }
-
-        public IActionResult PriceFilter(float minp, float maxp)
-        {
-            var vm = new AddsViewModel
-            {
-                Categories = context.Categories.ToList(),
-                Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp)).ToList()
-            };
+            vm.Adds = adds.ToList();
 
             return View("Index", vm);
         }
 
-        public IActionResult Search(string search)
+        public IActionResult CategoryFilter(int categoryId, bool myAdds = false)
         {
             var vm = new AddsViewModel
             {
-                Categories = context.Categories.ToList(),
-                Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search)).ToList()
+                Categories = context.Categories.ToList()
             };
 
+            if (myAdds)
+            {
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId && a.UserId == userId).ToList();
+                return View("MyAdds", vm);
+            }
+
+            vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList();
+            return View("Index", vm);
+        }
+
+        public IActionResult PriceFilter(float minp, float maxp, bool myAdds = false)
+        {
+            var vm = new AddsViewModel
+            {
+                Categories = context.Categories.ToList()
+            };
+
+            if (myAdds)
+            {
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp) && a.UserId == userId).ToList();
+                return View("MyAdds", vm);
+            }
+
+            vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => (a.Article.Price >= minp && a.Article.Price <= maxp)).ToList();
+            return View("Index", vm);
+        }
+
+        public IActionResult Search(string search, bool myAdds = false)
+        {
+            var vm = new AddsViewModel
+            {
+                Categories = context.Categories.ToList()
+            };
+
+            if (myAdds)
+            {
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search) && a.UserId == userId).ToList();
+                return View("MyAdds", vm);
+            }
+
+            vm.Adds = context.Adds.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.Name.Contains(search)).ToList();
+            return View("Index", vm);
+        }
+
+        public IActionResult AllFilter(bool myAdds = false)
+        {
+            var vm = new AddsViewModel
+            {
+                Categories = context.Categories.ToList()
+            };
+
+            if (myAdds)
+            {
+                var userName = User.Identity.Name;
+                var userId = context.Users.Single(u => u.UserName == userName).Id;
+                vm.Adds = context.Adds.Include(a => a.User).Include(a => a.Article).Where(a => a.UserId == userId).ToList();
+                return View("MyAdds", vm);
+            }
+
+            vm.Adds = context.Adds.Include(a => a.User).Include(a => a.Article).ToList();
             return View("Index", vm);
         }
 
@@ -168,7 +240,7 @@ namespace TrendyShop.Controllers
             context.Adds.Add(viewModel.Add);//this already updates User and Article
             context.SaveChanges();
 
-            return RedirectToAction("Index", "Add");
+            return RedirectToAction("MyAdds", "Add");
         }
 
         private string UploadedFile(IFormFile image)
@@ -247,7 +319,7 @@ namespace TrendyShop.Controllers
 
             context.SaveChanges();
 
-            return RedirectToAction("Index", "Add");
+            return RedirectToAction("MyAdds", "Add");
         }
 
         public ActionResult Delete(int aid, string uid)
@@ -259,7 +331,7 @@ namespace TrendyShop.Controllers
             context.Adds.Remove(add);
             context.SaveChanges();
 
-            return RedirectToAction("Index", "Add");
+            return RedirectToAction("MyAdds", "Add");
         }
 
         public User GetUser(string UserId)

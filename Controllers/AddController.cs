@@ -55,6 +55,7 @@ namespace TrendyShop.Controllers
             return View(avm);
         }
 
+      
         public IActionResult ConditionFilter(bool isNew, bool myAdds = false)
         {
             var vm = new AddsViewModel
@@ -247,6 +248,14 @@ namespace TrendyShop.Controllers
             return RedirectToAction("MyAdds", "Add");
         }
 
+        public IActionResult ChangePicture(int articleId, IFormFile Image)
+        {
+            var article = context.Articles.Find(articleId);
+            article.Image = UploadedFile(Image);
+            context.SaveChanges();
+
+            return RedirectToAction("Details", new { id = article.ArticleId});
+        }
         private string UploadedFile(IFormFile image)
         {
             string uniqueFileName = null;
@@ -350,6 +359,5 @@ namespace TrendyShop.Controllers
             }
             throw new Exception("User " + UserId + " not found");
         }
-
     }
 }

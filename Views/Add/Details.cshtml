@@ -12,7 +12,24 @@
     <div class="col-lg-8 mt-4 mx-auto">
         <div class="card">
             <div class="card-body">
-                <img src="~/images/@Model.Article.Image" class="img-fluid rounded" height="200" width="300" />
+                <div class="d-flex">
+                    <img src="~/images/@Model.Article.Image" class="img-fluid rounded" height="200" width="300" />
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (Model.User.UserName == User.Identity.Name)
+                        {
+                            <form asp-action="ChangePicture" asp-controller="Add" asp-route-articleId="@Model.Article.ArticleId" asp-route-Image="@Model.Image" enctype="multipart/form-data">
+                                <div class="custom-file d-flex">
+                                    <label class="custom-file-label ml-2" for="customFile" style="width:100px">Editar Foto</label>
+                                    <input asp-for="Image" class="custom-file-input mr-3" id="customFile" name="Image" style="width:50px" />
+                                    <button class="btn btn-dark ml-5" type="submit">Guardar</button>
+                                    <span asp-validation-for="Image"></span>
+                                </div>
+                            </form>
+                        }
+                    }
+                </div>
+
                 <div class="card-title border-bottom">
                     <h3 class="mt-2">@Model.Article.Name</h3>
                 </div>
@@ -28,30 +45,34 @@
                     <a asp-action="AccountDetails" asp-controller="User" asp-route-userName="@Model.User.UserName">@Model.User.UserName</a>
                 </div>
                 @Model.AddDescription
-            </div>
-            <div class="card-footer d-flex">
                 @if (SignInManager.IsSignedIn(User))
                 {
                     @if (Model.User.UserName != User.Identity.Name)
                     {
-                        @Html.ActionLink("Comprar", "BuyAddArticle", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "ml-2 mt-2" })
-                        @if (Model.AlreadyInCart)
-                        {
-                            <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#Alreadymodal">Añadir al Carrito</button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#nimodal">Añadir al Carrito</button>
+                        <div class=" d-flex">
+                            <div class="ml-auto">
+                                @Html.ActionLink("Comprar", "BuyAddArticle", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "btn btn-secondary" })
+                                @if (Model.AlreadyInCart)
+                                {
+                                    <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#Alreadymodal">Añadir al Carrito</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#nimodal">Añadir al Carrito</button>
 
-                        }
+                                }
+                            </div>
+                        </div>
+
                     }
                 }
-                @*else
-                    {
-                        @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, new { @class = "ml-2 mt-2" })
-                        @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, new { @class = "ml-2 mt-2" })
-                    }*@
             </div>
+
+            @*else
+        {
+            @Html.ActionLink("Editar", "Edit", "Add", new { aid = @Model.Article.ArticleId, uid = Model.User.Id }, new { @class = "ml-2 mt-2" })
+            @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = @Model.Article.ArticleId, uid = @Model.User.Id }, new { @class = "ml-2 mt-2" })
+        }*@
         </div>
     </div>
 
@@ -70,10 +91,13 @@
 
                         <input type="hidden" name="aid" value="@Model.Article.ArticleId" />
                         <input type="hidden" name="uid" value="@Model.UserName" />
-                        <label for="amountToBuy"></label>
-                        <input type="text" id="amountToBuy" name="amountToBuy" />
-
-                        <button type="button" onclick="ValidateModal()">Agregar</button>
+                        <div class="d-flex flex-column">
+                            <label for="amountToBuy">Cantidad</label>
+                            <div class="d-flex">
+                                <input type="text" id="amountToBuy" name="amountToBuy" />
+                                <button type="button" class="btn btn-secondary ml-1" onclick="ValidateModal()">Agregar</button>
+                            </div>
+                        </div>
                     </form>
 
                 </div>

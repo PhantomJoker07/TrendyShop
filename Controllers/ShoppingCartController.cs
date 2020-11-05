@@ -52,17 +52,6 @@ namespace TrendyShop.Controllers
                 TotalPrice += (int)item.Article.Price * item.Amount;
             }
 
-            if (CartItems.Count == 0)
-            {
-                var list = context.ShoppingLists.SingleOrDefault(s => s.IsMainList == true);
-                if (list != null)
-                {
-                    context.ShoppingLists.Remove(list);
-                    context.SaveChanges();
-                }
-
-            }
-
             var shoppingCartItem = new ShoppingCartViewModel
             {
                 ShoppingList = CartItems,
@@ -153,8 +142,9 @@ namespace TrendyShop.Controllers
         }
 
 
-        public IActionResult BuyCart(ShoppingCartViewModel shoppingCartViewModel)
+        public IActionResult BuyCart()
         {
+            
             var userid = GetUser(User.Identity.Name).Id;
 
             var cartItems = (from a in context.ShoppingCars
@@ -162,6 +152,9 @@ namespace TrendyShop.Controllers
                              join c in context.ShoppingList_Articles on b.ShoppingListId equals c.ShoppingListId
                              where b.IsMainList == true && a.UserId == userid
                              select new { c.Article, c.Amount }).ToList();   
+            if(cartItems.Count ==0)
+                return RedirectToAction("Index", "ShoppingCart");
+
 
             foreach (var item in cartItems)
             {
@@ -173,12 +166,6 @@ namespace TrendyShop.Controllers
 
                     ad.Amount -= item.Amount;
                     ad.User.TotalSales++;
-
-                    if (ad.Amount == 0)
-                    {
-                        context.Articles.Remove(ad.Article);
-                        context.Remove(ad);
-                    }
                  
                 }
                
@@ -221,6 +208,15 @@ namespace TrendyShop.Controllers
         {
             var art = context.ShoppingList_Articles.Single(a => (a.ShoppingListId == slid && a.ArticleId == aid));
             context.ShoppingList_Articles.Remove(art);
+            var sl = context.ShoppingList_Articles.Where(a => a.ShoppingListId == slid);
+            if(sl.Count() == 0)
+            {
+                var l = context.ShoppingLists.Find(slid);
+                context.ShoppingLists.Remove(l);
+                context.SaveChanges();
+            }
+
+
             context.SaveChanges();
             return RedirectToAction("Index", "ShoppingCart");
         }
@@ -285,6 +281,23 @@ namespace TrendyShop.Controllers
 
         }
 
+
+        public IActionResult DeleteListIndex(int sid)
+        {
+            var list = context.ShoppingLists.Find(sid);
+            if (list.IsSaved)
+            {
+                list.IsMainList = false;
+            }
+            else
+            {
+                DeleteShoppingList(sid);
+            }
+
+
+
+            return RedirectToAction("Index", "ShoppingCart");
+        }
 
         public IActionResult DeleteShoppingList(int sid)
         {

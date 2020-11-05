@@ -1,7 +1,7 @@
 ﻿@using TrendyShop.ViewModels
 @model AddViewModel
 @using Microsoft.AspNetCore.Identity;
-
+@inject SignInManager<User> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 <body>
@@ -30,17 +30,20 @@
                 @Model.AddDescription
             </div>
             <div class="card-footer d-flex">
-                @if (Model.User.UserName != User.Identity.Name)
+                @if (SignInManager.IsSignedIn(User))
                 {
-                    @Html.ActionLink("Comprar", "BuyAddArticle", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "ml-2 mt-2" })
-                    @if (Model.AlreadyInCart)
+                    @if (Model.User.UserName != User.Identity.Name)
                     {
-                        <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#Alreadymodal">Añadir al Carrito</button>
-                    }
-                    else
-                    {
-                        <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#nimodal">Añadir al Carrito</button>
+                        @Html.ActionLink("Comprar", "BuyAddArticle", "Buy", new { uid = @Model.User.Id, aid = @Model.Article.ArticleId }, new { @class = "ml-2 mt-2" })
+                        @if (Model.AlreadyInCart)
+                        {
+                            <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#Alreadymodal">Añadir al Carrito</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#nimodal">Añadir al Carrito</button>
 
+                        }
                     }
                 }
                 @*else

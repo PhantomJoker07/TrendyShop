@@ -188,10 +188,9 @@ namespace TrendyShop.Controllers
 
                 if (mySl.Count() > 0)
                 {
-                    foreach (var item in mySl)
-                    {
-                        sl2 = context.ShoppingLists.Find(item.ShoppingListId);
-                    }
+                   
+                        sl2 = context.ShoppingLists.Find(mySl.First().ShoppingListId);
+                   
                 }
 
                 if ((context.ShoppingList_Articles.SingleOrDefault(a => a.ShoppingListId == sl2.ShoppingListId && a.ArticleId == add.ArticleId)) != null)

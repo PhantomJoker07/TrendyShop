@@ -20,10 +20,6 @@ namespace TrendyShop.Controllers
         {
             context = ctx;
         }
-
-
-
-
         public IActionResult Index()
         {
             var userid = GetUser(User.Identity.Name).Id;
@@ -185,10 +181,9 @@ namespace TrendyShop.Controllers
 
             var sl = new ShoppingList();
 
-            foreach (var item in mySl)
-            {
-                sl = context.ShoppingLists.Find(item.ShoppingListId);
-            }
+         
+                sl = context.ShoppingLists.SingleOrDefault(s => s.ShoppingListId == mySl.First().ShoppingListId);
+            
 
 
             if (sl != null)
@@ -293,7 +288,6 @@ namespace TrendyShop.Controllers
 
         }
 
-
         public IActionResult DeleteListIndex(int sid)
         {
             var list = context.ShoppingLists.SingleOrDefault(s =>s.ShoppingListId == sid);
@@ -308,6 +302,7 @@ namespace TrendyShop.Controllers
                     DeleteShoppingList(sid);
                 }
             }
+            context.SaveChanges();
             return RedirectToAction("Index", "ShoppingCart");
         }
 
@@ -331,7 +326,6 @@ namespace TrendyShop.Controllers
                 ShoppingListName = sl.Name,
                 List = slart
             };
-
 
             return View(viewmodel);
         }

@@ -88,11 +88,11 @@
                     </form>
 
                 }
-                @if (SignInManager.IsSignedIn(User) && Model.IsFinished) //For the winner only
+                @if (SignInManager.IsSignedIn(User) && Model.IsFinished && !Model.Paid) //For the winner only
                 {
-                    <form asp-controller="Auction" asp-action="Buy" method="post">
+                    <form asp-controller="Buy" asp-action="BuyAuctionArticle" asp-route-aid="@Model.ArticleId"method="post">
                         <div class="mb-4">
-                            <input type="text" asp-for="ArticleId" data="@Model.Id" id="submit" hidden />
+                            @*<input type="text" asp-for="aid" data="@Model.ArticleId" id="submit" hidden />*@
                             <button type="submit" class="bg-dark btn btn-dark">Finalizar Subasta</button>
                         </div>
                     </form>

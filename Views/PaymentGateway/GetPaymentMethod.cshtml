@@ -1,8 +1,7 @@
 ﻿@model TrendyShop.ViewModels.PaymentMethodViewModel
-
 @*@{
-    ViewData["Title"] = "GetPaymentMethod";
-}*@
+        ViewData["Title"] = "GetPaymentMethod";
+    }*@
 
 <div class="col-lg-5 mx-auto mt-4">
     <div class="card">
@@ -38,13 +37,15 @@
                 @Html.HiddenFor(m => m.ArticleId)
                 @Html.HiddenFor(m => m.DateTicks)
                 @Html.HiddenFor(m => m.Charge)
-                @Html.HiddenFor(m => m.ForAuction)
+                @Html.HiddenFor(m => m.OrderType)
+                @*@Html.HiddenFor(m => m.ForAuction)*@
             }
 
 
             <div class="d-flex">
                 <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pago</button>
-                <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks asp-route-forAuction=@Model.ForAuction>
+                @*            <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks asp-route-forAuction=@Model.ForAuction>*@
+                <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks asp-route-orderType=@Model.OrderType>
                     <button class="btn btn-dark ml-1" type="submit">Cancelar</button>
                 </form>
             </div>
@@ -93,7 +94,7 @@
             alert("Sólo puede elegir una tarjeta para realizar el pago.")
             return false;
         }
-        if (cardNumberDDL == "" && nameOnCard == "" &&  cardNumber == "") {
+        if (cardNumberDDL == "" && nameOnCard == "" && cardNumber == "") {
             alert("Debe elegir una tarjeta para realizar el pago.")
             return false;
         }

@@ -13,9 +13,10 @@ namespace TrendyShop.ViewModels
         public string SellerId { get; set; }
         public int ArticleId { get; set; }
         public long DateTicks { get; set; }
-        public float Charge { get; set; }
+        public double Charge { get; set; }
         public IList<User_Card> Cards { get; set; }
-        public bool ForAuction { get; set; }
+        //public bool ForAuction { get; set; }
+        public int OrderType { get; set; }
 
         [Display(Name = "Número de tarjeta")]
         public string SelectedCardNumber { get; set; }

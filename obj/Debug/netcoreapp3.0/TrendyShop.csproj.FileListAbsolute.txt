@@ -1000,3 +1000,7 @@ C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\Bu
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuyAuctionArticle.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\PaymentGateway\GetPaymentMethod.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\ChangePassword.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\NoBuy.cshtml.g.cs
+B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\NoBuy.cshtml.g.cs
+B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\ChangePassword.cshtml.g.cs
+B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuySCArticles.cshtml.g.cs

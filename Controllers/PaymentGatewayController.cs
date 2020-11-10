@@ -24,7 +24,9 @@ namespace TrendyShop.Controllers
         }
 
         //En este caso, como la pasarela está integrada a la plataforma, ya tenemos datos del login del usuario
-        public IActionResult GetPaymentMethod(string userId, int articleId, long orderDateTicks, float charge, bool forAuction = false)
+        //Es necesario saber si el pago debe dividirse entre multiples vendedores, en ese caso se podria recibir un numero como 0 si ad,
+        //2 si auction y 1 si shopping cart, y entonces por la slist del clienteactual realzar klos pagos luego de validar si el usuario cuenta con los fondos suficientes
+        public IActionResult GetPaymentMethod(string userId, int articleId, long orderDateTicks, double charge, int orderType = 3)
         {
             var cards = context.User_Cards.Where(c => c.UserId == userId).ToList();
 
@@ -35,7 +37,8 @@ namespace TrendyShop.Controllers
                 DateTicks = orderDateTicks,
                 Charge = charge,
                 Cards = cards,
-                ForAuction = forAuction
+                OrderType = orderType
+                //ForAuction = forAuction
             };
             return View(pmvm);
         }
@@ -56,7 +59,8 @@ namespace TrendyShop.Controllers
                     Cards = cards,
                     CardNumber = pmvm.CardNumber,
                     NameOnCard = pmvm.NameOnCard,
-                    ForAuction = pmvm.ForAuction
+                    OrderType = pmvm.OrderType
+                    //ForAuction = pmvm.ForAuction
                 };
                 return RedirectToAction("GetPaymentMethod", newpmvm);
             }
@@ -84,7 +88,8 @@ namespace TrendyShop.Controllers
                 }
             }
           
-            return RedirectToAction("CloseOrder", "Buy", new { userId = pmvm.UserId, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks, forauction = pmvm.ForAuction });
+            //aqui es donde se deberia hacer las transacciones entre las cuentas del comprador y el o los vendedores
+            return RedirectToAction("CloseOrder", "Buy", new { userId = pmvm.UserId, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks, orderType = pmvm.OrderType/*, forauction = pmvm.ForAuction*/ });
         }
     }
 }

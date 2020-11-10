@@ -47,7 +47,7 @@ namespace TrendyShop.Controllers
             var date = DateTime.Now;
             var vm = new AuctionIndexViewModel
             {
-                Auctions = context.Auctions.Include(a => a.Article).Where(a => a.UserId == userId).ToList().Where(a=> a.Start <= date && a.Start + a.Duration > date || a.Start > date),
+                Auctions = context.Auctions.Include(a => a.Article).Where(a => a.UserId == userId).ToList(),
                 Categories = context.Categories.ToList()
             };
 
@@ -84,11 +84,17 @@ namespace TrendyShop.Controllers
             {
                 var userName = User.Identity.Name;
                 var userId = context.Users.Single(u => u.UserName == userName).Id;
-                vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId && a.UserId == userId).ToList();
+                vm.Auctions = context.Auctions.Include(a => a.Article)
+                                              .Include(a => a.User)
+                                              .Where(a => a.Article.CategoryId == categoryId && a.UserId == userId)
+                                              .ToList();
                 return View("MyAuctions", vm);
             }
 
-            vm.Auctions = context.Auctions.Include(a => a.Article).Include(a => a.User).Where(a => a.Article.CategoryId == categoryId).ToList();
+            vm.Auctions = context.Auctions.Include(a => a.Article)
+                                          .Include(a => a.User)
+                                          .Where(a => a.Article.CategoryId == categoryId)
+                                          .ToList();
             return View("Index", vm);
         }
 
@@ -210,9 +216,8 @@ namespace TrendyShop.Controllers
 
             var winner = context.Users.Find(auction.LastBid.UserId);
 
-            var d = auction.Start - auction.Duration;
-            //string deadline = "2020-11-06";
-            string deadline = (auction.Start - auction.Duration).ToString("yyyy-MM-dd hh:mm");
+            
+            string deadline = (auction.Start + auction.Duration).ToString("yyyy-MM-dd hh:mm");
             var result = new AuctionViewModel
             {
                 UserName = auction.User.UserName,
@@ -407,7 +412,7 @@ namespace TrendyShop.Controllers
             return result;
         }
         
-        public ActionResult Delete(int aid)
+        public ActionResult Delete(int aid, bool fromIndex)
         {
             var auction = context.Auctions.Include(a => a.Article)
                 .Single(a=>a.ArticleId == aid);
@@ -420,6 +425,9 @@ namespace TrendyShop.Controllers
             context.Articles.Remove(auction.Article);
             context.Auctions.Remove(auction);
             context.SaveChanges();
+
+            if(fromIndex)
+                return RedirectToAction("Index", "Auction");
 
             return RedirectToAction("MyAuctions", "Auction");
         }

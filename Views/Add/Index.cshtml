@@ -125,6 +125,12 @@
                             <div class="d-flex">
                                 <div class="ml-auto">
                                     @Html.ActionLink("Ver Anuncio...", "Details", "Add", new { id = a.ArticleId }, null)
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        @Html.ActionLink("Eliminar", "Delete", "Add", new { aid = a.Article.ArticleId, uid = a.User.Id, fromIndex = true }, new { @class = "ml-2 mt-2" })
+
+                                    }
+
                                 </div>
                             </div>
                         </div>

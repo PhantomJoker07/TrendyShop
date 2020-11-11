@@ -1,50 +1,40 @@
 ﻿@model TrendyShop.ViewModels.PaymentMethodViewModel
-@*@{
-        ViewData["Title"] = "GetPaymentMethod";
-    }*@
 
 <div class="col-lg-5 mx-auto mt-4">
     <div class="card">
         <div class="card-body">
             <h1 class="card-title border-bottom">Complete su orden: </h1>
-            @*@using (Html.BeginForm("EffectBuy", "Buy", new { aid = @Model.Add.ArticleId, uid = @Model.Add.UserId, card = @Model.Card, amountToBuy = @Model.AmountToBuy }))*@
             @using (Html.BeginForm("FinishPayment", "PaymentGateway", FormMethod.Post, new { id = "pform" }))
             {
-                <h3>@*Añada una tarjeta para realizar el pago:*@</h3>
-
                 <div class=" form-group">
                     @Html.LabelFor(m => m.NameOnCard)
-                    @Html.TextBoxFor(m => m.NameOnCard, new { @class = "form-control"@*, @id = "cardName"*@ })
+                    @Html.TextBoxFor(m => m.NameOnCard, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.NameOnCard)
                 </div>
 
                 <div class=" form-group">
                     @Html.LabelFor(m => m.CardNumber)
-                    @Html.TextBoxFor(m => m.CardNumber, new { @class = "form-control"@*, @id = "cardNumber"*@ })
+                    @Html.TextBoxFor(m => m.CardNumber, new { @class = "form-control"})
                     @Html.ValidationMessageFor(m => m.CardNumber)
                 </div>
 
                 <h3>O escoja una de las registradas:</h3>
 
-                //podemos actually tener un card que sea una clase con NameOnCard y CardNumber
                 <div class=" form-group">
                     @Html.LabelFor(m => m.SelectedCardNumber)
                     @Html.DropDownListFor(m => m.SelectedCardNumber, new SelectList(Model.Cards, "CardNumber", "CardNumber"), "", new { @class = "form-control" })
                 </div>
 
                 @Html.HiddenFor(m => m.UserId)
-                @*@Html.HiddenFor(m => m.SellerId)*@
                 @Html.HiddenFor(m => m.ArticleId)
                 @Html.HiddenFor(m => m.DateTicks)
                 @Html.HiddenFor(m => m.Charge)
                 @Html.HiddenFor(m => m.OrderType)
-                @*@Html.HiddenFor(m => m.ForAuction)*@
             }
 
 
             <div class="d-flex">
                 <button class="btn btn-secondary ml-auto" type="button" data-toggle="modal" data-target="#confirmodal">Realizar pago</button>
-                @*            <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks asp-route-forAuction=@Model.ForAuction>*@
                 <form asp-action="CancelOrder" asp-controller="Buy" asp-route-userId=@Model.UserId asp-route-articleId=@Model.ArticleId asp-route-dateTicks=@Model.DateTicks asp-route-orderType=@Model.OrderType>
                     <button class="btn btn-dark ml-1" type="submit">Cancelar</button>
                 </form>

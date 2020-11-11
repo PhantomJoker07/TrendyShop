@@ -12,13 +12,13 @@ namespace TrendyShop.Data
     {
         public DbSet<Article> Articles { get; set; }
 
+        public DbSet<Add> Adds { get; set; }
+
         public DbSet<ShoppingCar> ShoppingCars { get; set; }
 
         public DbSet<ShoppingList_Article> ShoppingList_Articles{ get; set; }
 
         public DbSet<ShoppingList> ShoppingLists { get; set; }
-
-        public DbSet<Add> Adds { get; set; }
 
         public DbSet<Auction> Auctions { get; set; }
 

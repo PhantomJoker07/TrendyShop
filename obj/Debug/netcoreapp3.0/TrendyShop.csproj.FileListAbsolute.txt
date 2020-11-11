@@ -966,7 +966,6 @@ B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\ne
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Error.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\AddToShoppCart.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Details.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Index.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\SavedLists.cshtml.g.cs

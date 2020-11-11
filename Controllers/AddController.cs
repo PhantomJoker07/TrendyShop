@@ -176,7 +176,7 @@ namespace TrendyShop.Controllers
                 context.Entry(add).Reference(a => a.User).Load();
                 context.Entry(add).Reference(a => a.Article).Load();
 
-            if (User.Identity == null)
+            if (User.Identity != null)
             {
                 var mySl = (from sc in context.ShoppingCars
                             join l in context.ShoppingLists

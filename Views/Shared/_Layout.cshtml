@@ -29,7 +29,8 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="padding:initial">
         <div class="container">
             <a class="navbar-brand" href="/" style="font-family: fantasy; color:#ffc107;">TrendyShop </a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -44,7 +45,6 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                                 <a class="dropdown-item" href="/Add/NewAdd">Nuevo Anuncio</a>
                                 <a class="dropdown-item" href="/Add/MyAdds">Mis Anuncios</a>
-                                @*                                <a class="dropdown-item" asp-action="MyAdds" asp-controller="Add" asp-route-currentUserName="@User.Identity.Name">Mis Anuncios</a>*@
                                 <a class="dropdown-item" href="/Add">Anuncios</a>
                             </div>
                         </li>
@@ -55,8 +55,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                                 <a class="dropdown-item" href="/Auction/NewAuction">Nueva Subasta</a>
-                                <a class="dropdown-item" href="/Auction/MyAuctions">Mis Subastas</a>
-                                @*                                <a class="dropdown-item" asp-action="MyAuctions" asp-controller="Auction" asp-route-currentUserName="@User.Identity.Name">Mis Subastas</a>*@
+                                <a class="dropdown-item" href="/Auction/MyAuctions">Mis Subastas</a>                          
                                 <a class="dropdown-item" href="/Auction">Subastas</a>
                             </div>
                         </li>
@@ -78,7 +77,6 @@
                         <a class="nav-link" href="/Home/Contact">Contáctanos</a>
                     </li>
 
-
                     @if (SignInManager.IsSignedIn(User))
                     {
 
@@ -86,7 +84,8 @@
                             <a class="nav-link" href="/ShoppingCart"><i class="fa fa-shopping-cart"></i></a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="btn btn-dark" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name<i class="fas fa-sort-down"></i></a>
+                            <a class="btn btn-dark" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" 
+                               aria-expanded="false">@User.Identity.Name<i class="fas fa-sort-down"></i></a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
                                 <a class="dropdown-item" asp-action="AccountDetails" asp-controller="User" asp-route-userName="@User.Identity.Name">Perfil</a>
 
@@ -127,11 +126,7 @@
 
     <!-- /.container -->
     <!-- Footer -->
-    @*<footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Trendy Shop 2019-2020</p>
-        </div>
-    </footer>*@
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="/vendor/jquery/jquery.min.js"></script>

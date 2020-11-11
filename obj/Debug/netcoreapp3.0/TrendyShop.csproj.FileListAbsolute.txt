@@ -807,7 +807,6 @@ C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.Views.p
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.csproj.CopyComplete
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.dll
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.pdb
-C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\AddToShoppCart.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Details.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Index.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\SavedLists.cshtml.g.cs
@@ -1004,3 +1003,4 @@ C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Shoppi
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\NoBuy.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\ChangePassword.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuySCArticles.cshtml.g.cs
+C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuySCArticles.cshtml.g.cs

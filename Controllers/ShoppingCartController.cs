@@ -230,8 +230,11 @@ namespace TrendyShop.Controllers
                         select new { l.ShoppingListId }).ToList();
 
             var currentsl = new ShoppingList();
+            if(mySl.Count > 0)
+            {
+                currentsl = context.ShoppingLists.Find(mySl.First().ShoppingListId);
+            }
             
-            currentsl = context.ShoppingLists.Find(mySl.First().ShoppingListId);
  
             if (currentsl != null)
                 currentsl.IsMainList = false;

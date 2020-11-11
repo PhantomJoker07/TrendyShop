@@ -334,7 +334,7 @@ namespace TrendyShop.Controllers
             return RedirectToAction("MyAdds", "Add");
         }
 
-        public ActionResult Delete(int aid, string uid)
+        public ActionResult Delete(int aid, string uid, bool fromIndex)
         {
             var add = context.Adds.Include(a => a.Article).Include(a => a.User)
                 .Single(a => a.UserId == uid && a.ArticleId == aid);
@@ -342,6 +342,9 @@ namespace TrendyShop.Controllers
             context.Articles.Remove(add.Article);
             context.Adds.Remove(add);
             context.SaveChanges();
+
+            if(fromIndex)
+                return RedirectToAction("Index", "Add");
 
             return RedirectToAction("MyAdds", "Add");
         }

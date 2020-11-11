@@ -27,10 +27,9 @@ namespace TrendyShop
                 context.Database.Migrate();
                 
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                var signInManager = services.GetRequiredService<SignInManager<User>>();
                 var userManager = services.GetRequiredService<UserManager<User>>();
 
-                DbInitializer.Initialize(context,roleManager,userManager,signInManager).Wait();
+                DbInitializer.Initialize(context,roleManager,userManager).Wait();
             }
             catch (Exception ex)
             {

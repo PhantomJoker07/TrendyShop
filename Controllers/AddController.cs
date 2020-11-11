@@ -176,7 +176,7 @@ namespace TrendyShop.Controllers
                 context.Entry(add).Reference(a => a.User).Load();
                 context.Entry(add).Reference(a => a.Article).Load();
 
-            if (User.Identity == null)
+            if (User.Identity != null)
             {
                 var mySl = (from sc in context.ShoppingCars
                             join l in context.ShoppingLists
@@ -188,10 +188,9 @@ namespace TrendyShop.Controllers
 
                 if (mySl.Count() > 0)
                 {
-                    foreach (var item in mySl)
-                    {
-                        sl2 = context.ShoppingLists.Find(item.ShoppingListId);
-                    }
+                   
+                        sl2 = context.ShoppingLists.Find(mySl.First().ShoppingListId);
+                   
                 }
 
                 if ((context.ShoppingList_Articles.SingleOrDefault(a => a.ShoppingListId == sl2.ShoppingListId && a.ArticleId == add.ArticleId)) != null)
@@ -335,7 +334,7 @@ namespace TrendyShop.Controllers
             return RedirectToAction("MyAdds", "Add");
         }
 
-        public ActionResult Delete(int aid, string uid)
+        public ActionResult Delete(int aid, string uid, bool fromIndex)
         {
             var add = context.Adds.Include(a => a.Article).Include(a => a.User)
                 .Single(a => a.UserId == uid && a.ArticleId == aid);
@@ -343,6 +342,9 @@ namespace TrendyShop.Controllers
             context.Articles.Remove(add.Article);
             context.Adds.Remove(add);
             context.SaveChanges();
+
+            if(fromIndex)
+                return RedirectToAction("Index", "Add");
 
             return RedirectToAction("MyAdds", "Add");
         }

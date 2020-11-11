@@ -145,6 +145,10 @@
                             <div class="ml-auto">
                                 @*<a class="btn btn-primary">Unirse </a>*@
                                 @Html.ActionLink("Detalles", "Details", "Auction", new { id = a.ArticleId }, null)
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    @Html.ActionLink("Eliminar", "Delete", "Auction", new { aid = a.ArticleId, fromIndex = true }, null)
+                                }
                             </div>
                         </div>
                     </div>

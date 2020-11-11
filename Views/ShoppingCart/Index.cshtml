@@ -2,17 +2,14 @@
 @{
     ViewData["Title"] = "ShoppingCart";
 }
-
 @model TrendyShop.ViewModels.ShoppingCartViewModel
 
 
 <!DOCTYPE html>
 <html lang="en">
-
-
 <body>
     <div class="row">
-        <div class="col-lg-8 mb-4 mx-auto">
+        <div class="col-lg-8 mb-4 mx-auto mt-5">
             <div class="card">
                 <div class="card-body">
                     <h1 class="card-title border-bottom">
@@ -25,7 +22,6 @@
                             <th>Cantidad</th>
                             <th>Precio Total</th>
                             <th>  @Html.ActionLink("Eliminar Lista", "DeleteListIndex", "ShoppingCart", new { sid = Model.ShoppingListId }, new { @class = "ml-auto" })</th>
-
                         </tr>
                         @foreach (var art in Model.ShoppingList)
                         {
@@ -60,35 +56,9 @@
             </div>
             <button type="button" class="btn btn-secondary ml-auto" onclick="location.pathname='/Buy/BuySCArticles'">Comprar Carrito</button>
 
-@*            <button type="button" class="btn btn-secondary ml-auto" onclick="location.pathname='/ShoppingCart/BuyCart'">Comprar Carrito</button>*@
         </div>
 
-        @*<div class="col-lg-3 mb-4 mt-4">
-            <div class="card ">
-                
-                <div class="card-body">
-                    <h2 class="card-title border-bottom">Pago</h2>
-
-                        @using (Html.BeginForm("BuyCart", "ShoppingCart"))
-                        {
-
-                            <div class="form-group">
-                                <label for="CreditCardName">Propietario de la Tarjeta</label>
-                                <input type="text" step="any" name="CreditCardName" />
-                                <br />
-                                <br />
-                                <label for="CreditCardNumber">Número de Tarjeta de crédito</label>
-                                <input type="text" step="any" name="CreditCardNumber" />
-
-                            </div>
-                            <div class="d-flex">
-                                <button type="submit" class="btn btn-secondary ml-auto">Comprar</button>
-                            </div>
-
-                        }
-                    </div>
-                </div>
-        </div>*@
+       
     </div>
 </body>
 </html>

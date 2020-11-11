@@ -14,9 +14,8 @@ namespace TrendyShop.Data
 {
     public class DbInitializer
     {
-        public static async Task Initialize(EFDbContext context, RoleManager<IdentityRole> _roleManager, UserManager<User> userManager, SignInManager<User> signInManager)
+        public static async Task Initialize(EFDbContext context, RoleManager<IdentityRole> _roleManager, UserManager<User> userManager)
         {
-            //Creating roles
             if (!await _roleManager.RoleExistsAsync("Admin"))
             {
                 await _roleManager.CreateAsync(new IdentityRole("Admin"));

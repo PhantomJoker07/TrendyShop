@@ -1,0 +1,64 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ShoppingCart";
+}
+@model TrendyShop.ViewModels.ShoppingCartViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div class="row">
+        <div class="col-lg-8 mb-4 mx-auto mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title border-bottom">
+                        Lista de compra
+                    </h1>
+                    <table class="table table-bordered mb-4">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Marca</th>
+                            <th>Cantidad</th>
+                            <th>Precio Total</th>
+                            <th>  @Html.ActionLink("Eliminar Lista", "DeleteListIndex", "ShoppingCart", new { sid = Model.ShoppingListId }, new { @class = "ml-auto" })</th>
+                        </tr>
+                        @foreach (var art in Model.ShoppingList)
+                        {
+                            <tr>
+                                <td>@art.Article.Name</td>
+                                <td>@art.Article.Brand</td>
+                                <td>@art.Amount</td>
+                                <td>@art.TotalPrice$</td>
+                                <td>@Html.ActionLink("", "DeleteArticle", "ShoppingCart", new { slid = @Model.ShoppingListId, aid = @art.ArticleId }, new { @class = "fas fa-trash-alt" })</td>
+                            </tr>
+                        }
+                    </table>
+                    @using (Html.BeginForm("SaveShoppingList", "ShoppingCart"))
+                    {
+                        <div class="form-group">
+                            @Html.HiddenFor(model => model.ShoppingListId)
+
+                            @Html.LabelFor(model => model.ShoppListName)
+                            <div class="d-flex">
+                                @Html.TextBoxFor(model => model.ShoppListName, new { })
+                                <button type="submit" class="btn btn-dark ml-1">Salvar Lista</button>
+                            </div>
+                        </div>
+                    }
+                    <div class="d-flex">
+
+                        @Html.ActionLink("Listas de Compra", "SavedLists", "ShoppingCart", null, new { @class = "ml-auto" })
+
+                    </div>
+                </div>
+
+            </div>
+            <button type="button" class="btn btn-secondary ml-auto" onclick="location.pathname='/Buy/BuySCArticles'">Comprar Carrito</button>
+
+        </div>
+
+       
+    </div>
+</body>
+</html>

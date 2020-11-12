@@ -1,0 +1,109 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<!DOCTYPE html>
+@model TrendyShop.ViewModels.RegisterViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html lang="en">
+<body>
+
+    <!-- Page Content -->
+    <div class="container my-4">
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home/Index">Inicio</a>
+            </li>
+            <li class="breadcrumb-item active">Entrar</li>
+        </ol>
+
+        <div class="col-lg-7 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-controller="User" asp-action="Register" method="post" name="sentMessage" id="contactForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName)
+                            <input type="text" asp-for="UserName" class="form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <label asp-for="Image"></label>
+                        <div class="custom-file mb-2">
+                            <input asp-for="Image" class="custom-file-input" id="customFile" />
+                            <label class="custom-file-label" for="customFile">Seleccionar Imagen</label>
+                            <span asp-validation-for="Image"></span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName)
+                            <input type="text" asp-for="FirstName" class=" form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName)
+                            <input type="text" asp-for="LastName" class="mb-4 form-control" id="submit" required data-validation-required-message="Por favor introduzca su nombre de usuario.">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PhoneNumber)
+                            <input type="text" asp-for="PhoneNumber" class=" form-control" id="submit" required data-validation-required-message="Por favor introduzca su número de teléfono.">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email)
+                            <input type="text" asp-for="Email" class=" form-control" id="submit" required data-validation-required-message="Por favor introduzca su dirección de correo.">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Details)
+                            <input type="text" asp-for="Details" class=" form-control" id="submit" required data-validation-required-message="Por favor introduzca algunos detalles sobre ud.">
+                            <span asp-validation-for="Details" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password)
+                            <input type="password" asp-for="Password" class=" form-control" id="email" required data-validation-required-message="Debe especificar una contraseña.">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Confirmation)
+                            <input type="password" asp-for="Confirmation" class=" form-control" id="email" required data-validation-required-message="Debe confirmar su contraseña.">
+                            <span asp-validation-for="Confirmation" class="text-danger"></span>
+                        </div>
+                        @if (Model.UserIsAdmin)
+                        {
+                            <div class="custom-checkbox">
+                                @Html.LabelFor(m => m.CreateAsAdmin)
+                                <input asp-for="CreateAsAdmin" type="checkbox"/>
+                            </div>
+                        }
+                        <div class="d-flex">
+                            <div class="ml-auto">
+                                <button type="submit" class="bg-dark btn btn-primary">Registrarse</button>
+                                <div asp-validation-summary="All" class="col-lg-4 text-danger"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript -->
+    @*<script src="/vendor/jquery/jquery.min.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
+
+</body>
+
+</html>

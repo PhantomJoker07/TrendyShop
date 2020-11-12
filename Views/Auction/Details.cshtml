@@ -1,149 +1,149 @@
-﻿@using TrendyShop.Models
-@model Auction
+﻿@using TrendyShop.ViewModels
+@model AuctionViewModel
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Compra Venta (Subasta x)</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/modern-business.css" rel="stylesheet">
-
-</head>
-
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Inicio</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Artículos
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/NewArticle">Anunciar</a>
-                            <a class="dropdown-item" href="/Home/Articles">Lista de Artículos</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Subasta
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/NewAuction">Nueva Subasta</a>
-                            <a class="dropdown-item" href="/Home/Auctions">Lista de Subastas</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/About">Acerca de</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/Contact">Contáctanos</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Usuario
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/Login">Entrar</a>
-                            <a class="dropdown-item" href="/Home/Register">Registrar</a>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <!-- Page Content -->
-    <div class="container">
+    @{
+        TimeSpan elapsed = DateTime.Now - Model.Start;
+        TimeSpan remaining = Model.Duration - elapsed;
+        if (elapsed > Model.Duration) remaining = new TimeSpan(0);
+        string winner = "-";
+        if (Model.Biders > 0)
+        {
+            winner = Model.LastBid.user.UserName;
+        }
+    }
+    <div class="col-lg-7 mx-auto mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title border-bottom">@Model.Name</h3>
 
-        <!-- Page Heading/Breadcrumbs -->
-        <h1 class="mt-4 mb-3 text-center">Subasta</h1>
+                <div class="d-flex">
+                    <img src="~/images/@Model.Article.Image" class="img-fluid rounded" height="200" width="300" />
+                    <div class=" ml-2 flex-column">
 
-        <h1 class="col-lg-8"><small>Artículo x</small></h1>
+                        <h3>@Model.Article.Name</h3>
+                        <p class="card-text">@Model.Article.Description</p>
+                    </div>
+                </div>
+                <div class="d-flex mt-4">
+                    @if (Model.IsFinished)
+                    {
+                        <p title="Fecha"><i class="far fa-calendar-check"></i> @Model.Start.ToString("dd/MM/yy")</p>
+                    }
+                    else
+                    {
+                        <p title="Fecha"><i class="far fa-calendar-alt"></i> @Model.Start.ToString("dd/MM/yy")</p>
+                    }
+                    <p title="Hora de inicio" class="ml-2"><i class="far fa-clock"></i> @Model.Start.ToString("hh:mm tt")</p>
+                    <p title="Tiempo restante (días/horas/min/seg)" class="ml-2">
+                        <i class="fas fa-hourglass-end"></i>
+                        <div id="clockdiv">
+                            <span class="days"></span>:
+                            <span class="hours"></span>:
+                            <span class="minutes"></span>:
+                            <span class="seconds"></span>
+                        </div>
+                    </p>
+                    <h5 title="Participantes" class="ml-2"><i class="fas fa-users"></i> @Model.Biders</h5>
 
+                </div>
+                @if (Model.IsFinished)
+                {
+                    <h5>Vendido a: @winner </h5>
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index">Inicio</a>
-            </li>
-            <li class="breadcrumb-item active"><a href="/Home/Articles">Artículos</a></li>
-            <li class="breadcrumb-item active">Artículo x</li>
-        </ol>
+                }
+                else if (Model.HasStarted && !Model.IsFinished) /*---------Si está en curso---------*/
+                {
+                    <h5 class="mb-0">Licitador en cabeza: @winner </h5>
+                }
+                <div class="d-flex">
+                    <h5 class="btn btn-secondary mt-0">Precio Inicial: @Model.Article.Price$</h5>
+                    @if (Model.IsFinished) // si ya se terminó
+                    {
+                        <h5 class="ml-2 btn btn-secondary">Precio Final: @Model.Price$</h5>
+                    }
+                    else if (Model.HasStarted && !Model.IsFinished) /*---------Si está en curso---------*/
+                    {
+                        <h5 class="ml-2 btn btn-secondary mt-0">Precio Actual: @Model.LastBid.amount$</h5>
+                    }
 
-        <div class="my-2 mb-4">
-            <h3 class="text-left"><small>Tiempo restante: xx:xx:xx</small></h3>
-            <h3 class="text-left"><small>Licitador en Cabeza: (nombre del usuario)</small></h3>
-            <h3 class="text-left"><small>Precio Actual: (Precio)</small></h3>
+                </div>
+                @if (SignInManager.IsSignedIn(User) && !Model.IsFinished && Model.HasStarted) //Only a logged user can participate
+                {
+                    <form asp-controller="Auction" asp-action="Bid" method="post">
+                        <h5 class="text-lg-left">Cantidad:</h5>
+                        <div class="d-flex">
+                            <input type="text" asp-for="BidAmount" class=" form-control" id="submit" required data-validation-required-message="Por favor introduzca una cantidad.">
+                            <span asp-validation-for="BidAmount" class="text-danger"></span>
+                            <input type="text" asp-for="ArticleId" data="@Model.Id" id="submit" hidden /> @*NO BORRAR*@
+                            <button type="submit" class="ml-2 bg-dark btn btn-dark">Pujar</button>
+                            <div asp-validation-summary="All" class="col-lg-4 text-danger"></div>
+                        </div>
+                    </form>
+
+                }
+                @if (SignInManager.IsSignedIn(User) && Model.IsFinished && !Model.Paid) //For the winner only
+                {
+                    <form asp-controller="Buy" asp-action="BuyAuctionArticle" asp-route-aid="@Model.ArticleId"method="post">
+                        <div class="mb-4">
+                            @*<input type="text" asp-for="aid" data="@Model.ArticleId" id="submit" hidden />*@
+                            <button type="submit" class="bg-dark btn btn-dark">Finalizar Subasta</button>
+                        </div>
+                    </form>
+                }
+            </div>
+
         </div>
-
-        <div class="row">
-            <div class="col-lg-12 navbar-brand">Imagen del producto</div>
-            <div class="col-lg-12">
-                <img src="/images/img1.jpg">
-            </div>
-        </div>
-
-        <!-- Article Info -->
-        <div class="row">
-            <div class="col-lg-12 mb-4">
-                <h4 class="card-header my-4">Artículo x</h4>
-            </div>
-            <div class="col-lg-12 card-body">
-                <p class="card-text">
-                    Descripción del producto...
-                </p>
-            </div>
-            <div class="col-lg-2 card-footer">
-                <h3>Cantidad</h3>
-            </div>
-            <div class="col-lg-2 card-footer">
-                <input class="form-control" required="" data-validation-required-message="Por favor introduzca una cantidad" type="text">
-            </div>
-            <div class="col-lg-4 card-footer">
-                <a href="" class="btn btn-primary">Pujar</a>
-            </div>
-            <div class="col-lg-4 card-footer">
-            </div>
-
-        </div>
-        <!-- /.row -->
-
     </div>
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-        </div>
-        <!-- /.container -->
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 </body>
-
 </html>
+<script>
+    function getTimeRemaining(endtime) {
+        const total = Date.parse(endtime) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+        return {
+            total,
+            days,
+            hours,
+            minutes,
+            seconds
+        };
+    }
+
+    function initializeClock(id, endtime) {
+        const clock = document.getElementById(id);
+        const daysSpan = clock.querySelector('.days');
+        const hoursSpan = clock.querySelector('.hours');
+        const minutesSpan = clock.querySelector('.minutes');
+        const secondsSpan = clock.querySelector('.seconds');
+
+        function updateClock() {
+            const t = getTimeRemaining(endtime);
+            if (t.total <= 0) {
+                clearInterval(timeinterval);
+            }
+            daysSpan.innerHTML = t.days;
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+            
+        }
+
+        updateClock();
+        const timeinterval = setInterval(updateClock, 1000);
+    }
+
+    const deadline = new Date( "@Model.Deadline");
+    initializeClock('clockdiv', deadline);
+</script>

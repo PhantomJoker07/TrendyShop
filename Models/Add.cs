@@ -1,25 +1,29 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace TrendyShop.Models
 {
     public class Add
     {
-        public int UserId { get; set; }
-
-        [ForeignKey("UserId"),Column(Order = 0)]
-        public User User { get; set; }
-
+        [Key]
         public int ArticleId { get; set; }
 
-        [Key,ForeignKey("ArticleId"), Column(Order = 1)]
+        [ForeignKey("ArticleId")]
         public Article Article { get; set; }
 
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User User { get; set; }        
+
+        [Display(Name = "Cantidad Disponible")]
         public int Amount { get; set; }
 
-        public string Description { get; set; } //Is this necessary??
+        [Display(Name = "Comentario sobre el anuncio")]
+        public string Description { get; set; }
 
         public DateTime LastModified { get; set; }
 

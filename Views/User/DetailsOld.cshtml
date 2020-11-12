@@ -1,0 +1,42 @@
+﻿@using TrendyShop.Models
+@model User
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+    <!-- Page Content -->
+    <div class="container my-2">
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home/Index">Inicio</a>
+            </li>
+            <li class="breadcrumb-item active">@Model.UserName</li>
+        </ol>
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3 text-center">@Model.UserName</h1>
+
+        <!-- Content Row -->
+        <div class="row">
+            <!-- Sidebar Column -->
+            <div class="col-lg-3 mb-4">
+                <div class="list-group">
+                    <img src="/images/profile.jpg" class="list-group-item" height="255" width="255">
+                    <p class="list-group-item">Número de Ventas: @Model.TotalSales</p>
+                    <p class="list-group-item">Valoración(0-5): @Model.Rating</p>
+                </div>
+            </div>
+
+            <h5 class="col-lg-9 text-center">@Model.Description</h5>
+        </div>
+
+
+    </div>
+    <!-- /.container -->
+    <!-- Footer -->
+
+</body>
+
+</html>

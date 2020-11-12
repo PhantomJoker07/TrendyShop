@@ -15,153 +15,69 @@
 
     <title>Compra Venta (Página de Inicio)</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/modern-business.css" rel="stylesheet">
-
 </head>
 
 <body>
-   
-       <!-- Navigation -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="/">Inicio</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Artículos
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                                <a class="dropdown-item" href="/Home/NewArticle">Anunciar</a>
-                                <a class="dropdown-item" href="/Home/Articles">Lista de Artículos</a>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Subasta
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                                <a class="dropdown-item" href="/Home/NewAuction">Nueva Subasta</a>
-                                <a class="dropdown-item" href="/Home/Auctions">Lista de Subastas</a>
-                            </div>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/About">Acerca de</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/Contact">Contáctanos</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Usuario
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                                <a class="dropdown-item" href="/Home/Login">Entrar</a>
-                                <a class="dropdown-item" href="/Home/Register">Registrar</a>
-                            </div>
-                        </li>
-
-                    </ul>
+    <div id="carouselExampleIndicators" class="carousel slide mt-4" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="0"></li>
+        </ol>
+        <div class="carousel-inner mt-4" role="listbox">
+            <div class="carousel-item active" style="background-image: url('/images/logo.jpg')">
+            </div>
+            <div class="carousel-item" style="background-image: url('/images/img00.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3>Bienvenido</h3>
+                    <p>Somos el mejor sitio de ventas online y subastas</p>
                 </div>
             </div>
-        </nav>
-    
-    <header>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                <!-- Slide One - Set the background image for this slide in the line below -->
-                <div class="carousel-item active" style="background-image: url('/images/img0.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>First Slide</h3>
-                        <p>This is a description for the first slide.</p>
-                    </div>
-                </div>
-                <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('/images/img1.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Second Slide</h3>
-                        <p>This is a description for the second slide.</p>
-                    </div>
-                </div>
-                <!-- Slide Three - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('/images/img2.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Third Slide</h3>
-                        <p>This is a description for the third slide.</p>
-                    </div>
+            <div class="carousel-item" style="background-image: url('/images/guy.jpg'); background-size:cover">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3>Siéntase en Casa</h3>
+                    <p>Trabajamos para usted. No dude en contactarnos!</p>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            <div class="carousel-item" style="background-image: url('/images/img02.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3>Nos preocupamos por usted</h3>
+                    <p>Su seguridad y protección es nuestra prioridad. Su información está a salvo con nosotros.</p>
+                </div>
+            </div>
+
         </div>
-    </header>
-
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+   
     <!-- Page Content -->
     <div class="container">
-
-
-        <h1 class="my-4 text-center ">Bienvenido</h1>
-
-
-
-        <h1 class="my-4">Inspeccione nuestros artículos recientes:</h1>
+        <h1 class="my-4 text-center"> Artículos recientes</h1>
 
         @foreach (HomeViewModel add in Model)
         {
-            <div class="row">
-                <div class="col-lg-12 mb-4">
-                    <div class="card h-100">
-                        <h4 class="card-header">@add.ArticleName</h4>
-                        <div class="card-body">
-                            <p class="card-text">@add.AddDescription</p>
-                        </div>
-                        <div class="card-footer">
-                            @*<a href="/Home/Add" class="btn btn-primary">Más</a>*@
-                            @Html.ActionLink("más", "Details", "Add", new { id = add.AddId })
+            <div class="col-lg-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title border-bottom">@add.ArticleName</h4>
 
+                        <div class="d-flex flex-column">
+                            <p class="card-text">@add.AddDescription</p>
+                            @Html.ActionLink("Ver más...", "Details", "Add", new { id = add.AddId }, new { @class = "ml-auto" })
                         </div>
                     </div>
                 </div>
             </div>
         }
-
-
     </div>
-    <!-- /.container -->
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Compra/Venta 2019</p>
-        </div>
-        <!-- /.container -->
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 </body>
-
 </html>

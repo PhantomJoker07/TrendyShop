@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using TrendyShop.Models;
 using TrendyShop.ViewModels;
 using TrendyShop.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrendyShop.Controllers
 {

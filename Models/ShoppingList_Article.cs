@@ -13,7 +13,7 @@ namespace TrendyShop.Models
 
         [Key, ForeignKey("ShoppingListId"), Column(Order = 0)]
         public ShoppingList ShoppingList { get; set; }
-        
+
         public int ArticleId { get; set; }
 
         [Key, ForeignKey("ArticleId"), Column(Order = 1)]

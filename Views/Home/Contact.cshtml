@@ -1,6 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
+@{ 
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
 <head>
 
     <meta charset="utf-8">
@@ -10,104 +12,60 @@
 
     <title>Compra Venta (Contáctanos)</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/modern-business.css" rel="stylesheet">
-
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Inicio</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Artículos
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/NewArticle">Anunciar</a>
-                            <a class="dropdown-item" href="/Home/Articles">Lista de Artículos</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Subasta
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/NewAuction">Nueva Subasta</a>
-                            <a class="dropdown-item" href="/Home/Auctions">Lista de Subastas</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/About">Acerca de</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/Contact">Contáctanos</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Usuario
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="/Home/Login">Entrar</a>
-                            <a class="dropdown-item" href="/Home/Register">Registrar</a>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <!-- Page Content -->
     <div class="container">
 
         <!-- Page Heading/Breadcrumbs -->
-        <h1 class="mt-4 mb-3">
-            Contact
-        </h1>
+        <h1 class="mt-4 mb-3">Contáctanos</h1>
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="/Home/Index">Inicio</a>
             </li>
-            <li class="breadcrumb-item active">Contactános</li>
+            <li class="breadcrumb-item active">Contáctanos</li>
         </ol>
 
         <!-- Content Row -->
         <div class="row">
             <!-- Map Column -->
             <div class="col-lg-8 mb-4">
-                <h1 class="text-center">Localización (Google Maps)</h1>
+                <img src="~/images/bannerimage-contact-us.png"/>
             </div>
             <!-- Contact Details Column -->
-            <div class="col-lg-4 mb-4">
-                <h3>Detalles</h3>
-                <p>
-                    Dirección
-                </p>
-                <p>
-                    <abbr title="Phone">P</abbr>: Número telefónico.
-                </p>
-                <p>
-                    <abbr title="Email">E</abbr>:
-                    <a href="mailto:name@example.com">
-                        correo@ejemplo.com
-                    </a>
-                </p>
+            <div class="col-lg-3 mb-4 ml-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title border-bottom">Desarrolladores</h3>
+                        <div class="d-flex flex-column">
+                            <div class="mb-3">
+                                <p>
+                                    <a href=":gabriel.martin@estudiantes.matcom.uh.cu">gabriel.martin@estudiantes</a>
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <p>
+                                    <a href=":gabriela.martinez@estudiantes.matcom.uh.cu">gabriela.martinez@estudiantes</a>
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <p>
+                                    <a href=":amalia.ibarra@estudiantes.matcom.uh.cu">amalia.ibarra@estudiantes</a>
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <p>
+                                    <a href=":sandra.martos@estudiantes.matcom.uh.cu">sandra.martos@estudiantes</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /.row -->
@@ -115,7 +73,6 @@
         <!-- In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
         <div class="row">
             <div class="col-lg-8 mb-4">
-                <h3>Escríbenos:</h3>
                 <form name="sentMessage" id="contactForm" novalidate>
                     <div class="control-group form-group">
                         <div class="controls">
@@ -144,7 +101,7 @@
                     </div>
                     <div id="success"></div>
                     <!-- For success/fail messages -->
-                    <button type="submit" class="btn btn-primary" id="sendMessageButton">Enviar Mensaje</button>
+                    <button class="btn btn-dark"type="submit"  id="sendMessageButton">Enviar Mensaje</button>
                 </form>
             </div>
 
@@ -153,22 +110,14 @@
 
     </div>
     <!-- /.container -->
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-        </div>
-        <!-- /.container -->
-    </footer>
-
     <!-- Bootstrap core JavaScript -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @*<script src="/vendor/jquery/jquery.min.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
 
     <!-- Contact form JavaScript -->
     <!-- Do not edit these files! In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
-    <script src="/js/jqBootstrapValidation.js"></script>
-    <script src="/js/contact_me.js"></script>
+    @*<script src="/js/jqBootstrapValidation.js"></script>
+        <script src="/js/contact_me.js"></script>*@
 
 </body>
 

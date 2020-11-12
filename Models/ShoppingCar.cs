@@ -9,7 +9,7 @@ namespace TrendyShop.Models
 {
     public class ShoppingCar
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("UserId"), Column(Order = 0)]
         public User User { get; set; }

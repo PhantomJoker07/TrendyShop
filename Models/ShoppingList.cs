@@ -12,6 +12,11 @@ namespace TrendyShop.Models
         [Key]
         public int ShoppingListId { get; set; }
 
+        public string Name { get; set; }
+
         public bool IsMainList { get; set; }
+
+        public bool IsSaved { get; set; }
+
     }
 }

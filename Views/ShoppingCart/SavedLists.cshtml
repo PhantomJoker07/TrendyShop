@@ -1,0 +1,38 @@
+﻿@using TrendyShop.Models
+
+@{
+    ViewData["Title"] = "SavedLists";
+}
+
+@model IEnumerable<TrendyShop.Models.ShoppingList>
+
+
+<div class="col-lg-8 mb-4 mx-auto mt-4">
+    <div class="card ">
+        <div class="card-body">
+        <h1 class="card-title border-bottom">Listas de compra</h1>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nombre</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+                </tr>
+                @foreach (var art in Model)
+                {
+
+                    <tr>
+                        <td>@art.Name</td>
+                        <td>@Html.ActionLink("Cargar", "LoadShoppingList", "ShoppingCart", new { sid = art.ShoppingListId })</td>
+                        <td>@Html.ActionLink("Eliminar", "DeleteShoppingList", "ShoppingCart", new { sid = art.ShoppingListId })</td>
+                        <td>@Html.ActionLink("Detalles", "Details", "ShoppingCart", new { sid = art.ShoppingListId })</td>
+
+                    </tr>
+
+
+                }
+            </table>
+        </div>
+    </div>
+</div>

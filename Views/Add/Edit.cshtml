@@ -1,0 +1,71 @@
+﻿@model TrendyShop.ViewModels.EditAddViewModel
+@*@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "EditAdd";
+}*@
+
+
+
+<!-- Navigation -->
+<div class="col-lg-8 mx-auto mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title border-bottom">Editar Artículo</h1>
+
+            @using (Html.BeginForm("SaveEdition", "Add"))
+            {
+                <div class=" form-group">
+                    @Html.LabelFor(a => a.Add.Article.Name)
+                    @Html.TextBoxFor(a => a.Add.Article.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Add.Article.Name)
+                </div>
+
+                <div class=" form-group">
+                    @Html.LabelFor(a => a.Add.Article.Brand)
+                    @Html.TextBoxFor(a => a.Add.Article.Brand, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Add.Article.Brand)
+                </div>
+
+                <div class=" form-group">
+                    @Html.LabelFor(a => a.Add.Article.Price)
+                    @Html.TextBoxFor(a => a.Add.Article.Price, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Add.Article.Price)
+                </div>
+
+                <div class=" form-group">
+                    @Html.LabelFor(a => a.Add.Article.Description)
+                    @Html.TextBoxFor(a => a.Add.Article.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Add.Article.Description)
+                </div>
+
+                <div class=" form-group">
+                    @Html.LabelFor(a => a.Add.Article.CategoryId)
+                    @Html.DropDownListFor(a => a.Add.Article.CategoryId, new SelectList(Model.Categories, "CategoryId", "Name"), "", new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(a => a.Add.Article.IsNew)
+                    @Html.CheckBoxFor(a => a.Add.Article.IsNew, new { @class = "checkbox" })
+                    @Html.ValidationMessageFor(a => a.Add.Article.IsNew)
+                </div>
+
+                <div class=" form-group">
+                    @Html.LabelFor(a => a.Add.Amount)
+                    @Html.TextBoxFor(a => a.Add.Amount, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Add.Amount)
+                </div>
+
+                <div class=" form-group">
+                    @Html.LabelFor(a => a.Add.Description)
+                    @Html.TextBoxFor(a => a.Add.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Add.Description)
+                </div>
+
+                @Html.HiddenFor(a => a.Add.UserId)
+                @Html.HiddenFor(a => a.Add.ArticleId)
+
+                <button type="submit" class=" btn btn-dark">Editar Anuncio</button>
+            }
+        </div>
+    </div>
+</div>

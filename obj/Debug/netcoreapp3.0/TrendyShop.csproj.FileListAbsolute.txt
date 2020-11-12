@@ -814,7 +814,6 @@ E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Index.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\SavedLists.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\PaymentGateway\GetPaymentMethod.cshtml.g.cs
-E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.csprojAssemblyReference.cache
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\bin\Debug\netcoreapp3.0\appsettings.Development.json
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\bin\Debug\netcoreapp3.0\appsettings.json
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\bin\Debug\netcoreapp3.0\Properties\launchSettings.json

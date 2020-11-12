@@ -23,9 +23,6 @@ namespace TrendyShop.Controllers
             return View();
         }
 
-        //En este caso, como la pasarela está integrada a la plataforma, ya tenemos datos del login del usuario
-        //Es necesario saber si el pago debe dividirse entre multiples vendedores, en ese caso se podria recibir un numero como 0 si ad,
-        //2 si auction y 1 si shopping cart, y entonces por la slist del clienteactual realzar klos pagos luego de validar si el usuario cuenta con los fondos suficientes
         public IActionResult GetPaymentMethod(string userId, int articleId, long orderDateTicks, double charge, int orderType = 3)
         {
             var cards = context.User_Cards.Where(c => c.UserId == userId).ToList();
@@ -38,7 +35,6 @@ namespace TrendyShop.Controllers
                 Charge = charge,
                 Cards = cards,
                 OrderType = orderType
-                //ForAuction = forAuction
             };
             return View(pmvm);
         }
@@ -60,7 +56,6 @@ namespace TrendyShop.Controllers
                     CardNumber = pmvm.CardNumber,
                     NameOnCard = pmvm.NameOnCard,
                     OrderType = pmvm.OrderType
-                    //ForAuction = pmvm.ForAuction
                 };
                 return RedirectToAction("GetPaymentMethod", newpmvm);
             }
@@ -69,7 +64,8 @@ namespace TrendyShop.Controllers
             var cardNumber = pmvm.CardNumber;
             if (pmvm.NameOnCard == null || pmvm.CardNumber == null)
             {
-                nameOnCard = context.User_Cards.Single(uc => uc.UserId == pmvm.UserId && uc.CardNumber == pmvm.SelectedCardNumber).NameOnCard;
+                nameOnCard = context.User_Cards.Single(uc => uc.UserId == pmvm.UserId 
+                && uc.CardNumber == pmvm.SelectedCardNumber).NameOnCard;
                 cardNumber = pmvm.SelectedCardNumber;
             }
             else
@@ -80,7 +76,8 @@ namespace TrendyShop.Controllers
                     CardNumber = cardNumber,
                     NameOnCard = nameOnCard
                 };
-                var cardInDb = context.User_Cards.SingleOrDefault(uc => uc.UserId == user_card.UserId && uc.CardNumber == user_card.CardNumber);
+                var cardInDb = context.User_Cards
+                    .SingleOrDefault(uc => uc.UserId == user_card.UserId && uc.CardNumber == user_card.CardNumber);
                 if (cardInDb == null)
                 {
                     context.User_Cards.Add(user_card);
@@ -89,7 +86,9 @@ namespace TrendyShop.Controllers
             }
           
             //aqui es donde se deberia hacer las transacciones entre las cuentas del comprador y el o los vendedores
-            return RedirectToAction("CloseOrder", "Buy", new { userId = pmvm.UserId, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks, orderType = pmvm.OrderType/*, forauction = pmvm.ForAuction*/ });
+            return RedirectToAction("CloseOrder", "Buy", 
+                new { userId = pmvm.UserId, articleId = pmvm.ArticleId, dateTicks = pmvm.DateTicks,
+                    orderType = pmvm.OrderType});
         }
     }
 }

@@ -15,7 +15,6 @@ namespace TrendyShop.ViewModels
         public long DateTicks { get; set; }
         public double Charge { get; set; }
         public IList<User_Card> Cards { get; set; }
-        //public bool ForAuction { get; set; }
         public int OrderType { get; set; }
 
         [Display(Name = "Número de tarjeta")]

@@ -8,24 +8,22 @@ namespace TrendyShop.Models
 {
     public class Add
     {
-        //[Key, Column(Order = 0)]
-        public string UserId { get; set; }
-
-        [ForeignKey("UserId")]  //previously UserId
-        public User User { get; set; }
-        
-        //[Key, Column(Order = 1)]
         [Key]
         public int ArticleId { get; set; }
 
         [ForeignKey("ArticleId")]
         public Article Article { get; set; }
 
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User User { get; set; }        
+
         [Display(Name = "Cantidad Disponible")]
-        public int Amount { get; set; }//required?
+        public int Amount { get; set; }
 
         [Display(Name = "Comentario sobre el anuncio")]
-        public string Description { get; set; } //Is this necessary??
+        public string Description { get; set; }
 
         public DateTime LastModified { get; set; }
 

@@ -50,7 +50,8 @@ namespace TrendyShop.Controllers
         [HttpPost]
         public IActionResult EffectBuy(BuyAddArticleViewModel bvm)
         {
-            var add = context.Adds.Include(a => a.Article).Single(a => a.ArticleId == bvm.Add.ArticleId && a.UserId == bvm.Add.UserId);
+            var add = context.Adds.Include(a => a.Article)
+                .Single(a => a.ArticleId == bvm.Add.ArticleId && a.UserId == bvm.Add.UserId);
 
             if (bvm.AmountToBuy > bvm.Add.Amount)
             {
@@ -83,7 +84,9 @@ namespace TrendyShop.Controllers
 
             var totalCharge = newOrder.Amount * bvm.Add.Article.Price + newOrder.ShippingCharge;
 
-            return RedirectToAction("GetPaymentMethod", "PaymentGateway", new { userId = newOrder.CustomerId, articleId = newOrder.ArticleId, orderDateTicks = newOrder.Date.Ticks, charge = totalCharge });
+            return RedirectToAction("GetPaymentMethod", "PaymentGateway",
+                new { userId = newOrder.CustomerId, articleId = newOrder.ArticleId,
+                    orderDateTicks = newOrder.Date.Ticks, charge = totalCharge });
         }
 
         public IActionResult BuySCArticles()
@@ -111,7 +114,6 @@ namespace TrendyShop.Controllers
             foreach (var item in carItems)
             {
                 var ad = context.Adds.Include(a => a.User).SingleOrDefault(b => b.ArticleId == item.Article.ArticleId);
-                //context.Entry(ad).Reference(a => a.User).Load();
 
                 ShoppingListArticuleViewModel slArticle = new ShoppingListArticuleViewModel
                 {
@@ -250,7 +252,6 @@ namespace TrendyShop.Controllers
                     orderDateTicks = newOrder.Date.Ticks,
                     charge = totalCharge,
                     orderType = 2
-                    //forAuction = true
                 });
         }
 
@@ -275,7 +276,7 @@ namespace TrendyShop.Controllers
             var date = new DateTime(dateTicks);
             var order = context.Orders.Single(o => o.CustomerId == userId && o.ArticleId == articleId && o.Date == date);
             order.Paid = true;
-            context.SaveChanges();//se deberia mandar un mensaje de completada su orden o anulada
+            context.SaveChanges();
 
             var add = context.Adds.Single(a => a.ArticleId == articleId);
             add.Amount -= order.Amount;
@@ -286,7 +287,6 @@ namespace TrendyShop.Controllers
             seller.Rating += 5;
             context.SaveChanges();
 
-            //verificar que esto no joda todo
             var currentUserName = User.Identity.Name;
             var currentUser = context.Users.Single(u => u.UserName == currentUserName);
             currentUser.Rating += 1;
@@ -317,7 +317,6 @@ namespace TrendyShop.Controllers
                         where sc.UserId == userId && sl.IsMainList == true
                         select new { sl.ShoppingListId }).ToList();
             
-            //var sl = context.ShoppingLists.Find(mySl.First().ShoppingListId);
             var shoppingList = context.ShoppingLists.SingleOrDefault(sl => sl.ShoppingListId == mySl.First().ShoppingListId);
 
             if (shoppingList != null)
@@ -348,12 +347,7 @@ namespace TrendyShop.Controllers
             var date = new DateTime(dateTicks);
             var order = context.AuctionOrders.Single(o => o.CustomerId == userId && o.ArticleId == articleId && o.Date == date);
             order.Paid = true;
-            context.SaveChanges();//se deberia mandar un mensaje de completada su orden o anulada
-
-            //auction Paid
-            //var auction = context.Auctions.Include(a => a.Article).Include(a => a.LastBid)
-            //    .Include(a => a.User)
-            //    .Single(a => a.UserId == userId && a.ArticleId == articleId);
+            context.SaveChanges();
 
             var auction = context.Auctions.Find(order.ArticleId);
             auction.Paid = true;
@@ -364,7 +358,6 @@ namespace TrendyShop.Controllers
             seller.Rating += 10;
             context.SaveChanges();
 
-            //verificar que esto no joda todo
             var currentUserName = User.Identity.Name;
             var currentUser = context.Users.Single(u => u.UserName == currentUserName);
             currentUser.Rating += 5;
@@ -388,7 +381,7 @@ namespace TrendyShop.Controllers
                 return RedirectToAction("Index", "Add");
             }
             else if (orderType == 2)
-            {//verificar paid en auction
+            {
                 var order = context.AuctionOrders.Single(o => o.CustomerId == userId && o.ArticleId == articleID && o.Date == date);
                 context.AuctionOrders.Remove(order);
                 context.SaveChanges();

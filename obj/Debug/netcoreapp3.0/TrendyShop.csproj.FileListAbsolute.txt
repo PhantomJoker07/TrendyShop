@@ -810,7 +810,6 @@ C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\TrendyShop.pdb
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Details.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Index.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\SavedLists.cshtml.g.cs
-E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\AddToShoppCart.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Details.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\Index.cshtml.g.cs
 E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\SavedLists.cshtml.g.cs
@@ -1004,3 +1003,5 @@ B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\ne
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\User\ChangePassword.cshtml.g.cs
 B:\Computers Science\3rd year\2do semestre\IS\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuySCArticles.cshtml.g.cs
 C:\My Projects\Proyecto IS\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuySCArticles.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\Buy\BuySCArticles.cshtml.g.cs
+E:\Cibernetics Core\3er Año\+IS+\TrendyShop\TrendyShop\obj\Debug\netcoreapp3.0\Razor\Views\ShoppingCart\NoBuy.cshtml.g.cs

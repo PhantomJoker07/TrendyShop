@@ -46,7 +46,6 @@ namespace TrendyShop.Data
             modelBuilder.Entity<Order>().HasKey(o => new { o.Date, o.CustomerId/*, o.SellerId*/, o.ArticleId });
             modelBuilder.Entity<AuctionOrder>().HasKey(o => new { o.Date, o.CustomerId/*, o.SellerId*/, o.ArticleId });
             modelBuilder.Entity<Bid>().HasKey(a => a.BidId);
-            //modelBuilder.Entity<User>().HasKey(u => u.UserName);
         }
     }
 }

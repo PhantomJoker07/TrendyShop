@@ -346,7 +346,7 @@ namespace TrendyShop.Controllers
                 viewModel.Auction.HasStarted = true;
             }
 
-            context.Auctions.Add(viewModel.Auction);//this already updates User and Article
+            context.Auctions.Add(viewModel.Auction);
             context.SaveChanges();
 
             return RedirectToAction("MyAuctions", "Auction");
